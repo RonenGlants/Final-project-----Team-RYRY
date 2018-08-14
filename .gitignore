@@ -1,6 +1,5 @@
 
-*.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
 *.xml
+*.iml
+node_modules*
+*.cmd
