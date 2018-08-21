@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-class UsersDBManager {
+module.exports = class UsersDBManager {
     constructor(){
         this.usersDBName = "user-data";
 
@@ -14,8 +14,8 @@ class UsersDBManager {
         db.collection(this.usersDBName).insertOne(user,function (err,result) {
             assert.equal(null,err);
             console.log("user inserted");
-        })
+        }.bind(this))
     }
 }
 
-module.exports = {UsersDBManager,}
+

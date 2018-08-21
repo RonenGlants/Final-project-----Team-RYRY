@@ -33,9 +33,9 @@ export default class LoginPage extends React.Component {
 
     handleLogin(eventLoginClick) {
         eventLoginClick.preventDefault(); // calls console.warn
-        const userName = eventLoginClick.target.elements.userName.value; // target is the form elements are the labels
-        const userPassword = eventLoginClick.target.elements.userPassword.value;
-        return fetch('/users/loginUser', {method:'POST', body: {userName: userName, userPassword: userPassword}, credentials: 'include'})
+       const userName = eventLoginClick.target.elements[0].value; // target is the form elements are the labels
+       const userPassword = eventLoginClick.target.elements[1].value;
+        return fetch('/users/loginUser', {method:'POST', body: JSON.stringify({userName: userName, userPassword: userPassword}), credentials: 'include'})
             .then(response=> {        // response is the result
                 if (response.ok){      // ok == 200
                     this.setState(()=> ({errMessage: ""}));

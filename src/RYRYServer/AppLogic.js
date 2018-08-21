@@ -1,5 +1,5 @@
 const DBManager = require('./Database/DBManager.js');
-const dbManager = new DBManager.DBManager();
+var dbManager = new DBManager();
 
 function loginUser(userName, password){
     dbManager.insertUser(
@@ -7,7 +7,6 @@ function loginUser(userName, password){
             userName: userName,
             password: password
         });
-    return true;
 }
 //todo: connect with DB
 
