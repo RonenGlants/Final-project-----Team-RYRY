@@ -11,7 +11,8 @@ module.exports = class UsersDBManager {
     }
 
     insertUser(db,user){
-        db.collection(this.usersDBName).insertOne(user,function (err,result) {
+        var collection = db.collection(this.usersDBName);
+        collection.insertOne(user,function (err,result) {
             assert.equal(null,err);
             console.log("user inserted");
         }.bind(this))
