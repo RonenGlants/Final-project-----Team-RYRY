@@ -7,6 +7,7 @@ function loginUser(userName, password){
             userName: userName,
             password: password
         });
+    var users = dbManager.getUsers();
 }
 //todo: connect with DB
 

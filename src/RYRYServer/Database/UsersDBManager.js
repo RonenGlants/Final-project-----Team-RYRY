@@ -6,6 +6,12 @@ module.exports = class UsersDBManager {
 
     }
 
+    getAllUsers(db){
+        var collection = db.collection(this.usersDBName);
+        var table = collection.find();
+        return table;
+    }
+
     validateUser(db,user){
 
     }

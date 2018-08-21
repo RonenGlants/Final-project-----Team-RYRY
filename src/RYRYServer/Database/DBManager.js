@@ -26,6 +26,20 @@ module.exports = class DBManager {
         }.bind(this));
     }
 
+    getUsers(){
+        mongo.connect(this.url, this.config, function (err, db) {
+            assert.equal(null, err);
+            var dbase = db.db("ryryDB");
+            var cursor = this.usersManager.getAllUsers(dbase);
+            var finalTable = [];
+            cursor.forEach(function(itr,err){
+                assert.equal(null, err);
+                finalTable.push(itr);
+            });
+            db.close();
+            return finalTable;
+        }.bind(this))
+    }
     insertUser(user) {
         var insertOperation = mongo.connect(this.url, this.config, function (err, db) {
             assert.equal(null, err);
