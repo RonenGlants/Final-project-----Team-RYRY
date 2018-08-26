@@ -1,11 +1,11 @@
 const UsersDBManager = require('./UsersDBManager.js');
+const Utils = require('./Utils.js');
 const mongo = require('mongodb').MongoClient;
 const assert = require('assert');
 
 module.exports = class DBManager {
     constructor() {
         this.config = {
-            autoIndex: true,
             useNewUrlParser: true,
         };
         this.url = "mongodb://localhost:27017/ryryDB";
@@ -13,16 +13,18 @@ module.exports = class DBManager {
         this.initDB.bind(this)();
     }
 
-    initDB() {
-        mongo.connect(this.url, this.config, function (err, db) {
+    async initDB() {
+        await mongo.connect(this.url, this.config, async function (err, db) {
             if (err) {
                 return console.dir(err);
             }
 
-            var dbase = db.db("ryryDB");
+            var dbase = await Utils.getDataBase(db);
 
-            dbase.createCollection("user-data", function (err, collection) {
+            await dbase.createCollection("user-data", function (err, collection) {
             });
+
+            await db.close();
         }.bind(this));
     }
 
@@ -30,16 +32,11 @@ module.exports = class DBManager {
         await mongo.connect(this.url, this.config, async function (err, db) {
             assert.equal(null, err);
 
-            var dbase = db.db("ryryDB");
-            var finalTable = [];
+            var dbase = await Utils.getDataBase(db);
             var cursor = await this.usersManager.getAllUsers(dbase);
+            var finalTable = await Utils.getTableFromCursor(cursor);
 
-            await cursor.forEach(user=>
-            {
-                finalTable.push(user);
-            });
-
-            db.close();
+            await db.close();
 
             return finalTable;
         }.bind(this));
@@ -49,10 +46,10 @@ module.exports = class DBManager {
         var insertOperation = await mongo.connect(this.url, this.config, async function (err, db) {
             assert.equal(null, err);
 
-            var dbase = db.db("ryryDB");
+            var dbase = await Utils.getDataBase(db);
 
             await this.usersManager.insertUser(dbase, user);
-            db.close();
+            await db.close();
         }.bind(this))
     }
 }
