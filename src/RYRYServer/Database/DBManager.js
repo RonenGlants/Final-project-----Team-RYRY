@@ -26,33 +26,32 @@ module.exports = class DBManager {
         }.bind(this));
     }
 
-    getUsers(){
-        mongo.connect(this.url, this.config, function (err, db) {
+    async getUsers() {
+        await mongo.connect(this.url, this.config, async function (err, db) {
             assert.equal(null, err);
 
             var dbase = db.db("ryryDB");
-            var cursor = this.usersManager.getAllUsers(dbase);
             var finalTable = [];
+            var cursor = await this.usersManager.getAllUsers(dbase);
 
-            cursor.forEach(function(itr,err){
-                assert.equal(null, err);
-                finalTable.push(itr);
-            }).then(function(value) {
-                    db.close();
+            await cursor.forEach(user=>
+            {
+                finalTable.push(user);
+            });
 
-                    return finalTable;
-                }
-            ) // todo: what is happening here?????
-        }.bind(this))
+            db.close();
+
+            return finalTable;
+        }.bind(this));
     }
 
-    insertUser(user) {
-        var insertOperation = mongo.connect(this.url, this.config, function (err, db) {
+    async insertUser(user) {
+        var insertOperation = await mongo.connect(this.url, this.config, async function (err, db) {
             assert.equal(null, err);
 
             var dbase = db.db("ryryDB");
 
-            this.usersManager.insertUser(dbase, user);
+            await this.usersManager.insertUser(dbase, user);
             db.close();
         }.bind(this))
     }

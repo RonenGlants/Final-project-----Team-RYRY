@@ -6,9 +6,10 @@ module.exports = class UsersDBManager {
 
     }
 
-    getAllUsers(db){
-        var collection = db.collection(this.usersDBName);
-        var table = collection.find();
+    async getAllUsers(db){
+        var collection = await db.collection(this.usersDBName);
+        var table = await collection.find();
+
         return table;
     }
 
@@ -16,9 +17,9 @@ module.exports = class UsersDBManager {
 
     }
 
-    insertUser(db,user){
-        var collection = db.collection(this.usersDBName);
-        collection.insertOne(user,function (err,result) {
+    async insertUser(db,user){
+        var collection = await db.collection(this.usersDBName);
+        await collection.insertOne(user,function (err,result) {
             assert.equal(null,err);
             console.log("user inserted");
         }.bind(this))
