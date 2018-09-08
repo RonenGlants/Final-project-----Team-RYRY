@@ -4,13 +4,10 @@ const appLogic = require('./AppLogic');
 const userManagement = express.Router();
 
 userManagement.post('/loginUser',
-    (req, res) => {
+    async (req, res) => {
         let userName = JSON.parse(req.body).userName;
         let password = JSON.parse(req.body).userPassword;
-        if (appLogic.loginUser(userName, password))
-            res.sendStatus(200);
-        else
-            res.sendStatus(401);
+        await appLogic.loginUser(userName, password);
     });
 
 //todo: set status with meaning to numbers

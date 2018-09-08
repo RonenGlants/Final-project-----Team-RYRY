@@ -8,7 +8,6 @@ export default class InputContainer extends React.Component {
         this.state={
             errMessage:'',
         }
-
     }
 
     render() {
