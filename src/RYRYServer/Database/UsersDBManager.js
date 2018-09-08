@@ -24,16 +24,16 @@ module.exports = class UsersDBManager {
         var collection = await db.collection(this.usersDBName);
         var isExists = await this.isUserExists(collection,user);
 
-        if(!isExists)
-        {
-                await collection.insertOne(user,function (err,result) {
-                    assert.equal(null,err);
-                    console.log("user inserted");
-                }.bind(this))
+        if(!isExists) {
+           await collection.insertOne(user,function (err,result) {
+               assert.equal(null,err);
+           });
+            console.log("user inserted");
+            return true;
         }
-        else
-        {
-            console.log("user exists!!!!!"); // todo: inform user
+        else {
+            console.log("user exists!!!!!");
+            return false;
         }
     }
 }

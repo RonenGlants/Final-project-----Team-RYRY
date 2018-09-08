@@ -13,7 +13,7 @@ export default class SignUpPage extends React.Component {
     render() {
         return (
             <div className="login-page-wrapper">
-                <form className="signup-form">
+                <form className="signup-form" onSubmit={this.signUpButtonClick.bind(this)}>
                     <img className="signup-logo" src={SignUpLogoImage}/>
                     <InputContainer labelClassName="username-label" labelValue="Name" type="text"
                                     inputChangeValidation={this.props.nameChangeValidation}/>
@@ -30,14 +30,33 @@ export default class SignUpPage extends React.Component {
                         <input type="radio" name="gender" value="female"/> Female
                     </label>
                     <br/>
-                    <input onClick={this.loginButtonClick.bind(this)} className="submit-btn btn" type="submit" value="Login"/>
+                    <input className="submit-btn btn" type="submit" value="Sign Up"/>
                 </form>
             </div>
         );
     }
 
-    loginButtonClick(){
-        this.props.showLogin();
+    signUpButtonClick(signUpClickEvent){
+        signUpClickEvent.preventDefault(); // calls console.warn
+        const userName = signUpClickEvent.target.elements[0].value; // target is the form elements are the labels
+        const userPassword = signUpClickEvent.target.elements[1].value;
+        const email = signUpClickEvent.target.elements[2].value;
+
+        if(this.props.isSignupValid(userName, userPassword, email))
+        {
+            return fetch('/users/signUpUser', {
+                method: 'POST',
+                body: JSON.stringify({userName: userName, userPassword: userPassword}),
+                credentials: 'include'
+            })
+                .then(response => {        // response is the result
+                    if (response.ok) {      // ok == 200
+                        this.props.showLogin();
+                    } else {
+                        console.log("sign up fetch failed: response not ok")
+                    }
+                });
+        }
     }
 }
         // todo : "on submit form"

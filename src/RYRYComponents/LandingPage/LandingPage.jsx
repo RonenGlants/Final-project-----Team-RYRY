@@ -12,7 +12,7 @@ export default class LandingPage extends React.Component {
         this.signUpType = "signUp";
 
         this.state = {
-            type: this.loginType,
+            type: this.signUpType,
         }
 
     }
@@ -20,16 +20,17 @@ export default class LandingPage extends React.Component {
     render() {
         if (this.state.type == this.loginType)
             return (
-                <LoginPage nameChangeValidation={this.validateUsername.bind(this)}
-                           passwordChangeValidation={this.validatePassword.bind(this)}
+                <LoginPage nameChangeValidation={this.getUsernameErrorMessage.bind(this)}
+                           passwordChangeValidation={this.getPasswordErrorMessage.bind(this)}
                            showSignUp={this.showSignUp.bind(this)}
                 />
             );
         else
             return (
-                <SignUpPage nameChangeValidation={this.validateUsername.bind(this)}
-                            passwordChangeValidation={this.validatePassword.bind(this)}
+                <SignUpPage nameChangeValidation={this.getUsernameErrorMessage.bind(this)}
+                            passwordChangeValidation={this.getPasswordErrorMessage.bind(this)}
                             showLogin={this.showLogin.bind(this)}
+                            isSignupValid = {this.isSignupValid.bind(this)}
                 />
             );
     }
@@ -46,12 +47,32 @@ export default class LandingPage extends React.Component {
         }));
     }
 
-    validateUsername(value) {
-        return value + "1";
+    getUsernameErrorMessage(value) {
+        if (!this.isUsernameValid(value))
+            return "Needs at least 6 letters";
+        else {
+            return "";
+        }
     }
 
-    validatePassword(value) {
-        return value + "2";
+    getPasswordErrorMessage(value) {
+        if (!this.isPasswordValid(value))
+            return "Needs at least 6 letters";
+        else {
+            return "";
+        }
     }
 
+    isSignupValid(username, password, email) {
+        return this.isPasswordValid(password) && this.isUsernameValid(username) && this.isUsernameValid(email); // todo: handel email validation
+
+    }
+
+    isPasswordValid(value) {
+        return value.length > 6;
+    }
+
+    isUsernameValid(value) {
+        return value.length > 6;
+    }
 }
