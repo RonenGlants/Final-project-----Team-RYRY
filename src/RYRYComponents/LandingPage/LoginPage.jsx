@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import loginLogoImage from '../Resources/LoginLogo.jpg';
 import InputContainer from "./InputContainer.jsx";
+import {Button, Card, CardBody, CardTitle, CardText, CardHeader, Row, Col} from 'reactstrap';
 
 export default class LoginPage extends React.Component {
     constructor(args) {
@@ -13,17 +14,28 @@ export default class LoginPage extends React.Component {
 
     render() {
         return (
-            <div className="login-page-wrapper">
+            <Row className="login-page-wrapper">
+               <Col sm={{ size: 'auto', offset: 1}}>
                 <img className="login-logo" src={loginLogoImage}/>
                 <form onSubmit={this.handleLogin}>
                    <InputContainer labelClassName="username-label" labelValue="Name" type="text" inputChangeValidation={this.props.nameChangeValidation}/>
-                    <br/>
                     <InputContainer labelClassName="password-label" labelValue="Password" type="password" inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <br/>
-                    <input className="submit-btn btn" type="submit" value="Login"/>
+                    <Button color="primary" className="submit-btn btn" type="submit" value="Login">Login</Button>
                 </form>
-                <input onClick={this.signUpButtonClick.bind(this)} className="submit-btn btn" type="submit" value="SignUp"/>
-            </div>
+                </Col>
+                <Col sm={{ size: 'auto', offset: 1}} className="login-page-not-signed-yet">
+                    <Card body outline color="primary" className="notSignedYetCard" style={{width:"80%", height:"60%"}}>
+                        <CardHeader tag="h3">Not signed yet?</CardHeader>
+                        <CardBody>
+                            <CardText>Join us to earn new skills and enrich others</CardText>
+                            <CardText>
+                                <small className="text-muted">It only takes a minute...</small>
+                            </CardText>
+                            <Button color="danger" onClick={this.signUpButtonClick.bind(this)} className="submit-btn btn" type="submit" value="SignUp">Sign Up</Button>
+                        </CardBody>
+                      </Card>
+                </Col>
+            </Row>
         );
     }
 

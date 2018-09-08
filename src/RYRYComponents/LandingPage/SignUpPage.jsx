@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SignUpLogoImage from '../Resources/SignUpLogo.jpg';
 import InputContainer from "./InputContainer.jsx";
+import './LandingPage.css';
 
 export default class SignUpPage extends React.Component {
     constructor(args) {
@@ -12,27 +13,25 @@ export default class SignUpPage extends React.Component {
     render() {
         return (
             <div className="login-page-wrapper">
-                <form>
-                    <img className="login-logo" src={SignUpLogoImage}/>
+                <form className="signup-form">
+                    <img className="signup-logo" src={SignUpLogoImage}/>
                     <InputContainer labelClassName="username-label" labelValue="Name" type="text"
                                     inputChangeValidation={this.props.nameChangeValidation}/>
-                    <br/>
                     <InputContainer labelClassName="password-label" labelValue="Password" type="password"
                                     inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <br/>
                     <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
                                     placeholder="ronen@RYRY.com"
                                     inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <br/>
                     <label className="gender-label">Gender: </label>
                     <label>
-                        <input type="radio" name="gender" value="male" defaultChecked/>Male
+                        <input type="radio" name="gender" value="male" defaultChecked/> Male
                     </label>
                     <label>
-                        <input type="radio" name="gender" value="female"/>Female
+                        <input type="radio" name="gender" value="female"/> Female
                     </label>
+                    <br/>
+                    <input onClick={this.loginButtonClick.bind(this)} className="submit-btn btn" type="submit" value="Login"/>
                 </form>
-                <input onClick={this.loginButtonClick.bind(this)} className="submit-btn btn" type="submit" value="Login"/>
             </div>
         );
     }
