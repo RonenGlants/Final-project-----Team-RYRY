@@ -22,13 +22,15 @@ export default class LandingPage extends React.Component {
             return (
                 <LoginPage nameChangeValidation={this.validateUsername.bind(this)}
                            passwordChangeValidation={this.validatePassword.bind(this)}
-                           showSignUp={this.showSignUp.bind(this)}/>
+                           showSignUp={this.showSignUp.bind(this)}
+                />
             );
         else
             return (
                 <SignUpPage nameChangeValidation={this.validateUsername.bind(this)}
                             passwordChangeValidation={this.validatePassword.bind(this)}
-                            showLogin={this.showLogin.bind(this)}/>
+                            showLogin={this.showLogin.bind(this)}
+                />
             );
     }
 
