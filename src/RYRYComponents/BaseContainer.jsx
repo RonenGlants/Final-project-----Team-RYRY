@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './LandingPage/LandingPage.jsx';
-import HomePage from './HomePage.jsx';
-import UserProfilePage from './UserProfilePage.jsx'
+import HomePage from './HomePage/HomePage.jsx';
+import UserProfilePage from './UserProfilePage/UserProfilePage.jsx'
 
 export default class BaseContainer extends React.Component{
     constructor(args){
@@ -10,6 +10,9 @@ export default class BaseContainer extends React.Component{
         this.landingPage = "landingPage";
         this.homePage = "homePage";
         this.userProfilePage = "userProfilePage";
+
+        this.userLoggedOut = this.userLoggedOut.bind(this);
+        this.showUserProfile = this.showUserProfile.bind(this);
 
         this.state = {
             pageType: this.homePage,
@@ -23,12 +26,21 @@ export default class BaseContainer extends React.Component{
                 );
             else if(this.state.pageType == this.homePage)
                 return (
-                    <HomePage showUserProfile={this.showUserProfile.bind(this)}/>
+                    <HomePage showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut}/>
                 );
-            else //(this.state.pageType == this.userProfilePage)
+            else if(this.state.pageType == this.userProfilePage)
                 return (
                     <UserProfilePage/>
                 );
+            else
+                return(
+                    <LandingPage/>
+                );
+
+    }
+
+    userLoggedOut(){
+        this.setState({pageType: this.landingPage})
     }
 
     showUserProfile(){
@@ -38,5 +50,5 @@ export default class BaseContainer extends React.Component{
     }
 
     //todo: switching between landing page (after login/signup to homepage
-
+    //todo: implement error page
 }
