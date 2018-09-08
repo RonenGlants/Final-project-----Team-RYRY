@@ -42,15 +42,22 @@ module.exports = class DBManager {
         }.bind(this));
     }
 
-    async insertUser(user) {
-        var insertOperation = await mongo.connect(this.url, this.config, async function (err, db) {
-            assert.equal(null, err);
-
-            var dbase = await Utils.getDataBase(db);
-
-            await this.usersManager.insertUser(dbase, user);
-            await db.close();
-        }.bind(this))
+    async insertUser(newUser) {
+        let status = false;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+               status = await this.handleInsertUser(newUser,db);
+            }
+        );
+        return status;
     }
+
+    async handleInsertUser(newUser,db){
+      // assert.equal(null, err);
+       let dbase = await Utils.getDataBase(db);
+       let isInserted = await this.usersManager.insertUser(dbase, newUser);
+       await db.close();
+       return isInserted;
+    }
+
 }
 

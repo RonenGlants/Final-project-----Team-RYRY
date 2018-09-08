@@ -12,7 +12,7 @@ export default class LandingPage extends React.Component {
         this.signUpType = "signUp";
 
         this.state = {
-            type: this.loginType,
+            type: this.signUpType,
         }
 
     }

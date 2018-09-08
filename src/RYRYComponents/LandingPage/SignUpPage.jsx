@@ -44,7 +44,18 @@ export default class SignUpPage extends React.Component {
 
         if(this.props.isSignupValid(userName, userPassword, email))
         {
-            this.props.showLogin();
+            return fetch('/users/signUpUser', {
+                method: 'POST',
+                body: JSON.stringify({userName: userName, userPassword: userPassword}),
+                credentials: 'include'
+            })
+                .then(response => {        // response is the result
+                    if (response.ok) {      // ok == 200
+                        this.props.showLogin();
+                    } else {
+                        console.log("sign up fetch failed: response not ok")
+                    }
+                });
         }
     }
 }

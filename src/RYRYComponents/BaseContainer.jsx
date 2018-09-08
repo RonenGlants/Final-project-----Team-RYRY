@@ -16,7 +16,7 @@ export default class BaseContainer extends React.Component{
         this.showUserProfile = this.showUserProfile.bind(this);
 
         this.state = {
-            pageType: this.homePage,
+            pageType: this.landingPage,
         }
     }
 
