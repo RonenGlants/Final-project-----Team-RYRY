@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import SignUpLogoImage from '../Resources/SignUpLogo.jpg';
 import InputContainer from "./InputContainer.jsx";
 import './LandingPage.css';
+import SkillsInputContainer from './SkillsInputContainer.jsx';
 
 export default class SignUpPage extends React.Component {
     constructor(args) {
