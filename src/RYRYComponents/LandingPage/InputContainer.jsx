@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default class InputContainer extends React.Component {
     constructor(args) {
         super(...args);
+        this.whenChanged = this.whenChanged.bind(this);
         this.state={
             errMessage:'',
         }
@@ -14,7 +15,7 @@ export default class InputContainer extends React.Component {
         return (
             <div>
                 <label className={this.props.labelClassName}> {this.props.labelValue}: </label>
-                <input type={this.props.type} onChange={this.whenChanged.bind(this)}/>
+                <input type={this.props.type} onChange={this.whenChanged}/>
                 <label className="errMessage">{this.state.errMessage}</label>
             </div>
         );

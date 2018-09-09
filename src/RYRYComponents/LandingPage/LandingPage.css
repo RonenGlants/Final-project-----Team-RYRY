@@ -25,6 +25,14 @@
   //margin-bottom: 2px;
 }
 
+.signup-table-row{
+  width: 100%;
+}
+
+signup-table-row{
+  width: 40%;
+}
+
 
 /* Example Styles for React Tags*/
 #app {

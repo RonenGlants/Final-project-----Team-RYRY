@@ -20,6 +20,12 @@ module.exports = class UsersDBManager {
         return resultTable.length != 0;
     }
 
+    async isUserAuthenticated(collection, user) {
+        var resultTable = await Utils.find(collection, {userName: user.userName, userPassword: user.userPassword});
+
+        return resultTable.length != 0;
+    }
+
     async insertUser(db,user){
         var collection = await db.collection(this.usersDBName);
         var isExists = await this.isUserExists(collection,user);
@@ -34,6 +40,20 @@ module.exports = class UsersDBManager {
         else {
             console.log("user exists!!!!!");
             return false;
+        }
+    }
+
+    async loginUser(db, user) {
+        var collection = await db.collection(this.usersDBName);
+        var isExists = await this.isUserAuthenticated(collection, user);
+
+        if(!isExists){
+            console.log("Authentication failed - user or password doesn't appear in DB")
+            return false;
+        }
+        else{
+            console.log("Authentication success - user and password appear in DB")
+            return true;
         }
     }
 }

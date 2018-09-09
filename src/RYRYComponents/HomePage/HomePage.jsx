@@ -25,6 +25,10 @@ export default class HomePage extends React.Component{
         }
     }
 
+    ComponentWillUnmount(){
+        this.setState({userFirstName: this.props.userName})
+    }
+
     render(){
         return(
            <div className="home-page-root">

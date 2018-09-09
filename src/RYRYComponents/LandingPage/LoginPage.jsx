@@ -7,6 +7,8 @@ import {Button, Card, CardBody, CardTitle, CardText, CardHeader, Row, Col} from 
 export default class LoginPage extends React.Component {
     constructor(args) {
         super(...args);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.state = {
             errMessage: "",
         }
@@ -34,7 +36,7 @@ export default class LoginPage extends React.Component {
                             <CardText>
                                 <small className="text-muted">It only takes a minute...</small>
                             </CardText>
-                            <Button color="danger" onClick={this.signUpButtonClick.bind(this)}
+                            <Button color="danger" onClick={this.signUpButtonClick}
                                     className="submit-btn btn" type="submit" value="SignUp">Sign Up</Button>
                         </CardBody>
                     </Card>
@@ -58,14 +60,16 @@ export default class LoginPage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    this.setState(() => ({errMessage: ""}));
-                    this.props.loginSuccessHandler();
+                    console.log("OK with loginUser")
+                    this.props.loginSuccessHandler(userName, userPassword);
+                    //this.setState(() => ({errMessage: ""}));
+
+                    //this.props.loginSuccessHandler();
                 } else {
-                    if (response.status === 403) {
                         //todo: handle error
-                        this.setState(() => ({errMessage: "User name already exist, please try another one"}));
-                    }
-                    this.props.loginErrorHandler();
+                        //this.setState(() => ({errMessage: "User name already exist, please try another one"}));
+                        console.log("403 with loginUser")
+                    //this.props.loginErrorHandler();
                 }
             });
         return true;

@@ -10,6 +10,12 @@ export default class LandingPage extends React.Component {
         super(...args);
         this.loginType = "login";
         this.signUpType = "signUp";
+        this.getPasswordErrorMessage = this.getPasswordErrorMessage.bind(this);
+        this.getUsernameErrorMessage = this.getUsernameErrorMessage.bind(this);
+        this.showLogin = this.showLogin.bind(this);
+        this.showSignUp = this.showSignUp.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.isSignupValid = this.isSignupValid.bind(this);
 
         this.state = {
             type: this.signUpType,
@@ -20,17 +26,18 @@ export default class LandingPage extends React.Component {
     render() {
         if (this.state.type == this.loginType)
             return (
-                <LoginPage nameChangeValidation={this.getUsernameErrorMessage.bind(this)}
-                           passwordChangeValidation={this.getPasswordErrorMessage.bind(this)}
-                           showSignUp={this.showSignUp.bind(this)}
+                <LoginPage nameChangeValidation={this.getUsernameErrorMessage}
+                           passwordChangeValidation={this.getPasswordErrorMessage}
+                           showSignUp={this.showSignUp}
+                           loginSuccessHandler={this.handleLogin}
                 />
             );
         else
             return (
-                <SignUpPage nameChangeValidation={this.getUsernameErrorMessage.bind(this)}
-                            passwordChangeValidation={this.getPasswordErrorMessage.bind(this)}
-                            showLogin={this.showLogin.bind(this)}
-                            isSignupValid = {this.isSignupValid.bind(this)}
+                <SignUpPage nameChangeValidation={this.getUsernameErrorMessage}
+                            passwordChangeValidation={this.getPasswordErrorMessage}
+                            showLogin={this.showLogin}
+                            isSignupValid = {this.isSignupValid}
                 />
             );
     }
@@ -45,6 +52,10 @@ export default class LandingPage extends React.Component {
         this.setState(() => ({
             type: this.loginType,
         }));
+    }
+
+    handleLogin(userName, userPassword){
+        this.props.handleAuthenticatedUser(userName, userPassword);
     }
 
     getUsernameErrorMessage(value) {

@@ -8,13 +8,14 @@ import SkillsInputContainer from './SkillsInputContainer.jsx';
 export default class SignUpPage extends React.Component {
     constructor(args) {
         super(...args);
+        this.signUpButtonClick = this.signUpButtonClick.bind(this);
 
     }
 
     render() {
         return (
             <div className="login-page-wrapper">
-                <form className="signup-form" onSubmit={this.signUpButtonClick.bind(this)}>
+                <form className="signup-form" onSubmit={this.signUpButtonClick}>
                     <img className="signup-logo" src={SignUpLogoImage}/>
                     <InputContainer labelClassName="username-label" labelValue="Name" type="text"
                                     inputChangeValidation={this.props.nameChangeValidation}/>
@@ -29,6 +30,14 @@ export default class SignUpPage extends React.Component {
                     </label>
                     <label>
                         <input type="radio" name="gender" value="female"/> Female
+                    </label>
+                    <br/>
+                    <label> My Skills:
+                        <SkillsInputContainer/>
+                    </label>
+                    <br/>
+                    <label> My Desired Skills:
+                        <SkillsInputContainer/>
                     </label>
                     <br/>
                     <input className="submit-btn btn" type="submit" value="Sign Up"/>
@@ -52,6 +61,7 @@ export default class SignUpPage extends React.Component {
             })
                 .then(response => {        // response is the result
                     if (response.ok) {      // ok == 200
+                        console.log("signup success - going to showLogin")
                         this.props.showLogin();
                     } else {
                         console.log("sign up fetch failed: response not ok")

@@ -1,17 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ReactTags from 'react-tag-autocomplete';
+//import ReactTags from 'react-tag-autocomplete';
 import './LandingPage.css';
+import { WithContext as ReactTags } from 'react-tag-input';
 
 const HobbiesToMap = [
     "Ballet",
     "Cooking",
-    "Arak",
-    "MergeWithMaster",
-    "SignUp",
-    "ShtrudelNekudaCom"
+    "Coding",
+    "C#",
+    "French Speaking",
+    "French Writing",
+    "Hebrew Speaking",
+    "Hebrew Writing",
+    "Spanish Speaking",
+    "Spanish Writing",
+    "Football",
+    "The History of ancient Egypt",
+    "Basketball",
+    "Smart Shopping",
+    "NodeJS",
+    "MongoDB",
+    "Hip-Hop Dancing",
+    "Modern Fashion",
+    "Italian Cuisine",
+    "Riding Bikes",
+    "Riding Skates",
+    "Playing Guitar",
+    "Playing Piano",
+    "Web Development",
+    "Healthy Living",
+    "Healthy Cooking",
+    "DIY",
+    "Judo",
+    "Karate",
+    "Jiu-Jitsu",
+    "Boxing",
+    "Writing Poetry",
+    "Writing Books",
+    "Mexican Culture"
 ];
+
+const KeyCodes = {
+    comma: 188,
+    enter: 13,
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 const suggestions = HobbiesToMap.map((Hobby) => {
     return {
@@ -26,7 +62,7 @@ export default class SkillsInputContainer extends React.Component {
         super(props);
 
         this.state = {
-            tags: [{ id: 'JavaScript', text: 'JavaScript' }, { id: 'Football', text: 'Football' }],
+            tags: [],
             suggestions: suggestions,
         };
         this.handleDelete = this.handleDelete.bind(this);
@@ -69,6 +105,7 @@ export default class SkillsInputContainer extends React.Component {
                     tags={tags}
                     suggestions={suggestions}
                     delimiters={delimiters}
+                    placeholder="Add new skill"
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
                     handleDrag={this.handleDrag}
