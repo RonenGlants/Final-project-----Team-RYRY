@@ -20,7 +20,6 @@ export default class LandingPage extends React.Component {
         this.state = {
             type: this.signUpType,
         }
-
     }
 
     render() {
@@ -60,7 +59,7 @@ export default class LandingPage extends React.Component {
 
     getUsernameErrorMessage(value) {
         if (!this.isUsernameValid(value))
-            return "Needs at least 6 letters";
+            return "name can not be empty";
         else {
             return "";
         }
@@ -68,22 +67,21 @@ export default class LandingPage extends React.Component {
 
     getPasswordErrorMessage(value) {
         if (!this.isPasswordValid(value))
-            return "Needs at least 6 letters";
+            return "Password length should be at least 6";
         else {
             return "";
         }
     }
 
     isSignupValid(username, password, email) {
-        return this.isPasswordValid(password) && this.isUsernameValid(username) && this.isUsernameValid(email); // todo: handel email validation
-
+        return this.isPasswordValid(password) && this.isUsernameValid(username);
     }
 
     isPasswordValid(value) {
-        return value.length > 6;
+        return value.length >= 6;
     }
 
     isUsernameValid(value) {
-        return value.length > 6;
+        return value.length > 0;
     }
 }

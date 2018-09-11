@@ -51,7 +51,6 @@ module.exports = class DBManager {
         return status;
     }
 
-
     async loginUser(user) {
         let status = false;
         await mongo.connect(this.url, this.config)
@@ -78,7 +77,5 @@ module.exports = class DBManager {
         return isLoggedIn;
 
     }
-
-
 }
 

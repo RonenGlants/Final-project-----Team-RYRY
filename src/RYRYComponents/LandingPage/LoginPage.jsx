@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import loginLogoImage from '../Resources/LoginLogo.jpg';
-import InputContainer from "./InputContainer.jsx";
+import InputContainer from "./Containers/InputContainer.jsx";
 import {Button, Card, CardBody, CardTitle, CardText, CardHeader, Row, Col} from 'reactstrap';
 
 export default class LoginPage extends React.Component {
@@ -20,11 +20,12 @@ export default class LoginPage extends React.Component {
                 <Col sm={{size: 'auto', offset: 1}}>
                     <img className="login-logo" src={loginLogoImage}/>
                     <form onSubmit={this.handleLogin}>
-                        <InputContainer labelClassName="username-label" labelValue="Name" type="text"
+                        <InputContainer labelClassName="username-label" labelValue="Email" type="text"
                                         inputChangeValidation={this.props.nameChangeValidation}/>
                         <InputContainer labelClassName="password-label" labelValue="Password" type="password"
                                         inputChangeValidation={this.props.passwordChangeValidation}/>
                         <Button color="primary" className="submit-btn btn" type="submit" value="Login">Login</Button>
+                        <label className="errMessage">{this.state.errMessage}</label>
                     </form>
                 </Col>
                 <Col sm={{size: 'auto', offset: 1}} className="login-page-not-signed-yet">
@@ -53,6 +54,7 @@ export default class LoginPage extends React.Component {
         loginClickEvent.preventDefault(); // calls console.warn
         const userName = loginClickEvent.target.elements[0].value; // target is the form elements are the labels
         const userPassword = loginClickEvent.target.elements[1].value;
+        this.showLoginErrorMessage("");
         return fetch('/users/loginUser', {
             method: 'POST',
             body: JSON.stringify({userName: userName, userPassword: userPassword}),
@@ -62,18 +64,20 @@ export default class LoginPage extends React.Component {
                 if (response.ok) {      // ok == 200
                     console.log("OK with loginUser")
                     this.props.loginSuccessHandler(userName, userPassword);
-                    //this.setState(() => ({errMessage: ""}));
 
                     //this.props.loginSuccessHandler();
                 } else {
-                        //todo: handle error
-                        //this.setState(() => ({errMessage: "User name already exist, please try another one"}));
-                        console.log("403 with loginUser")
-                    //this.props.loginErrorHandler();
+                    console.log("403 with loginUser")
+                    this.showLoginErrorMessage("Email or Password are incorrect.")
                 }
             });
         return true;
-        //TODO: implement fetch(authentication)
+    }
+
+    showLoginErrorMessage(error) {
+        this.setState(() => ({
+            errMessage: error,
+        }));
     }
 }
 
