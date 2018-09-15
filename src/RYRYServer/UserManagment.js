@@ -15,6 +15,18 @@ userManagement.post('/signUpUser',
         }
     });
 
+userManagement.post('/loginUser',
+    async (req, res) => {
+        let user = JSON.parse(req.body);
+        let isLoggedIn = await appLogic.loginUser(user);
+        if (isLoggedIn){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 //todo: set status with meaning to numbers
 
 module.exports = userManagement;

@@ -14,9 +14,12 @@ export default class BaseContainer extends React.Component{
 
         this.userLoggedOut = this.userLoggedOut.bind(this);
         this.showUserProfile = this.showUserProfile.bind(this);
+        this.handleAuthenticatedUser = this.handleAuthenticatedUser.bind(this);
 
         this.state = {
             pageType: this.landingPage,
+            userName: 'Dudu',
+            password: '123'
         }
     }
 
@@ -27,7 +30,7 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <LandingPage/>
+                    <LandingPage handleAuthenticatedUser={this.handleAuthenticatedUser}/>
                     </div>
 
                 );
@@ -37,7 +40,7 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                          <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <HomePage showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut}/>
+                    <HomePage userName={this.state.userName} showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut}/>
                     </div>
                 );
             else if(this.state.pageType == this.userProfilePage)
@@ -55,10 +58,16 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <LandingPage/>
+                        <LandingPage handleAuthenticatedUser={this.handleAuthenticatedUser}/>
                     </div>
                 );
 
+    }
+
+    handleAuthenticatedUser(userName, passWord){
+        this.setState({pageType: this.homePage,
+                       userName: userName,
+                       password: passWord})
     }
 
     userLoggedOut(){

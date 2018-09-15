@@ -51,6 +51,17 @@ module.exports = class DBManager {
         return status;
     }
 
+    async loginUser(user) {
+        let status = false;
+        await mongo.connect(this.url, this.config)
+            .then(async (db) => {
+                status = await this.handleLoginUser(user, db);
+            }
+            );
+        return status;
+    }
+
+
     async handleInsertUser(newUser,db){
       // assert.equal(null, err);
        let dbase = await Utils.getDataBase(db);
@@ -59,5 +70,12 @@ module.exports = class DBManager {
        return isInserted;
     }
 
+    async handleLoginUser(user, db) {
+        let dbase = await Utils.getDataBase(db);
+        let isLoggedIn = await this.usersManager.loginUser(dbase, user);
+        await db.close();
+        return isLoggedIn;
+
+    }
 }
 
