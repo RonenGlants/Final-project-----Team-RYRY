@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {CardTitle, Button, Card, CardBody, CardFooter, CardText, CardHeader} from 'reactstrap';
+import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle} from 'reactstrap';
 
 export default class NewsfeedContainer extends React.Component{
     constructor(args){

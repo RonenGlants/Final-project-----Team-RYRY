@@ -15,6 +15,17 @@ userManagement.post('/signUpUser',
         }
     });
 
+userManagement.get('/user',
+    async (req, res) => {
+        let userName = req.query.userName;
+        let user = await appLogic.getUser(userName);
+        user = user[0];
+            res.json({
+                firstName: user.firstName,
+                lastName: user.lastName,
+            });
+    });
+
 userManagement.post('/loginUser',
     async (req, res) => {
         let user = JSON.parse(req.body);
