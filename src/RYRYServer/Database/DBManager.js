@@ -1,4 +1,5 @@
 const UsersDBManager = require('./UsersDBManager.js');
+const GroupsDBManager = require('./GroupsDBManager.js');
 const Utils = require('./Utils.js');
 const mongo = require('mongodb').MongoClient;
 const assert = require('assert');
@@ -10,6 +11,7 @@ module.exports = class DBManager {
         };
         this.url = "mongodb://localhost:27017/ryryDB";
         this.usersManager = new UsersDBManager();
+        this.groupsManager = new GroupsDBManager();
         this.initDB.bind(this)();
     }
 
@@ -23,7 +25,8 @@ module.exports = class DBManager {
 
             await dbase.createCollection("user-data", function (err, collection) {
             });
-
+            await dbase.createCollection("group-data", function (err, collection) {
+            });
             await db.close();
         }.bind(this));
     }
@@ -51,6 +54,14 @@ module.exports = class DBManager {
         }.bind(this));
     }
 
+    async getGroupsById(userId) {
+        let myGroups = null;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            myGroups = await this.handleGetGroupsById(userId,db);
+            }
+        );
+        return myGroups;
+    }
 
     async insertUser(newUser) {
         let status = false;
@@ -60,8 +71,15 @@ module.exports = class DBManager {
         );
         return status;
     }
-    
 
+    async insertGroup(newGroup) {
+        let status = false;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                status = await this.handleInsertGroup(newGroup,db);
+            }
+        );
+        return status;
+    }
     async loginUser(user) {
         let status = false;
         await mongo.connect(this.url, this.config)
@@ -72,12 +90,27 @@ module.exports = class DBManager {
         return status;
     }
 
+    async handleInsertGroup(newGroup,db){
+        let dbase = await Utils.getDataBase(db);
+        let isInserted = await this.groupsManager.insertGroup(dbase, newGroup);
+        await db.close();
+        return isInserted;
+    }
+
     async handleGetUserById(id,db){
         let dbase = await Utils.getDataBase(db);
         let user = await this.usersManager.getUserById(dbase, id);
         await db.close();
         return user;
     }
+
+    async handleGetGroupsById(userId,db){
+        let dbase = await Utils.getDataBase(db);
+        let myGroups = await this.groupsManager.getGroupsById(dbase, userId);
+        await db.close();
+        return myGroups;
+    }
+
     async handleInsertUser(newUser,db){
        let dbase = await Utils.getDataBase(db);
        let isInserted = await this.usersManager.insertUser(dbase, newUser);
