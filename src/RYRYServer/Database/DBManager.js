@@ -29,13 +29,12 @@ module.exports = class DBManager {
     }
 
     async getUserById(id) {
-        await mongo.connect(this.url, this.config, async function (err, db) {
-            assert.equal(null, err);
-            var dbase = await Utils.getDataBase(db);
-            var user = await this.usersManager.getUserById(dbase, id);
-            await db.close();
-            return user;
-        }.bind(this));
+        let user = null;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                user = await this.handleGetUserById(id,db);
+            }
+        );
+        return user;
     }
 
     async getUsers() {
@@ -73,9 +72,13 @@ module.exports = class DBManager {
         return status;
     }
 
-
+    async handleGetUserById(id,db){
+        let dbase = await Utils.getDataBase(db);
+        let user = await this.usersManager.getUserById(dbase, id);
+        await db.close();
+        return user;
+    }
     async handleInsertUser(newUser,db){
-      // assert.equal(null, err);
        let dbase = await Utils.getDataBase(db);
        let isInserted = await this.usersManager.insertUser(dbase, newUser);
        await db.close();

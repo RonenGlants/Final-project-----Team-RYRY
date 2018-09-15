@@ -12,7 +12,7 @@ async function loginUser(user) {
 }
 
 async function getUser(userName) {
-    let user = await dbManager.usersDbManager.getUserById(userName);
+    let user = await dbManager.getUserById(userName);
     return user;
 }
 

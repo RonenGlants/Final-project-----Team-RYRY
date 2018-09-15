@@ -18,11 +18,11 @@ userManagement.post('/signUpUser',
 userManagement.get('/user',
     async (req, res) => {
         let userName = req.query.userName;
-        let user = await appLogic.getUser(userName);
+        let user = await appLogic.getUser(userName)[0];
 
         res.json({
-            firstName:user.firstName,
-            lastName:user.lastName,
+            firstName: user.firstName,
+            lastName: user.lastName,
         });
 
 /*
