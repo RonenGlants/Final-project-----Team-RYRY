@@ -71,6 +71,10 @@ export default class SkillsInputContainer extends React.Component {
         this.handleTagClick = this.handleTagClick.bind(this);
     }
 
+    getTags(){
+        return this.state.tags;
+    }
+
     handleDelete(i) {
         const {tags} = this.state;
         this.setState({

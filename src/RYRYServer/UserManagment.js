@@ -5,8 +5,8 @@ const userManagement = express.Router();
 
 userManagement.post('/signUpUser',
     async (req, res) => {
-        let user = JSON.parse(req.body);
-        let isSignUp = await appLogic.signUpUser(user);
+        let body = JSON.parse(req.body);
+        let isSignUp = await appLogic.signUpUser(body.newUser);
         if(isSignUp){
             res.sendStatus(200);
         }

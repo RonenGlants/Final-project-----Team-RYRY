@@ -19,7 +19,7 @@ export default class SignUpPage extends React.Component {
     render() {
         var genderOptions = ["Male", "Female"];
         return (
-            <div className="login-page-wrapper">
+            <div className="signup-page-wrapper">
                 <Row>
                     <Col sm={{size: 'auto', offset: 1}}>
                         <form className="signup-form" onSubmit={this.signUpButtonClick}>
@@ -33,8 +33,12 @@ export default class SignUpPage extends React.Component {
                             <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
                                             placeholder="ronen@RYRY.com"/>
                             <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
-                            <SkillsInputContainer skillsTitle="My Skills"/>
-                            <SkillsInputContainer skillsTitle="My Desired Skills"/>
+                            <SkillsInputContainer ref={(mySkillsCont) => {
+                                window.mySkillsCont = mySkillsCont
+                            }} skillsTitle="My Skills"/>
+                            <SkillsInputContainer ref={(desiredSkillsCont) => {
+                                window.desiredSkillsCont = desiredSkillsCont
+                            }} skillsTitle="My Desired Skills"/>
                             <input className="submit-btn btn" type="submit" value="Sign Up"/>
                             <label className="errMessage">{this.state.errMessage}</label>
                         </form>
@@ -57,13 +61,27 @@ export default class SignUpPage extends React.Component {
 
     signUpButtonClick(signUpClickEvent) {
         signUpClickEvent.preventDefault(); // calls console.warn
-        const userName = signUpClickEvent.target.elements[3].value; // target is the form elements are the labels
-        const userPassword = signUpClickEvent.target.elements[2].value;
-
-        if (this.props.isSignupValid(userName, userPassword)) {
+        const firstName = signUpClickEvent.target.elements[0].value; // target is the form elements are the labels
+        const lastName = signUpClickEvent.target.elements[1].value;
+        const password = signUpClickEvent.target.elements[2].value;
+        const email = signUpClickEvent.target.elements[3].value;
+        const gender = signUpClickEvent.target.elements[4].checked ? signUpClickEvent.target.elements[4].value : signUpClickEvent.target.elements[5].value;
+        const mySkills = window.mySkillsCont.getTags();
+        const desiredSkills = window.desiredSkillsCont.getTags();
+        const newUser = {
+            userName: email,
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            email: email,
+            gender: gender,
+            mySkills: mySkills,
+            desiredSkills: desiredSkills,
+        }
+        if (this.props.isSignupValid(newUser.userName, newUser.password)) {
             return fetch('/users/signUpUser', {
                 method: 'POST',
-                body: JSON.stringify({userName: userName, userPassword: userPassword}),
+                body: JSON.stringify({newUser}),
                 credentials: 'include'
             })
                 .then(response => {        // response is the result
