@@ -31,20 +31,17 @@ export default class HomePage extends React.Component {
 
     }
 
-    getCommunitiesAndEvents() {;
-       }
+    getCommunitiesAndEvents() {
+        ;
+    }
 
-    getUserFeeds() {;
+    getUserFeeds() {
+        ;
 //todo:
     }
 
     getUser() {
-
-        var url = new URL('/users/user')
-        var params = {userName:this.props.userName,}
-        url.search = new URLSearchParams(params)
-
-        return fetch(url, {
+        return fetch('users/user?userName=' + this.props.userName, {
             method: 'GET',
             credentials: 'include'
         })
