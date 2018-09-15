@@ -16,15 +16,20 @@ export default class SignUpPage extends React.Component {
     }
 
     render() {
-    var genderOptions = ["Male","Female"];
+        var genderOptions = ["Male", "Female"];
+
         return (
-            <div className="login-page-wrapper">
+            <div className="signup-page-wrapper">
                 <form className="signup-form" onSubmit={this.signUpButtonClick}>
                     <img className="signup-logo" src={SignUpLogoImage}/>
-                    <InputContainer labelClassName="username-label" labelValue="First Name" type="text" inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="username-label" labelValue="Last Name" type="text" inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="password-label" labelValue="Password" type="password" inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <InputContainer labelClassName="mail-label" labelValue="Email" type="email" placeholder="ronen@RYRY.com"/>
+                    <InputContainer labelClassName="username-label" labelValue="First Name" type="text"
+                                    inputChangeValidation={this.props.nameChangeValidation}/>
+                    <InputContainer labelClassName="username-label" labelValue="Last Name" type="text"
+                                    inputChangeValidation={this.props.nameChangeValidation}/>
+                    <InputContainer labelClassName="password-label" labelValue="Password" type="password"
+                                    inputChangeValidation={this.props.passwordChangeValidation}/>
+                    <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
+                                    placeholder="ronen@RYRY.com"/>
                     <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
                     <SkillsInputContainer skillsTitle="My Skills"/>
                     <SkillsInputContainer skillsTitle="My Desired Skills"/>

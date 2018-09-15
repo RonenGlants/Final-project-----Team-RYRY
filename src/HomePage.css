@@ -1,5 +1,4 @@
 .home-page-root{
-
 }
 
 .home-page-menu{
@@ -22,18 +21,17 @@
 .user-col{
 
 }
+
 community-root{
 
 }
 
 community-each{
   background-color: #a8d9ff;
-
 }
 
 .communities-col{
   //margin-left: 770px;
-
 }
 
 news-feed-root{
@@ -44,7 +42,6 @@ news-feed-root{
   border-left: solid 2px #8a8a8a;
   border-right: solid 2px #8a8a8a;
   //border-bottom: none;
-
 }
 
 news-feed-each{
@@ -82,12 +79,10 @@ card-communities-wrapper{
   height: 300px;
   }
 
-
 .btn-danger{
   margin-left: 20px;
 }
 .home-page-ryry{
   font-family: "Arial Black";
   margin: 5px;
-
 }
