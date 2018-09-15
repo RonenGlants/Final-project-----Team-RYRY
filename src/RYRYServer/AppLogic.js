@@ -1,6 +1,5 @@
 const DBManager = require('./Database/DBManager.js');
 let dbManager = new DBManager();
-let usersDbManager = new UsersDBManager();
 
 async function signUpUser(newUser) {
     let status = await dbManager.insertUser(newUser);
@@ -13,7 +12,7 @@ async function loginUser(user) {
 }
 
 async function getUser(userName) {
-    let user = await usersDbManager.getUserByUserName(userName);
+    let user = await dbManager.usersDbManager.getUserById(userName);
     return user;
 }
 

@@ -23,8 +23,7 @@ export default class HomePage extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({userFirstName: this.props.userName})
-        this.getUserName();
+        this.getUser();
         this.getUserFeeds();
         this.getCommunitiesAndEvents();
 
@@ -37,16 +36,20 @@ export default class HomePage extends React.Component {
 //todo:
     }
 
-    getUserName() {
-        return fetch('/users/fullName', {
+    getUser() {
+        return fetch('/users/user', {
             method: 'GET',
-            body: JSON.stringify({userName: this.props.userName}),
+            params: JSON.stringify({userName: this.props.userName}),
             credentials: 'include'
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
                     console.log("fetching full name succeeded")
-                    this.setState({userFirstName: response.firstName})
+                    this.setState({
+                        userFirstName: response.firstName,
+                        userLastName: response.lastName,
+
+                    })
                 } else {
                     console.log("fetching full name failed: response not ok")
                     //todo: handle error( if possible)
