@@ -45,18 +45,21 @@ export default class HomePage extends React.Component {
             method: 'GET',
             credentials: 'include'
         })
-            .then(response => {        // response is the result
-                if (response.ok) {      // ok == 200
-                    console.log("fetching full name succeeded")
-                    this.setState({
-                        userFirstName: response.firstName,
-                        userLastName: response.lastName,
-
-                    })
-                } else {
-                    console.log("fetching full name failed: response not ok")
-                    //todo: handle error( if possible)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
                 }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching full name succeeded")
+                this.setState({
+                    userFirstName: content.firstName,
+                    userLastName: content.lastName,
+                })
+            })
+            .catch(err => {
+                throw err
             });
     }
 
@@ -117,7 +120,8 @@ export default class HomePage extends React.Component {
 
     userProfileClick() {
         this.props.showUserProfile();
-    };
+    }
+    ;
 
     userSettingsClick() {
         // todo: create a settingPage container and invoke basecontainer to render it by props
