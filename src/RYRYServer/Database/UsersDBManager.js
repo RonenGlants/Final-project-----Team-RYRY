@@ -4,7 +4,6 @@ const Utils = require('./Utils.js');
 module.exports = class UsersDBManager {
     constructor(){
         this.usersDBName = "user-data";
-
     }
 
     async getAllUsers(db){
