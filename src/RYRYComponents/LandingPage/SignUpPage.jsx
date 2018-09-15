@@ -19,35 +19,39 @@ export default class SignUpPage extends React.Component {
     render() {
         var genderOptions = ["Male", "Female"];
         return (
-            <div className="login-page-wrapper">
-                <Row >
+            <div className="signup-page-wrapper">
+                <Row>
                     <Col sm={{size: 'auto', offset: 1}}>
-                <form className="signup-form" onSubmit={this.signUpButtonClick}>
-                    <img className="signup-logo" src={SignUpLogoImage}/>
-                    <InputContainer labelClassName="username-label" labelValue="First Name" type="text"
-                                    inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="username-label" labelValue="Last Name" type="text"
-                                    inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="password-label" labelValue="Password" type="password"
-                                    inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
-                                    placeholder="ronen@RYRY.com"/>
-                    <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
-                    <SkillsInputContainer ref={(mySkillsCont) => {window.mySkillsCont = mySkillsCont}} skillsTitle="My Skills"/>
-                    <SkillsInputContainer ref={(desiredSkillsCont) => {window.desiredSkillsCont = desiredSkillsCont}} skillsTitle="My Desired Skills"/>
-                    <input className="submit-btn btn" type="submit" value="Sign Up"/>
-                    <label className="errMessage">{this.state.errMessage}</label>
-                </form>
+                        <form className="signup-form" onSubmit={this.signUpButtonClick}>
+                            <img className="signup-logo" src={SignUpLogoImage}/>
+                            <InputContainer labelClassName="username-label" labelValue="First Name" type="text"
+                                            inputChangeValidation={this.props.nameChangeValidation}/>
+                            <InputContainer labelClassName="username-label" labelValue="Last Name" type="text"
+                                            inputChangeValidation={this.props.nameChangeValidation}/>
+                            <InputContainer labelClassName="password-label" labelValue="Password" type="password"
+                                            inputChangeValidation={this.props.passwordChangeValidation}/>
+                            <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
+                                            placeholder="ronen@RYRY.com"/>
+                            <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
+                            <SkillsInputContainer ref={(mySkillsCont) => {
+                                window.mySkillsCont = mySkillsCont
+                            }} skillsTitle="My Skills"/>
+                            <SkillsInputContainer ref={(desiredSkillsCont) => {
+                                window.desiredSkillsCont = desiredSkillsCont
+                            }} skillsTitle="My Desired Skills"/>
+                            <input className="submit-btn btn" type="submit" value="Sign Up"/>
+                            <label className="errMessage">{this.state.errMessage}</label>
+                        </form>
                     </Col>
                     <Col>
-                <Card body outline color="primary" className="alredySignedUpCard"
-                      style={{width: "80%", height: "60%"}}>
-                    <CardHeader tag="h3">Already signed up</CardHeader>
-                    <CardBody>
-                        <Button color="danger" onClick={this.signInButtonClick}
-                                className="submit-btn btn" type="submit" value="SignIn">Sign In</Button>
-                    </CardBody>
-                </Card>
+                        <Card body outline color="primary" className="alredySignedUpCard"
+                              style={{width: "80%", height: "60%"}}>
+                            <CardHeader tag="h3">Already signed up</CardHeader>
+                            <CardBody>
+                                <Button color="danger" onClick={this.signInButtonClick}
+                                        className="submit-btn btn" type="submit" value="SignIn">Sign In</Button>
+                            </CardBody>
+                        </Card>
                     </Col>
                 </Row>
             </div>

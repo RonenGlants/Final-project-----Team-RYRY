@@ -10,8 +10,7 @@ export default class LandingPage extends React.Component {
         super(...args);
         this.loginType = "login";
         this.signUpType = "signUp";
-        this.getPasswordErrorMessage = this.getPasswordErrorMessage.bind(this);
-        this.getUsernameErrorMessage = this.getUsernameErrorMessage.bind(this);
+        this.getEmptyErrorMessage = this.getEmptyErrorMessage.bind(this);
         this.showLogin = this.showLogin.bind(this);
         this.showSignUp = this.showSignUp.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -25,16 +24,16 @@ export default class LandingPage extends React.Component {
     render() {
         if (this.state.type == this.loginType)
             return (
-                <LoginPage nameChangeValidation={this.getUsernameErrorMessage}
-                           passwordChangeValidation={this.getPasswordErrorMessage}
+                <LoginPage nameChangeValidation={this.getEmptyErrorMessage}
+                           passwordChangeValidation={this.getEmptyErrorMessage}
                            showSignUp={this.showSignUp}
                            loginSuccessHandler={this.handleLogin}
                 />
             );
         else
             return (
-                <SignUpPage nameChangeValidation={this.getUsernameErrorMessage}
-                            passwordChangeValidation={this.getPasswordErrorMessage}
+                <SignUpPage nameChangeValidation={this.getEmptyErrorMessage}
+                            passwordChangeValidation={this.getEmptyErrorMessage}
                             showLogin={this.showLogin}
                             isSignupValid = {this.isSignupValid}
                 />
@@ -57,17 +56,9 @@ export default class LandingPage extends React.Component {
         this.props.handleAuthenticatedUser(userName, userPassword);
     }
 
-    getUsernameErrorMessage(value) {
+    getEmptyErrorMessage(value) {
         if (!this.isUsernameValid(value))
-            return "name can not be empty";
-        else {
-            return "";
-        }
-    }
-
-    getPasswordErrorMessage(value) {
-        if (!this.isPasswordValid(value))
-            return "Password length should be at least 6";
+            return "filed can not be empty";
         else {
             return "";
         }

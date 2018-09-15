@@ -32,10 +32,11 @@ module.exports = class DBManager {
         await mongo.connect(this.url, this.config, async function (err, db) {
             assert.equal(null, err);
             var dbase = await Utils.getDataBase(db);
-            var user = await this.usersManager.getUserById(dbase,id);
+            var user = await this.usersManager.getUserById(dbase, id);
             await db.close();
             return user;
         }.bind(this));
+    }
 
     async getUsers() {
         await mongo.connect(this.url, this.config, async function (err, db) {
