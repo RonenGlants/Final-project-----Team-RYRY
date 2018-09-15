@@ -18,21 +18,16 @@ userManagement.post('/signUpUser',
 userManagement.get('/user',
     async (req, res) => {
         let userName = req.query.userName;
-        let user = await appLogic.getUser(userName)[0];
-
-        res.json({
-            firstName: user.firstName,
-            lastName: user.lastName,
-        });
-
-/*
-        if(isSignUp){
-            res.sendStatus(200);
+        let user = await appLogic.getUser(userName);
+        if (user) {
+            res.json({
+                firstName: user[0].firstName,
+                lastName: user[0].lastName,
+            });
         }
         else{
-            res.sendStatus(403);
+            console.log("user: " + userName + " did not found")
         }
-   */
     });
 
 userManagement.post('/loginUser',
