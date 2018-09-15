@@ -32,12 +32,48 @@ export default class HomePage extends React.Component {
     }
 
     getCommunitiesAndEvents() {
-        ;
+        return fetch('groups/usersGroups?userName=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching all groups succeeded")
+                this.setState({
+                    communities: content.communities,
+                    events: content.events,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
     }
 
     getUserFeeds() {
-        ;
-//todo:
+        return fetch('feeds?feeds=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching feeds succeeded")
+                this.setState({
+                    feeds: content.feeds,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
     }
 
     getUser() {
