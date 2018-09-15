@@ -6,16 +6,14 @@ export default class CommunityListContainer extends React.Component{
     constructor(args){
         super(...args);
         this.state ={
-
         }
-
     }
 
     render(){
         return(
             <div className="community">
                 {this.props.myCommunities.map((community) => {
-                    return <CardText className="community-each">{community}</CardText>
+                    return <CardText className="community-each">{community.name}</CardText>
                 })}
             </div>
         )
