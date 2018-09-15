@@ -6,6 +6,8 @@ import '../../HomePage.css';
 import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 
+require('url');
+
 export default class HomePage extends React.Component {
     constructor(args) {
         super(...args);
@@ -37,9 +39,13 @@ export default class HomePage extends React.Component {
     }
 
     getUser() {
-        return fetch('/users/user', {
+
+        var url = new URL('/users/user')
+        var params = {userName:this.props.userName,}
+        url.search = new URLSearchParams(params)
+
+        return fetch(url, {
             method: 'GET',
-            params: JSON.stringify({userName: this.props.userName}),
             credentials: 'include'
         })
             .then(response => {        // response is the result
