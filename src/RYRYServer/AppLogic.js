@@ -1,5 +1,6 @@
 const DBManager = require('./Database/DBManager.js');
-var dbManager = new DBManager();
+let dbManager = new DBManager();
+let usersDbManager = new UsersDBManager();
 
 async function signUpUser(newUser) {
     let status = await dbManager.insertUser(newUser);
@@ -11,6 +12,9 @@ async function loginUser(user) {
     return status;
 }
 
-//todo: connect with DB
+async function getUser(userName) {
+    let user = await usersDbManager.getUserByUserName(userName);
+    return user;
+}
 
-module.exports = {signUpUser, loginUser,}
+module.exports = {signUpUser, loginUser, getUser,}

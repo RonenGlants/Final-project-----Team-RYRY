@@ -50,6 +50,7 @@ module.exports = class DBManager {
         );
         return status;
     }
+    
 
     async loginUser(user) {
         let status = false;

@@ -15,6 +15,23 @@ userManagement.post('/signUpUser',
         }
     });
 
+userManagement.get('/fullName',
+    async (req, res) => {
+        let userName= JSON.parse(req.body);
+        let user = await appLogic.getUser(userName);
+
+        res.json({firstName:user.firstName});
+
+/*
+        if(isSignUp){
+            res.sendStatus(200);
+        }
+        else{
+            res.sendStatus(403);
+        }
+   */
+    });
+
 userManagement.post('/loginUser',
     async (req, res) => {
         let user = JSON.parse(req.body);
