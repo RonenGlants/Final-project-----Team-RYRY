@@ -28,7 +28,7 @@ module.exports = class UsersDBManager {
 
     async insertUser(db,user){
         var collection = await db.collection(this.usersDBName);
-        var isExists = await this.isUserExists(collection,user);
+        var isExists = await this.isUserExists(collection,user.userName);
 
         if(!isExists) {
            await collection.insertOne(user,function (err,result) {
@@ -41,6 +41,12 @@ module.exports = class UsersDBManager {
             console.log("user exists!!!!!");
             return false;
         }
+    }
+
+    async getUserById(db,id){
+        var collection = await db.collection(this.usersDBName);
+        let user = await Utils.find(collection,{userName: id});
+        return user;
     }
 
     async loginUser(db, user) {
