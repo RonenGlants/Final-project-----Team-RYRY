@@ -21,7 +21,7 @@ module.exports = class UsersDBManager {
     }
 
     async isUserAuthenticated(collection, user) {
-        var resultTable = await Utils.find(collection, {userName: user.userName, userPassword: user.userPassword});
+        var resultTable = await Utils.find(collection, {userName: user.userName, password: user.userPassword});
 
         return resultTable.length != 0;
     }
