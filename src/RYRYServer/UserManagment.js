@@ -19,15 +19,11 @@ userManagement.get('/user',
     async (req, res) => {
         let userName = req.query.userName;
         let user = await appLogic.getUser(userName);
-        if (user) {
+        user = user[0];
             res.json({
-                firstName: user[0].firstName,
-                lastName: user[0].lastName,
+                firstName: user.firstName,
+                lastName: user.lastName,
             });
-        }
-        else{
-            console.log("user: " + userName + " did not found")
-        }
     });
 
 userManagement.post('/loginUser',
