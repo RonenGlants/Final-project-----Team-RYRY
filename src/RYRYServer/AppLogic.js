@@ -16,4 +16,20 @@ async function getUser(userName) {
     return user;
 }
 
-module.exports = {signUpUser, loginUser, getUser,}
+async function getGroups(userName) {
+    let communities = [];
+    let events = [];
+    let groups = await dbManager.getGroupsById(userName);
+
+    groups.map((group) => {
+        if (group.endDate) {
+            events.add(group);
+        } else {
+            communities.add(group);
+        }
+    });
+
+    return {events: events, communities: communities};
+}
+
+module.exports = {signUpUser, loginUser, getUser, getGroups}
