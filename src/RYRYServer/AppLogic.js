@@ -17,14 +17,14 @@ async function getUser(userName) {
 }
 
 async function getGroups(userName) {
-    let communities = [];
-    let events = [];
-    let groups = await dbManager.getGroupsById(userName);
+            let communities = [];
+            let events = [];
+            let groups = await dbManager.getGroupsById(userName);
 
-    groups.map((group) => {
-        if (group.endDate) {
-            events.add(group);
-        } else {
+            groups.map((group) => {
+                if (group.endDate) {
+                    events.add(group);
+                } else {
             communities.add(group);
         }
     });
@@ -32,4 +32,9 @@ async function getGroups(userName) {
     return {events: events, communities: communities};
 }
 
-module.exports = {signUpUser, loginUser, getUser, getGroups}
+async function addGroup(newGroup) {
+    let status = await dbManager.insertGroup(newGroup);
+    return status;
+}
+
+module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup}

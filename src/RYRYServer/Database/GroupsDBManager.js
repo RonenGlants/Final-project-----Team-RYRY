@@ -6,15 +6,15 @@ module.exports = class UsersDBManager {
         this.groupsDBName = "group-data";
     }
 
-    async isGroupExists(collection,group) {
-        var resultTable = await Utils.find(collection, {name: group.name});
+    async isGroupExists(collection,groupId) {
+        var resultTable = await Utils.find(collection, groupId);
 
         return resultTable.length != 0;
     }
 
     async insertGroup(db,group){
         var collection = await db.collection(this.groupsDBName);
-        var isExists = await this.isGroupExists(collection,group.name);
+        var isExists = await this.isGroupExists(collection,{name: group.name});
 
         if(!isExists) {
             await collection.insertOne(group,function (err,result) {
