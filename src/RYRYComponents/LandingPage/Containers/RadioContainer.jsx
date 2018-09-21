@@ -44,6 +44,7 @@ export default class RadioContainer extends React.Component {
         let theType = "";
         if (event.target.checked == true){
             this.setState({type: event.target.value});
+            theType = event.target.value;
         }
         else{
             if(event.target.value == "Male") {
