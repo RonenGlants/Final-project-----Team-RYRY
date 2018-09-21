@@ -105,6 +105,7 @@ export default class HomePage extends React.Component {
                 <div className="home-page-body">
                     <Row className="row-root">
                         <Col sm={{size: 'auto'}} className="user-col">
+                            <Button onClick={this.insertUser}></Button>
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>
@@ -161,5 +162,25 @@ export default class HomePage extends React.Component {
 
     userSettingsClick() {
         // todo: create a settingPage container and invoke basecontainer to render it by props
+    }
+
+    insertUser() {
+        let data = {name: "huliohulio222"};
+
+        return fetch('/groups/addGroup', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("group inserted?")
+                } else {
+                    console.log("403 with addGroup")
+                    // todo: show message to user.
+                }
+            });
+
+        return true;
     }
 }
