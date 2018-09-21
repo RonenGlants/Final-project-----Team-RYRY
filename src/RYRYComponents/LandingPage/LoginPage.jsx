@@ -9,6 +9,9 @@ export default class LoginPage extends React.Component {
         super(...args);
         this.handleLogin = this.handleLogin.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.showLoginErrorMessage = this.showLoginErrorMessage.bind(this);
+
         this.state = {
             errMessage: "",
             password: "",
@@ -70,8 +73,6 @@ export default class LoginPage extends React.Component {
                 if (response.ok) {      // ok == 200
                     console.log("OK with loginUser")
                     this.props.loginSuccessHandler(userName, userPassword);
-
-                    //this.props.loginSuccessHandler();
                 } else {
                     console.log("403 with loginUser")
                     this.showLoginErrorMessage("Email or Password are incorrect.")

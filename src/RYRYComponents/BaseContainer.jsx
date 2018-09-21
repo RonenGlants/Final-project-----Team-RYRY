@@ -18,8 +18,8 @@ export default class BaseContainer extends React.Component{
 
         this.state = {
             pageType: this.landingPage,
-            userName: 'Dudu',
-            password: '123'
+            userName: '',
+            password: ''
         }
     }
 
