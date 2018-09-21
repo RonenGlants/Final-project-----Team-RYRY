@@ -4,7 +4,6 @@ const Utils = require('./Utils.js');
 module.exports = class UsersDBManager {
     constructor(){
         this.usersDBName = "user-data";
-
     }
 
     async getAllUsers(db){
@@ -21,14 +20,14 @@ module.exports = class UsersDBManager {
     }
 
     async isUserAuthenticated(collection, user) {
-        var resultTable = await Utils.find(collection, {userName: user.userName, userPassword: user.userPassword});
+        var resultTable = await Utils.find(collection, {userName: user.userName, password: user.userPassword});
 
         return resultTable.length != 0;
     }
 
     async insertUser(db,user){
         var collection = await db.collection(this.usersDBName);
-        var isExists = await this.isUserExists(collection,user);
+        var isExists = await this.isUserExists(collection,user.userName);
 
         if(!isExists) {
            await collection.insertOne(user,function (err,result) {
@@ -41,6 +40,12 @@ module.exports = class UsersDBManager {
             console.log("user exists!!!!!");
             return false;
         }
+    }
+
+    async getUserById(db,id){
+        var collection = await db.collection(this.usersDBName);
+        let user = await Utils.find(collection,{userName: id});
+        return user;
     }
 
     async loginUser(db, user) {

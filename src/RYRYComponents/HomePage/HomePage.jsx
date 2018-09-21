@@ -1,82 +1,165 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Button, Card, CardBody, CardImg, CardText, CardHeader, Row, Col} from 'reactstrap';
-import HomePageLogo from '../Resources/HomePageLogo.jpg'
+import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import CommunityListContainer from "./CommunityListContainer.jsx";
 import '../../HomePage.css';
 import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 
-export default class HomePage extends React.Component{
-    constructor(args){
+require('url');
+
+export default class HomePage extends React.Component {
+    constructor(args) {
         super(...args);
         this.userLogOut = this.userLogOut.bind(this);
         this.userProfileClick = this.userProfileClick.bind(this);
         this.userSettingsClick = this.userSettingsClick.bind(this);
 
-        this.state ={
-            userFirstName: 'Dudu',
-            userLastName: 'Faruk',
-            communities: ["Nargila", "Armani", "Arak", "Beitar yerushalaim", "Nike"],
-            feeds: ["DayOne", "DayTwo", "DayThree", "DayFour", "DayFive", "You see where this is going"],
-
-
+        this.state = {
+            userFirstName: null,
+            userLastName: null,
+            communities: [],
+            events: [],
+            feeds: [],
         }
     }
 
-    ComponentWillUnmount(){
-        this.setState({userFirstName: this.props.userName})
+    componentWillMount() {
+        this.getUser();
+        this.getUserFeeds();
+        this.getCommunitiesAndEvents();
+
     }
 
-    render(){
-        return(
-           <div className="home-page-root">
-               <div className="home-page-body">
+    getCommunitiesAndEvents() {
+        return fetch('groups/usersGroups?userName=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching all groups succeeded")
+                this.setState({
+                    communities: content.communities,
+                    events: content.events,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
+    getUserFeeds() {
+        return fetch('feeds?feeds=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching feeds succeeded")
+                this.setState({
+                    feeds: content.feeds,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
+    getUser() {
+        return fetch('users/user?userName=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching full name succeeded")
+                this.setState({
+                    userFirstName: content.firstName,
+                    userLastName: content.lastName,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
+    render() {
+        return (
+            <div className="home-page-root">
+                <div className="home-page-body">
                     <Row className="row-root">
                         <Col sm={{size: 'auto'}} className="user-col">
                             <div className="card-wrapper">
                                 <Card>
-                                <CardHeader>
-                                    <Button onClick={this.userProfileClick}><CardImg top width="100%" src={UserProfileLogo}/></Button>
-                                            Hello, {this.state.userFirstName} {this.state.userLastName}
-                                </CardHeader>
-                                <CardBody>
-                                    <UserCardDropDownContainer userName={this.state.userFirstName} invokeLogOut={this.userLogOut}
-                                    invokeProfilePage={this.userProfileClick}
-                                    invokeSettingsPage={this.userSettingsClick}/>
-                                </CardBody>
+                                    <CardHeader>
+                                        <Button onClick={this.userProfileClick}><CardImg top width="100%"
+                                                                                         src={UserProfileLogo}/></Button>
+                                        Hello, {this.state.userFirstName} {this.state.userLastName}
+                                    </CardHeader>
+                                    <CardBody>
+                                        <UserCardDropDownContainer userName={this.state.userFirstName}
+                                                                   invokeLogOut={this.userLogOut}
+                                                                   invokeProfilePage={this.userProfileClick}
+                                                                   invokeSettingsPage={this.userSettingsClick}/>
+                                    </CardBody>
                                 </Card>
                             </div>
                         </Col>
                         <Col sm={{size: 6}} className="feeds-col">
-                                <NewsfeedContainer myFeeds={this.state.feeds}/>
+                            <NewsfeedContainer myFeeds={this.state.feeds}/>
                         </Col>
-                <Col sm={{size: 'auto', offset: 1}} className="communities-col">
-                    <div className="card-wrapper">
-                        <Card>
-                            <CardHeader>My communities</CardHeader>
-                            <CardBody>
-                                <CommunityListContainer myCommunities={this.state.communities}/>
-                            </CardBody>
-                        </Card>
-                    </div>
-                </Col>
-            </Row>
-           </div>
-           </div>
+                        <Col sm={{size: 'auto', offset: 1}} className="communities-col">
+                            <div className="card-wrapper">
+                                <Card>
+                                    <CardHeader>My Communities</CardHeader>
+                                    <CardBody>
+                                        <CommunityListContainer myCommunities={this.state.communities}/>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Col>
+                        <Col sm={{size: 'auto', offset: 1}} className="communities-col">
+                            <div className="card-wrapper">
+                                <Card>
+                                    <CardHeader>My Events</CardHeader>
+                                    <CardBody>
+                                        <CommunityListContainer myCommunities={this.state.events}/>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
         );
     }
 
-    userLogOut(){
+    userLogOut() {
         this.props.invokeDisplayLandingPage();
     }
 
-    userProfileClick(){
+    userProfileClick() {
         this.props.showUserProfile();
-    };
+    }
+    ;
 
-    userSettingsClick(){
+    userSettingsClick() {
         // todo: create a settingPage container and invoke basecontainer to render it by props
     }
 }

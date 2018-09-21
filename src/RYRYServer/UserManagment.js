@@ -5,14 +5,25 @@ const userManagement = express.Router();
 
 userManagement.post('/signUpUser',
     async (req, res) => {
-        let user = JSON.parse(req.body);
-        let isSignUp = await appLogic.signUpUser(user);
+        let body = JSON.parse(req.body);
+        let isSignUp = await appLogic.signUpUser(body.newUser);
         if(isSignUp){
             res.sendStatus(200);
         }
         else{
             res.sendStatus(403);
         }
+    });
+
+userManagement.get('/user',
+    async (req, res) => {
+        let userName = req.query.userName;
+        let user = await appLogic.getUser(userName);
+        user = user[0];
+            res.json({
+                firstName: user.firstName,
+                lastName: user.lastName,
+            });
     });
 
 userManagement.post('/loginUser',

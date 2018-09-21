@@ -100,3 +100,16 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   background: #4a1;
   cursor: pointer;
 }
+label.errMessage{
+  margin-left: 5px;
+  color: #cc0000;
+}
+
+div.signup-page-wrapper {
+  position: relative;
+}
+
+.signup-logo{
+  width: 60%;
+  height: auto;
+}

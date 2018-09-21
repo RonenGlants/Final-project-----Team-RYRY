@@ -7,6 +7,6 @@ import { Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstra
 
 /* Directly adding react element */
 ReactDOM.render(
-    <BaseContainer />, 
+    <BaseContainer ref={(basePage) => {window.basePage = basePage}}/>,
     document.getElementById("root")
 );
