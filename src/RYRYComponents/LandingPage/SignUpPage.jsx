@@ -10,9 +10,18 @@ export default class SignUpPage extends React.Component {
     constructor(args) {
         super(...args);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.signInButtonClick = this.signInButtonClick.bind(this);
+        this.showSignUpErrorMessage = this.showSignUpErrorMessage.bind(this);
+
+
         this.state = {
             errMessage: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            email: '',
+            gender: '',
         }
     }
 
@@ -24,15 +33,11 @@ export default class SignUpPage extends React.Component {
                     <Col sm={{size: 'auto', offset: 1}}>
                         <form className="signup-form" onSubmit={this.signUpButtonClick}>
                             <img className="signup-logo" src={SignUpLogoImage}/>
-                            <InputContainer labelClassName="username-label" labelValue="First Name" type="text"
-                                            inputChangeValidation={this.props.nameChangeValidation}/>
-                            <InputContainer labelClassName="username-label" labelValue="Last Name" type="text"
-                                            inputChangeValidation={this.props.nameChangeValidation}/>
-                            <InputContainer labelClassName="password-label" labelValue="Password" type="password"
-                                            inputChangeValidation={this.props.passwordChangeValidation}/>
-                            <InputContainer labelClassName="mail-label" labelValue="Email" type="email"
-                                            placeholder="ronen@RYRY.com"/>
-                            <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
+                            <InputContainer myName="firstName" labelClassName="username-label" labelValue="First Name" type="text" handleMyChange={this.handleChange} inputChangeValidation={this.props.nameChangeValidation}/>
+                            <InputContainer myName="lastName" labelClassName="username-label" labelValue="Last Name" type="text" handleMyChange={this.handleChange} inputChangeValidation={this.props.nameChangeValidation}/>
+                            <InputContainer myName="password" ref="password-container" labelClassName="password-label" labelValue="Password" type="password" handleMyChange={this.handleChange} inputChangeValidation={this.props.passwordChangeValidation}/>
+                            <InputContainer myName="email" ref="email-container" labelClassName="mail-label" labelValue="Email" type="email" handleMyChange={this.handleChange}/>
+                            <RadioContainer myName="gender" choiceTitle="Gender" choiceOptions={genderOptions} handleMyChange={this.handleChange}/>
                             <SkillsInputContainer ref={(mySkillsCont) => {
                                 window.mySkillsCont = mySkillsCont
                             }} skillsTitle="My Skills"/>
@@ -59,13 +64,13 @@ export default class SignUpPage extends React.Component {
     }
 
 
-    signUpButtonClick(signUpClickEvent) {
-        signUpClickEvent.preventDefault(); // calls console.warn
-        const firstName = signUpClickEvent.target.elements[0].value; // target is the form elements are the labels
-        const lastName = signUpClickEvent.target.elements[1].value;
-        const password = signUpClickEvent.target.elements[2].value;
-        const email = signUpClickEvent.target.elements[3].value;
-        const gender = signUpClickEvent.target.elements[4].checked ? signUpClickEvent.target.elements[4].value : signUpClickEvent.target.elements[5].value;
+    signUpButtonClick() {
+        //signUpClickEvent.preventDefault(); // calls console.warn
+        const firstName = this.state.firstName; // target is the form elements are the labels
+        const lastName = this.state.lastName;
+        const password = this.state.password;
+        const email = this.state.email;
+        const gender = this.state.gender;
         const mySkills = window.mySkillsCont.getTags();
         const desiredSkills = window.desiredSkillsCont.getTags();
         const newUser = {
@@ -99,6 +104,7 @@ export default class SignUpPage extends React.Component {
         }
     }
 
+
     signInButtonClick() {
         this.props.showLogin();
     }
@@ -108,4 +114,9 @@ export default class SignUpPage extends React.Component {
             errMessage: error,
         }));
     }
+
+    handleChange(name, value){
+        this.setState({[name]: value})
+    }
+
 }

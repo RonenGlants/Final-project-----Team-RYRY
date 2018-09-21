@@ -11,6 +11,8 @@ export default class LoginPage extends React.Component {
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.state = {
             errMessage: "",
+            password: "",
+            email: ""
         }
     }
 
@@ -20,9 +22,11 @@ export default class LoginPage extends React.Component {
                 <Col sm={{size: 'auto', offset: 1}}>
                     <img className="login-logo" src={loginLogoImage}/>
                     <form onSubmit={this.handleLogin}>
-                        <InputContainer labelClassName="username-label" labelValue="Email" type="text"
+                        <InputContainer myName="email" labelClassName="username-label" labelValue="Email" type="email"
+                                        handleMyChange={this.handleChange}
                                         inputChangeValidation={this.props.nameChangeValidation}/>
-                        <InputContainer labelClassName="password-label" labelValue="Password" type="password"
+                        <InputContainer myName="password" labelClassName="password-label" labelValue="Password" type="password"
+                                        handleMyChange={this.handleChange}
                                         inputChangeValidation={this.props.passwordChangeValidation}/>
                         <Button color="primary" className="submit-btn btn" type="submit" value="Login">Login</Button>
                         <label className="errMessage">{this.state.errMessage}</label>
@@ -52,8 +56,10 @@ export default class LoginPage extends React.Component {
 
     handleLogin(loginClickEvent) {
         loginClickEvent.preventDefault(); // calls console.warn
-        const userName = loginClickEvent.target.elements[0].value; // target is the form elements are the labels
-        const userPassword = loginClickEvent.target.elements[1].value;
+        const userName = this.state.email;
+        const userPassword = this.state.password;
+        //const userName = loginClickEvent.target.elements[0].value; // target is the form elements are the labels
+        //const userPassword = loginClickEvent.target.elements[1].value;
         this.showLoginErrorMessage("");
         return fetch('/users/loginUser', {
             method: 'POST',
@@ -72,6 +78,10 @@ export default class LoginPage extends React.Component {
                 }
             });
         return true;
+    }
+
+    handleChange(name, value){
+        this.setState({[name]: value})
     }
 
     showLoginErrorMessage(error) {

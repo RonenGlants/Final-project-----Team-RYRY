@@ -67,7 +67,7 @@ div.ReactTags__selected span.ReactTags__tag {
   display: inline-block;
   padding: 5px;
   margin: 0 5px;
-  cursor: move;
+  cursor: pointer;
   border-radius: 2px;
 }
 div.ReactTags__selected a.ReactTags__remove {
@@ -83,7 +83,7 @@ div.ReactTags__suggestions {
 div.ReactTags__suggestions ul {
   list-style-type: none;
   box-shadow: .05em .01em .5em rgba(0,0,0,.2);
-  background: white;
+  background: #b7cfe0;
   width: 200px;
 }
 div.ReactTags__suggestions li {
@@ -97,7 +97,7 @@ div.ReactTags__suggestions li mark {
   font-weight: 600;
 }
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
-  background: #b7cfe0;
+  background: #4a1;
   cursor: pointer;
 }
 label.errMessage{
