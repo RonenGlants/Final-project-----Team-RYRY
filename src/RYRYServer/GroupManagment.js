@@ -8,7 +8,6 @@ groupManagement.get('/usersGroups',
         let userName = req.query.userName;
         let groups = await appLogic.getGroups(userName);
 
-        groups = groups[0];
         res.json(groups);
     });
 
