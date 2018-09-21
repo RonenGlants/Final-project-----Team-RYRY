@@ -8,6 +8,7 @@ export default class InputContainer extends React.Component {
         this.whenChanged = this.whenChanged.bind(this);
         this.state = {
             errMessage: '',
+            value:''
         }
     }
 
@@ -15,7 +16,7 @@ export default class InputContainer extends React.Component {
         return (
             <div>
                 <label className={this.props.labelClassName}> {this.props.labelValue}: </label>
-                <input type={this.props.type} onChange={this.whenChanged}/>
+                <input name={this.props.myName} type={this.props.type} placeholder="enter text here..." value={this.state.value} onChange={this.whenChanged}/>
                 <label className="errMessage">{this.state.errMessage}</label>
             </div>
         );
@@ -28,5 +29,7 @@ export default class InputContainer extends React.Component {
                 errMessage: message,
             }));
         }
+        this.setState({value: event.target.value});
+        this.props.handleMyChange(event.target.name, event.target.value);
     }
 }

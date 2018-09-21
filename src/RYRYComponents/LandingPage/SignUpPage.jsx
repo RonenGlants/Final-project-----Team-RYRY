@@ -10,8 +10,14 @@ export default class SignUpPage extends React.Component {
     constructor(args) {
         super(...args);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
             errMessage: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            email: '',
+            gender: '',
         }
     }
 
@@ -21,10 +27,10 @@ export default class SignUpPage extends React.Component {
             <div className="login-page-wrapper">
                 <form className="signup-form" onSubmit={this.signUpButtonClick}>
                     <img className="signup-logo" src={SignUpLogoImage}/>
-                    <InputContainer labelClassName="username-label" labelValue="First Name" type="text" inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="username-label" labelValue="Last Name" type="text" inputChangeValidation={this.props.nameChangeValidation}/>
-                    <InputContainer labelClassName="password-label" labelValue="Password" type="password" inputChangeValidation={this.props.passwordChangeValidation}/>
-                    <InputContainer labelClassName="mail-label" labelValue="Email" type="email" placeholder="ronen@RYRY.com"/>
+                    <InputContainer myName="firstName" labelClassName="username-label" labelValue="First Name" type="text" handleMyChange={this.handleChange} inputChangeValidation={this.props.nameChangeValidation}/>
+                    <InputContainer myName="lastName" labelClassName="username-label" labelValue="Last Name" type="text" handleMyChange={this.handleChange} inputChangeValidation={this.props.nameChangeValidation}/>
+                    <InputContainer myName="password" ref="password-container" labelClassName="password-label" labelValue="Password" type="password" handleMyChange={this.handleChange} inputChangeValidation={this.props.passwordChangeValidation}/>
+                    <InputContainer myName="email" ref="email-container" labelClassName="mail-label" labelValue="Email" type="email" handleMyChange={this.handleChange}/>
                     <RadioContainer choiceTitle="Gender" choiceOptions={genderOptions}/>
                     <SkillsInputContainer skillsTitle="My Skills"/>
                     <SkillsInputContainer skillsTitle="My Desired Skills"/>
@@ -37,8 +43,10 @@ export default class SignUpPage extends React.Component {
 
     signUpButtonClick(signUpClickEvent) {
         signUpClickEvent.preventDefault(); // calls console.warn
-        const userName = signUpClickEvent.target.elements[3].value; // target is the form elements are the labels
-        const userPassword = signUpClickEvent.target.elements[2].value;
+        const userName = this.state.email;
+        const userPassword = this.state.password;
+        //const userName = signUpClickEvent.target.elements[3].value; // target is the form elements are the labels
+        //const userPassword = signUpClickEvent.target.elements[2].value;
 
         if (this.props.isSignupValid(userName, userPassword)) {
             return fetch('/users/signUpUser', {
@@ -66,4 +74,9 @@ export default class SignUpPage extends React.Component {
             errMessage: error,
         }));
     }
+
+    handleChange(name, value){
+        this.setState({[name]: value})
+    }
+
 }
