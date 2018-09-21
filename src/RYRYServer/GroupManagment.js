@@ -12,4 +12,16 @@ groupManagement.get('/usersGroups',
         res.json(groups);
     });
 
+groupManagement.post('/addGroup',
+    async (req, res) => {
+        let group = JSON.parse(req.body);
+        let isAdded = await appLogic.addGroup(group);
+        if (isAdded){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 module.exports = groupManagement;
