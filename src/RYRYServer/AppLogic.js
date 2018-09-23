@@ -17,15 +17,15 @@ async function getUser(userName) {
 }
 
 async function getGroups(userName) {
-            let communities = [];
-            let events = [];
-            let groups = await dbManager.getGroupsById(userName);
+    let communities = [];
+    let events = [];
+    let groups = await dbManager.getGroupsById(userName);
 
-            groups.map((group) => {
-                if (group.endDate) {
-                    events.add(group);
-                } else {
-            communities.add(group);
+    groups.map((group) => {
+        if (group.endDate) {
+            events.push(group);
+        } else {
+            communities.push(group);
         }
     });
 
