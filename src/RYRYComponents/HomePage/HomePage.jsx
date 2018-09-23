@@ -1,10 +1,13 @@
 import React from 'react';
+import Modal from 'react-responsive-modal';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import CommunityListContainer from "./CommunityListContainer.jsx";
 import '../../HomePage.css';
 import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
+import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
+import CreateNewEventModal from "./CreateNewEventModal.jsx";
 
 require('url');
 
@@ -14,6 +17,9 @@ export default class HomePage extends React.Component {
         this.userLogOut = this.userLogOut.bind(this);
         this.userProfileClick = this.userProfileClick.bind(this);
         this.userSettingsClick = this.userSettingsClick.bind(this);
+        this.onOpenModalCommunity = this.onOpenModalCommunity.bind(this);
+        this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
+        this.onCloseModal = this.onCloseModal.bind(this);
 
         this.state = {
             userFirstName: null,
@@ -21,6 +27,9 @@ export default class HomePage extends React.Component {
             communities: [],
             events: [],
             feeds: [],
+            communityModalOpen: false,
+            eventModalOpen: false,
+            typeForModal: ''
         }
     }
 
@@ -103,6 +112,12 @@ export default class HomePage extends React.Component {
         return (
             <div className="home-page-root">
                 <div className="home-page-body">
+                    <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
+                        <CreateNewCommunityModal/>
+                    </Modal>
+                    <Modal open={this.state.eventModalOpen} onClose={this.onCloseModal}>
+                        <CreateNewEventModal whenCancel={this.onCloseModal}/>
+                    </Modal>
                     <Row className="row-root">
                         <Col sm={{size: 'auto'}} className="user-col">
                             <Button onClick={this.insertUser}></Button>
@@ -117,7 +132,9 @@ export default class HomePage extends React.Component {
                                         <UserCardDropDownContainer userName={this.state.userFirstName}
                                                                    invokeLogOut={this.userLogOut}
                                                                    invokeProfilePage={this.userProfileClick}
-                                                                   invokeSettingsPage={this.userSettingsClick}/>
+                                                                   invokeSettingsPage={this.userSettingsClick}
+                                                                   invokeCreateNewCommunity={this.onOpenModalCommunity}
+                                                                   invokeCreateNewEvent={this.onOpenModalEvent}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -183,4 +200,17 @@ export default class HomePage extends React.Component {
 
         return true;
     }
+
+    onOpenModalCommunity(){
+        this.setState({communityModalOpen: true})
+    };
+
+    onOpenModalEvent(){
+        this.setState({eventModalOpen: true})
+    }
+
+    onCloseModal(){
+        this.setState({communityModalOpen: false,
+                        eventModalOpen: false})
+    };
 }

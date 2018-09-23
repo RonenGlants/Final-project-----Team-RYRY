@@ -86,3 +86,15 @@ card-communities-wrapper{
   font-family: "Arial Black";
   margin: 5px;
 }
+
+.modal-root{
+  padding-top: 20px;
+  margin-top: 20px;
+  background-size: 100% 100%;
+  width: 600px;
+  height: 400px;
+}
+
+.modal-card{
+  board: solid black 3px;
+}
