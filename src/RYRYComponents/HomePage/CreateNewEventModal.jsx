@@ -43,7 +43,7 @@ export default class CreateNewEventModal extends React.Component {
     }
 
     handleCreate(){
-
+        
     }
 
     handleCancel(){
