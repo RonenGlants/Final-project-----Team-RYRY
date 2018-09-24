@@ -12,15 +12,14 @@ export default class CreateNewEventModal extends React.Component {
 
         this.state = {
             open: false,
+            createEventStatus: '',
             eventTitle: '',
             description: '',
             startingDate: '',
             startingTime: '',
             endingDate: '',
             endingTime: '',
-
         }
-
     }
 
     render() {
@@ -39,25 +38,41 @@ export default class CreateNewEventModal extends React.Component {
                 <ModalFooter>
                     <Button color="success" onClick={this.handleCreate}>Create</Button>
                     <Button color="danger" onClick={this.handleCancel}>Cancel</Button>
+                    <label>{this.state.createEventStatus}</label>
                 </ModalFooter>
             </div>
         );
     }
 
-    handleCreate(){
+    handleCreate() {
         const newEvent = {
-            title: this.state.eventTitle,
+            name: this.state.eventTitle,
+            manager: this.props.userName,
+            friends: [this.props.userName],
             description: this.state.description,
             startingDate: this.state.startingDate,
             startingTime: this.state.startingTime,
             endingDate: this.state.endingDate,
             endingTime: this.state.endingTime
-        }
-        this.props.onCreateGroup(newEvent);
+        };
+
+        this.props.onCreateGroup(newEvent).then(isCreated => {
+            if (isCreated === true) {
+                this.setState({
+                    createEventStatus: 'Group created!'
+                });
+            }
+            else {
+                this.setState({
+                    createEventStatus: 'Group with that title already exists!'
+                });
+            }
+        });
     }
 
     handleCancel(){
-        this.setState({eventTitle: '',
+        this.setState({
+            eventTitle: '',
             startingDate: '',
             startingTime: '',
             endingDate: '',
@@ -67,6 +82,5 @@ export default class CreateNewEventModal extends React.Component {
 
     handleChange(name, value){
         this.setState({[name]: value})
-
     }
 }

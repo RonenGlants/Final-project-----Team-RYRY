@@ -116,7 +116,7 @@ export default class HomePage extends React.Component {
                         <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}/>
                     </Modal>
                     <Modal open={this.state.eventModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}/>
+                        <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup} userName={this.props.userName}/>
                     </Modal>
                     <Row className="row-root">
                         <Col sm={{size: 'auto'}} className="user-col">
@@ -175,30 +175,26 @@ export default class HomePage extends React.Component {
     userProfileClick() {
         this.props.showUserProfile();
     }
-    ;
 
     userSettingsClick() {
         // todo: create a settingPage container and invoke basecontainer to render it by props
     }
 
     insertGroup(newGroup) {
-        let data = {name: "huliohulio22222", friends: ["ro@ro"]};
-
         return fetch('/groups/addGroup', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(newGroup),
             credentials: 'include'
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
                     console.log("group inserted?")
+                    return true;
                 } else {
                     console.log("403 with addGroup")
-                    // todo: show message to user.
+                    return false;
                 }
             });
-
-        return true;
     }
 
     onOpenModalCommunity(){
