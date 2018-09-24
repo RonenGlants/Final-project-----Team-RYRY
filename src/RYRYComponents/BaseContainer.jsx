@@ -49,7 +49,7 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <UserProfilePage/>
+                    <UserProfilePage userFirstName={"Submit"} userLastName={"to Ilan"} />
                     </div>
                 );
             else
