@@ -59,12 +59,12 @@ export default class CreateNewEventModal extends React.Component {
         this.props.onCreateGroup(newEvent).then(isCreated => {
             if (isCreated === true) {
                 this.setState({
-                    createEventStatus: 'Group created!'
+                    createEventStatus: 'Event created!'
                 });
             }
             else {
                 this.setState({
-                    createEventStatus: 'Group with that title already exists!'
+                    createEventStatus: 'Event or Community with that title already exists!'
                 });
             }
         });

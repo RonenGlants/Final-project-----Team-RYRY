@@ -113,7 +113,7 @@ export default class HomePage extends React.Component {
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}/>
+                        <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup} userName={this.props.userName}/>
                     </Modal>
                     <Modal open={this.state.eventModalOpen} onClose={this.onCloseModal}>
                         <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup} userName={this.props.userName}/>
