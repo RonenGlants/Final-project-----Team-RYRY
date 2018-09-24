@@ -21,7 +21,7 @@ export default class CreateNewCommunityModal extends React.Component {
                 <ModalHeader>Create new event</ModalHeader>
                 <ModalBody>
                     <InputContainer myName="communityTitle" labelClassName="community-title-class" labelValue="Community title" type="text" handleMyChange={this.handleChange}/>
-                    <InputContainer myName="communityDescription" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
+                    <InputContainer myName="description" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                 </ModalBody>
                 <ModalFooter>
                     <Button color="success" onClick={this.handleCreate}>Create</Button>
