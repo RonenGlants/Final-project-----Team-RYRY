@@ -8,7 +8,8 @@ export default class CreateNewCommunityModal extends React.Component {
         super(props);
         this.state = {
             open: false,
-            communityName: '',
+            communityTitle: '',
+            communityDescription: '',
         }
 
     }
@@ -17,9 +18,36 @@ export default class CreateNewCommunityModal extends React.Component {
         const { open } = this.state.open;
         return (
             <div>
-
-
+                <ModalHeader>Create new event</ModalHeader>
+                <ModalBody>
+                    <InputContainer myName="communityTitle" labelClassName="community-title-class" labelValue="Community title" type="text" handleMyChange={this.handleChange}/>
+                    <InputContainer myName="communityDescription" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="success" onClick={this.handleCreate}>Create</Button>
+                    <Button color="danger" onClick={this.handleCancel}>Cancel</Button>
+                </ModalFooter>
             </div>
         );
+    }
+
+    handleCreate(){
+        const communityTitle = this.state.communityTitle;
+        const description = this.state.description;
+        const newCommunity = {
+            title: communityTitle,
+            description: description,
+        }
+        this.props.onCreateGroup(newCommunity);
+    }
+
+
+    handleCancel(){
+        this.props.onCancel();
+    }
+
+    handleChange(name, value){
+        this.setState({[name]: value})
+
     }
 }

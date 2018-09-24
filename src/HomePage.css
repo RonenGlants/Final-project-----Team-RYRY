@@ -98,3 +98,8 @@ card-communities-wrapper{
 .modal-card{
   board: solid black 3px;
 }
+
+.group-description{
+  width: 180px;
+  height: 100px;
+}
