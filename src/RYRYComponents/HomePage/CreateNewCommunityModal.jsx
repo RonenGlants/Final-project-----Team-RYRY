@@ -21,7 +21,7 @@ export default class CreateNewCommunityModal extends React.Component {
                 <ModalHeader>Create new event</ModalHeader>
                 <ModalBody>
                     <InputContainer myName="communityTitle" labelClassName="community-title-class" labelValue="Community title" type="text" handleMyChange={this.handleChange}/>
-                    <InputContainer myName="communityDescription" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
+                    <InputContainer myName="description" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                 </ModalBody>
                 <ModalFooter>
                     <Button color="success" onClick={this.handleCreate}>Create</Button>
@@ -32,15 +32,12 @@ export default class CreateNewCommunityModal extends React.Component {
     }
 
     handleCreate(){
-        const communityTitle = this.state.communityTitle;
-        const description = this.state.description;
         const newCommunity = {
-            title: communityTitle,
-            description: description,
+            title: this.state.communityTitle,
+            description: this.state.description,
         }
         this.props.onCreateGroup(newCommunity);
     }
-
 
     handleCancel(){
         this.props.onCancel();
