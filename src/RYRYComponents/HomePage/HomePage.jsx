@@ -113,10 +113,10 @@ export default class HomePage extends React.Component {
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewCommunityModal/>
+                        <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}/>
                     </Modal>
                     <Modal open={this.state.eventModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewEventModal whenCancel={this.onCloseModal}/>
+                        <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}/>
                     </Modal>
                     <Row className="row-root">
                         <Col sm={{size: 'auto'}} className="user-col">
@@ -181,7 +181,7 @@ export default class HomePage extends React.Component {
         // todo: create a settingPage container and invoke basecontainer to render it by props
     }
 
-    insertGroup() {
+    insertGroup(newGroup) {
         let data = {name: "huliohulio22222", friends: ["ro@ro"]};
 
         return fetch('/groups/addGroup', {
