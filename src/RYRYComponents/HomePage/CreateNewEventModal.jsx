@@ -13,6 +13,7 @@ export default class CreateNewEventModal extends React.Component {
         this.state = {
             open: false,
             eventTitle: '',
+            description: '',
             startingDate: '',
             startingTime: '',
             endingDate: '',
@@ -29,6 +30,7 @@ export default class CreateNewEventModal extends React.Component {
                 <ModalHeader>Create new event</ModalHeader>
                 <ModalBody>
                     <InputContainer myName="eventTitle" labelClassName="event-title-class" labelValue="Event title" type="text" handleMyChange={this.handleChange} />
+                    <InputContainer myName="eventDescription" labelClassName="" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingDate" labelClassName="starting-date-class" labelValue="Starting date" type="date" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingTime" labelClassName="starting-time-class" labelValue="Starting time" type="time" handleMyChange={this.handleChange} />
                     <InputContainer myName="endingDate" labelClassName="ending-date-class" labelValue="Ending date" type="date" handleMyChange={this.handleChange} />
@@ -43,14 +45,34 @@ export default class CreateNewEventModal extends React.Component {
     }
 
     handleCreate(){
-        
+        const eventTitle = this.state.eventTitle;
+        const description = this.state.description;
+        const startingDate = this.state.startingDate;
+        const startingTime = this.state.startingTime;
+        const endingDate = this.state.eventTitle;
+        const endingTime = this.state.eventTitle;
+        const newEvent = {
+            title: eventTitle,
+            description: description,
+            startingDate: startingDate,
+            startingTime: startingTime,
+            endingDate: endingDate,
+            endingTime: endingTime
+        }
+        this.props.onCreateGroup(newEvent);
     }
 
     handleCancel(){
+        this.setState({eventTitle: '',
+            startingDate: '',
+            startingTime: '',
+            endingDate: '',
+            endingTime: ''});
         this.props.whenCancel();
     }
 
-    handleChange(){
+    handleChange(name, value){
+        this.setState({[name]: value})
 
     }
 }
