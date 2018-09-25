@@ -64,7 +64,7 @@ export default class HomePage extends React.Component {
     }
 
     getUserFeeds() {
-        return fetch('feeds?feeds=' + this.props.userName, {
+        return fetch('feeds/usersFeeds?userId=' + this.props.userName, {
             method: 'GET',
             credentials: 'include'
         })
