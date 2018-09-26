@@ -17,6 +17,7 @@ export default class HomePage extends React.Component {
         this.userLogOut = this.userLogOut.bind(this);
         this.userProfileClick = this.userProfileClick.bind(this);
         this.userSettingsClick = this.userSettingsClick.bind(this);
+        this.handleGroupClick = this.handleGroupClick.bind(this);
         this.onOpenModalCommunity = this.onOpenModalCommunity.bind(this);
         this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
@@ -147,7 +148,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myCommunities={this.state.communities}/>
+                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities} onGroupClick={this.handleGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -157,7 +158,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myCommunities={this.state.events}/>
+                                        <CommunityListContainer myType="events" myCommunities={this.state.events} onGroupClick={this.handleGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -209,4 +210,12 @@ export default class HomePage extends React.Component {
         this.setState({communityModalOpen: false,
                         eventModalOpen: false})
     };
+
+    handleGroupClick(groupName, type){
+        [type].forEach(group => {
+            if (group.name === groupName){
+                this.props.invokeDisplayGroupPage(group, type);
+            }
+        })
+    }
 }

@@ -13,9 +13,15 @@ export default class CommunityListContainer extends React.Component{
         return(
             <div className="community">
                 {this.props.myCommunities.map((community) => {
-                    return <CardText className="community-each">{community.name}</CardText>
+                    return <CardText className="community-each">{community.name} onClick={this.handleGroupClick}</CardText>
                 })}
             </div>
         )
     };
+
+    handleGroupClick(event){
+        this.props.onGroupClick(event.target.value, this.props.myType); // value should hold the group name
+    }
+
+
 }

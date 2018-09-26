@@ -11,6 +11,14 @@ groupManagement.get('/usersGroups',
         res.json(groups);
     });
 
+groupManagement.get('/group',
+    async(req, res) => {
+        let groupName = req.query.groupName;
+        let group = await appLogic.getGroupById(groupName);
+
+
+    })
+
 groupManagement.post('/addGroup',
     async (req, res) => {
         let group = JSON.parse(req.body);
