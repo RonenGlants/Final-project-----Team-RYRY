@@ -22,7 +22,8 @@ export default class BaseContainer extends React.Component{
         this.state = {
             pageType: this.landingPage,
             userName: '',
-            password: ''
+            password: '',
+            groupName: ''
         }
     }
 
@@ -57,11 +58,11 @@ export default class BaseContainer extends React.Component{
                 );
             else if(this.state.pageType == this.groupPage)
                 return(
-                    <div className="group-page-root">
-                        <div className="group-page-menu">
+                    <div className="home-page-root">
+                        <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                        <GroupPage/>
+                        <GroupPage myName={this.state.groupName}/>
                     </div>
                 );
 
@@ -77,8 +78,9 @@ export default class BaseContainer extends React.Component{
         this.setState({pageType: this.landingPage})
     }
 
-    showGroupPage(){
-        this.setState({pageType: this.groupPage})
+    showGroupPage(groupName){
+        this.setState({pageType: this.groupPage,
+                        groupName: groupName})
     }
 
     showUserProfile(){

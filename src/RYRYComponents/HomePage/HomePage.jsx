@@ -170,7 +170,7 @@ export default class HomePage extends React.Component {
     }
 
     onGroupClick(groupName){
-        alert("On click " + groupName + "from homepage");
+        this.props.showGroupPage(groupName);
     }
 
     userLogOut() {

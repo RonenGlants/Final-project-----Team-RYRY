@@ -15,7 +15,7 @@ export default class GroupPage extends React.Component{
     render(){
         return(
             <div>
-                <p>Group page</p>
+                <p>{this.props.myName}</p>
             </div>
         )
     }
