@@ -17,7 +17,7 @@ export default class LandingPage extends React.Component {
         this.isSignupValid = this.isSignupValid.bind(this);
 
         this.state = {
-            type: this.signUpType,
+            type: this.loginType,
         }
     }
 
