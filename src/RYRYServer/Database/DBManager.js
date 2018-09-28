@@ -121,6 +121,22 @@ module.exports = class DBManager {
         return feeds;
     }
 
+    async removeUserFromGroup(groupAndUserData) {
+        let dbase = await Utils.getDataBase(db);
+        let isRemoved = await this.groupsManager.removeUserFromGroup(dbase, groupAndUserData);
+        await db.close();
+
+        return isInserted;
+    }
+
+    async addUserToGroup(groupAndUserData) {
+        let dbase = await Utils.getDataBase(db);
+        let isAdded = await this.groupsManager.addUserToGroup(dbase, groupAndUserData);
+        await db.close();
+
+        return isInserted;
+    }
+
     async handleGetFeedsByUser(userId, db){
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByUser(dbase, userId);

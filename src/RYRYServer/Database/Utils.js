@@ -21,4 +21,10 @@ async function find(collection,item) {
     return await getTableFromCursor(allNamedUsers);
 }
 
-module.exports = {getDataBase,getTableFromCursor, find}
+async function update(collection,query, itemToUpdate) {
+    var allNamedUsers = await collection.update(query, itemToUpdate, {upsert: true})
+
+    return await getTableFromCursor(allNamedUsers);
+}
+
+module.exports = {getDataBase,getTableFromCursor, find, update}

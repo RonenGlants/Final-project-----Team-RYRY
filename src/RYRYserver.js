@@ -4,7 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const userManagement = require('./RYRYServer/UserManagment');
 const groupManagement = require('./RYRYServer/GroupManagment');
-const feedManagement = require('./RYRYServer/FeedManagment');
+const feedManagement = require('./RYRYServer/FeedManagement');
 
 const app = express();
 

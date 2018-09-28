@@ -23,4 +23,30 @@ groupManagement.post('/addGroup',
         }
     });
 
+groupManagement.post('/removeUserFromGroup',
+    async (req, res) => {
+        let groupAndUserData = JSON.parse(req.body);
+        let isRemoved = await appLogic.removeUserFromGroup(groupAndUserData);
+
+        if (isRemoved){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
+groupManagement.post('/addUserToGroup',
+    async (req, res) => {
+        let groupAndUserData = JSON.parse(req.body);
+        let isAdded = await appLogic.addUserToGroup(groupAndUserData);
+
+        if (isAdded){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 module.exports = groupManagement;

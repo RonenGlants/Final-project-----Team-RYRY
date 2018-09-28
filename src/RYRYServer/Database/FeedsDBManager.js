@@ -22,18 +22,17 @@ module.exports = class FeedsDBManager {
     }
 
     async getFeedsByGroup(db, groupId) {
-        var collection = await db.collection(this.usersDBName);
+        var collection = await db.collection(this.feedsDBName);
         var feeds = await Utils.find(collection, {groupId: groupId});
 
         return feeds;
     }
 
     async getFeedsByUser(db, userId) {
-        var collection = await db.collection(this.usersDBName);
+        var collection = await db.collection(this.feedsDBName);
         var feeds = await Utils.find(collection, {userId: userId});
 
         return feeds;
     }
 }
-
 
