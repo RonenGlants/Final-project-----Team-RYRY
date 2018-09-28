@@ -14,7 +14,7 @@ export default class FriendsListContainer extends React.Component{
     render(){
         return(
             <div className="friends-list-root">
-
+                <p>Hello</p>
             </div>
         )
     }

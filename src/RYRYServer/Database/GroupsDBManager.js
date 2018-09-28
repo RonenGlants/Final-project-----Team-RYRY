@@ -45,11 +45,6 @@ module.exports = class UsersDBManager {
         }
         return myGroups;
     }
-
-    async getGroupById(db, id){
-        var collection = await db.collection(this.groupsDBName);
-
-    }
-}
+};
 
 

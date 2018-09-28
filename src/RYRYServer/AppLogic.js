@@ -16,10 +16,6 @@ async function getUser(userName) {
     return user;
 }
 
-async function getGroupById(groupName) {
-    let group = await dbManager.getGroupById(groupName);
-}
-
 async function getGroups(userName) {
     let communities = [];
     let events = [];

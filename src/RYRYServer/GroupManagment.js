@@ -17,7 +17,7 @@ groupManagement.get('/group',
         let group = await appLogic.getGroupById(groupName);
 
 
-    })
+    });
 
 groupManagement.post('/addGroup',
     async (req, res) => {

@@ -81,14 +81,6 @@ module.exports = class DBManager {
         return status;
     }
 
-    async getGroupById(groupId) {
-        let status = false;
-        await mongo.connect(this.url, this.config).then(async(db) => {
-                status = await this.handleGetGroupById(groupId, db);
-            }
-        );
-        return status;
-    }
 
     async loginUser(user) {
         let status = false;
@@ -112,13 +104,6 @@ module.exports = class DBManager {
         let user = await this.usersManager.getUserById(dbase, id);
         await db.close();
         return user;
-    }
-
-    async handleGetGroupById(id, db){
-        let dbase = await Utils.getDataBase(db);
-        let group = await this.groupsManager.getGroupById(dbase, id);
-        await db.close();
-        return group;
     }
 
     async handleGetGroupsById(userId,db){

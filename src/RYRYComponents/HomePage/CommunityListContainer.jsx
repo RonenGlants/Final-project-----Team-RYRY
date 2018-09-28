@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {CardText, Button} from 'reactstrap';
+import {Button} from 'reactstrap';
 
 export default class CommunityListContainer extends React.Component{
     constructor(args){
@@ -14,7 +14,7 @@ export default class CommunityListContainer extends React.Component{
             <div className="community">
                 {this.props.myCommunities.map((community) => {
                     return <div>
-                            <Button color="primary" value={community.name} onClick={this.handleGroupClick}>
+                            <Button className="submit-btn btn" color="primary" value={community.name} type="submit" onClick={this.handleGroupClick}>
                             {community.name}
                             </Button>
                             <br/>
