@@ -5,7 +5,7 @@ import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle} from 'react
 export default class NewsfeedContainer extends React.Component{
     constructor(args){
         super(...args);
-        this.state ={
+        this.state = {
 
         }
 

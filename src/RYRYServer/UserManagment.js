@@ -20,10 +20,7 @@ userManagement.get('/user',
         let userName = req.query.userName;
         let user = await appLogic.getUser(userName);
         user = user[0];
-            res.json({
-                firstName: user.firstName,
-                lastName: user.lastName,
-            });
+        res.json({user});
     });
 
 userManagement.post('/loginUser',
@@ -40,4 +37,15 @@ userManagement.post('/loginUser',
 
 //todo: set status with meaning to numbers
 
+userManagement.post('/updateProfile',
+    async (req, res) => {
+        let user = JSON.parse(req.body);
+        let updateStatus = await appLogic.updateUserProfile(user);
+        if(updateStatus){
+            res.sendStatus(200);
+        }
+        else{
+            res.sendStatus(403);
+        }
+    });
 module.exports = userManagement;

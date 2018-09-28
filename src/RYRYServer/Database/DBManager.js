@@ -200,5 +200,20 @@ module.exports = class DBManager {
 
         return isInserted;
     }
+    async updateUserProfile(newUser){
+        let status = false;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                status = await this.handleUpdateUser(newUser,db);
+            }
+        );
+        return status;
+    }
+
+    async handleUpdateUser(newUser, db) {
+        let dbase = await Utils.getDataBase(db);
+        let isUpdated = await this.usersManager.updateUser(dbase, newUser);
+        await db.close();
+        return isUpdated;
+    }
 }
 

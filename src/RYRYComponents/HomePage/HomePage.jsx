@@ -81,7 +81,7 @@ export default class HomePage extends React.Component {
                 })
             })
             .catch(err => {
-                throw err
+                throw err;
             });
     }
 
@@ -97,10 +97,10 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded")
+                console.log("fetching full name succeeded");
                 this.setState({
-                    userFirstName: content.firstName,
-                    userLastName: content.lastName,
+                    userFirstName: content.user.firstName,
+                    userLastName: content.user.lastName,
                 })
             })
             .catch(err => {

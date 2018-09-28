@@ -66,4 +66,10 @@ async function addUserToGroup(groupAndUserData) {
     return status;
 }
 
-module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, getFeedsByGroup, getFeedsByUser, addFeed, removeUserFromGroup, addUserToGroup}
+async function updateUserProfile(newUser) {
+    let status = await dbManager.updateUserProfile(newUser);
+    return status;
+}
+
+module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, getFeedsByGroup, getFeedsByUser, addFeed, removeUserFromGroup, addUserToGroup, updateUserProfile}
+

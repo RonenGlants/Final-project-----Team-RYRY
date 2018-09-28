@@ -35,7 +35,7 @@ export default class UserCardDropDownContainer extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu>
                     <DropdownItem header>{this.props.userName}</DropdownItem>
-                    <DropdownItem onClick={this.profileClick}>Profile</DropdownItem>
+                    <DropdownItem onClick={this.profileClick}>Edit profile</DropdownItem>
                     <DropdownItem onClick={this.settingsClick}>Settings</DropdownItem>
                     <DropdownItem onClick={this.newCommunityClick}>Create new community</DropdownItem>
                     <DropdownItem onClick={this.newEventClick}>Create new event</DropdownItem>
