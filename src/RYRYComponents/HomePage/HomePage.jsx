@@ -22,6 +22,9 @@ export default class HomePage extends React.Component {
         this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
 
+        this.communities = "communities";
+        this.events = "events";
+
         this.state = {
             userFirstName: null,
             userLastName: null,
@@ -148,7 +151,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities} onGroupClick={this.handleGroupClick}/>
+                                        <CommunityListContainer className="" myType={this.communities} myCommunities={this.state.communities} onGroupClick={this.handleGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -158,7 +161,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="events" myCommunities={this.state.events} onGroupClick={this.handleGroupClick}/>
+                                        <CommunityListContainer className="" myType={this.events} myCommunities={this.state.events} onGroupClick={this.handleGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
