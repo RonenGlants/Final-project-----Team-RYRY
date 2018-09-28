@@ -21,7 +21,7 @@ export default class SignUpPage extends React.Component {
             lastName: '',
             password: '',
             email: '',
-            gender: '',
+            gender: "Male",
         }
     }
 
@@ -88,8 +88,7 @@ export default class SignUpPage extends React.Component {
                 method: 'POST',
                 body: JSON.stringify({newUser}),
                 credentials: 'include'
-            })
-                .then(response => {        // response is the result
+            }).then(response => {        // response is the result
                     if (response.ok) {      // ok == 200
                         console.log("signup success - going to showLogin")
                         this.props.showLogin();

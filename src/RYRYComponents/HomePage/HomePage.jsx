@@ -65,7 +65,7 @@ export default class HomePage extends React.Component {
     }
 
     getUserFeeds() {
-        return fetch('feeds?feeds=' + this.props.userName, {
+        return fetch('feeds/usersFeeds?userId=' + this.props.userName, {
             method: 'GET',
             credentials: 'include'
         })
@@ -78,11 +78,11 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching feeds succeeded")
                 this.setState({
-                    feeds: content.feeds,
+                    feeds: content,
                 })
             })
             .catch(err => {
-                throw err
+                throw err;
             });
     }
 
@@ -98,10 +98,10 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded")
+                console.log("fetching full name succeeded");
                 this.setState({
-                    userFirstName: content.firstName,
-                    userLastName: content.lastName,
+                    userFirstName: content.user.firstName,
+                    userLastName: content.user.lastName,
                 })
             })
             .catch(err => {
@@ -114,36 +114,35 @@ export default class HomePage extends React.Component {
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup} userName={this.props.userName}/>
+                        <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}
+                                                 userName={this.props.userName}/>
                     </Modal>
                     <Modal open={this.state.eventModalOpen} onClose={this.onCloseModal}>
-                        <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup} userName={this.props.userName}/>
+                        <CreateNewEventModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}
+                                             userName={this.props.userName}/>
                     </Modal>
                     <Row className="row-root">
-                        <Col sm={{size: 'auto'}} className="user-col">
-                            <Button onClick={this.insertGroup}></Button>
-                            <div className="card-wrapper">
-                                <Card>
-                                    <CardHeader>
-                                        <Button onClick={this.userProfileClick}><CardImg top width="100%"
-                                                                                         src={UserProfileLogo}/></Button>
-                                        Hello, {this.state.userFirstName} {this.state.userLastName}
-                                    </CardHeader>
-                                    <CardBody>
-                                        <UserCardDropDownContainer userName={this.state.userFirstName}
-                                                                   invokeLogOut={this.userLogOut}
-                                                                   invokeProfilePage={this.userProfileClick}
-                                                                   invokeSettingsPage={this.userSettingsClick}
-                                                                   invokeCreateNewCommunity={this.onOpenModalCommunity}
-                                                                   invokeCreateNewEvent={this.onOpenModalEvent}/>
-                                    </CardBody>
-                                </Card>
-                            </div>
+                        <Col sm={{size: 'auto'}} className="user-profile-wrapper card-wrapper">
+                            <Card>
+                                <CardHeader>
+                                    <Button onClick={this.userProfileClick}><CardImg top width="100%"
+                                                                                     src={UserProfileLogo}/></Button>
+                                    Hello, {this.state.userFirstName} {this.state.userLastName}
+                                </CardHeader>
+                                <CardBody>
+                                    <UserCardDropDownContainer userName={this.state.userFirstName}
+                                                               invokeLogOut={this.userLogOut}
+                                                               invokeProfilePage={this.userProfileClick}
+                                                               invokeSettingsPage={this.userSettingsClick}
+                                                               invokeCreateNewCommunity={this.onOpenModalCommunity}
+                                                               invokeCreateNewEvent={this.onOpenModalEvent}/>
+                                </CardBody>
+                            </Card>
                         </Col>
-                        <Col sm={{size: 6}} className="feeds-col">
+                        <Col className="feeds-wrapper">
                             <NewsfeedContainer myFeeds={this.state.feeds}/>
                         </Col>
-                        <Col sm={{size: 'auto', offset: 1}} className="communities-col">
+                        <Col className="groups-wrapper">
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
@@ -152,8 +151,6 @@ export default class HomePage extends React.Component {
                                     </CardBody>
                                 </Card>
                             </div>
-                        </Col>
-                        <Col sm={{size: 'auto', offset: 1}} className="communities-col">
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
@@ -210,16 +207,18 @@ export default class HomePage extends React.Component {
             });
     }
 
-    onOpenModalCommunity(){
+    onOpenModalCommunity() {
         this.setState({communityModalOpen: true})
     };
 
-    onOpenModalEvent(){
+    onOpenModalEvent() {
         this.setState({eventModalOpen: true})
     }
 
-    onCloseModal(){
-        this.setState({communityModalOpen: false,
-                        eventModalOpen: false})
+    onCloseModal() {
+        this.setState({
+            communityModalOpen: false,
+            eventModalOpen: false
+        })
     };
 }

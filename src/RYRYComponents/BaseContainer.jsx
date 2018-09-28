@@ -54,7 +54,7 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <UserProfilePage/>
+                    <UserProfilePage userName={this.state.userName} password={this.state.password} />
                     </div>
                 );
             else if(this.state.pageType == this.groupPage)
