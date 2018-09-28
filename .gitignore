@@ -4,3 +4,4 @@
 node_modules*
 *.cmd
 public/bundle.js
+public/bundle.js

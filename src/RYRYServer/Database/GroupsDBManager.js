@@ -45,6 +45,57 @@ module.exports = class UsersDBManager {
         }
         return myGroups;
     }
+
+    async addUserToGroup(db, groupAndUserData) {
+        var collection = await db.collection(this.groupsDBName);
+        var query = {name: groupAndUserData.groupName};
+        var relevantGroupInArray = await Utils.find(collection, query);
+
+        if (relevantGroupInArray.length == 0) {
+            return false;
+        }
+
+        var relevantGroup = relevantGroupInArray[0];
+
+        for (var i = 0; i < relevantGroup.friends.length; i++) {
+            if (relevantGroup.friends[i] == groupAndUserData.userId) {
+                return false;
+            }
+        }
+
+        relevantGroup.friends.push(groupAndUserData.userId);
+        Utils.update(collection, query, relevantGroup);
+
+        return true;
+    }
+
+    async removeUserFromGroup(db, groupAndUserData) {
+        var collection = await db.collection(this.groupsDBName);
+        var query = {name: groupAndUserData.groupName};
+        var relevantGroupInArray = await Utils.find(collection, query);
+
+        if (relevantGroupInArray.length == 0) {
+            return false;
+        }
+
+        var relevantGroup = relevantGroupInArray[0];
+
+        if(relevantGroup.manager === groupAndUserData.userId)
+        {
+            return false;
+        }
+
+        for (var i = 0; i < relevantGroup.friends.length; i++) {
+            if (relevantGroup.friends[i] == groupAndUserData.userId) {
+                relevantGroup.friends.splice(i, 1);
+                Utils.update(collection, query, relevantGroup);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 

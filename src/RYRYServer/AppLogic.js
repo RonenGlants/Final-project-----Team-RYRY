@@ -37,8 +37,39 @@ async function addGroup(newGroup) {
     return status;
 }
 
+async function getFeedsByGroup(groupId) {
+    let feeds = await dbManager.getFeedsByGroup(groupId);
+
+    return feeds;
+}
+
+async function getFeedsByUser(userId){
+    let feeds = await dbManager.getFeedsByUser(userId);
+
+    return feeds;
+}
+
+async function addFeed(feedData) {
+    let status = await dbManager.insertFeed(feedData);
+    return status;
+}
+
+async function removeUserFromGroup(groupAndUserData) {
+    let status = await dbManager.removeUserFromGroup(groupAndUserData);
+
+    return status;
+}
+
+async function addUserToGroup(groupAndUserData) {
+    let status = await dbManager.addUserToGroup(groupAndUserData);
+
+    return status;
+}
+
 async function updateUserProfile(newUser) {
     let status = await dbManager.updateUserProfile(newUser);
     return status;
 }
-module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, updateUserProfile}
+
+module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, getFeedsByGroup, getFeedsByUser, addFeed, removeUserFromGroup, addUserToGroup, updateUserProfile}
+
