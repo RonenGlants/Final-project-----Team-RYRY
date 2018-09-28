@@ -4,7 +4,7 @@ import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap'
 import FriendProfileContainer from './FriendProfileContainer.jsx';
 
 import '../../GroupPage.css';
-import NewsfeedContainer from "../HomePage/NewsfeedContainer";
+import NewsfeedContainer from "../HomePage/NewsfeedContainer.jsx";
 
 require('url');
 
@@ -16,7 +16,7 @@ export default class GroupPage extends React.Component{
         this.disassembleGroup = this.disassembleGroup.bind(this);
         this.isUserAFriend = this.isUserAFriend.bind(this);
 
-        this.state ={
+        this.state = {
             modalOpen: false,
             userName: '',
             name: '',
@@ -35,7 +35,7 @@ export default class GroupPage extends React.Component{
         this.isUserAFriend();
     }
 
-    render(){
+    render() {
         return(
             <div className="group-page-root">
                 <Modal open={this.state.modalOpen} onClose={this.onCloseModal}>
@@ -48,7 +48,6 @@ export default class GroupPage extends React.Component{
                 </Row>
                     <FriendsListContainer myFriends={this.state.friends}></FriendsListContainer>
                     <NewsfeedContainer/>
-
                 </div>
             </div>
         )
@@ -75,9 +74,9 @@ export default class GroupPage extends React.Component{
                 endingDate: this.props.myGroup.endingDate,
                 endingTime: this.props.myGroup.endingTime
             })
-
         }
-        else{
+
+        else {
             this.setState({
                 name: this.props.myGroup.name,
                 description: this.props.myGroup.description
