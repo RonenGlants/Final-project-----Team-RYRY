@@ -20,6 +20,7 @@ export default class HomePage extends React.Component {
         this.onOpenModalCommunity = this.onOpenModalCommunity.bind(this);
         this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
+        this.onGroupClick = this.onGroupClick.bind(this);
 
         this.state = {
             userFirstName: null,
@@ -147,7 +148,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities}/>
+                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities} invokeOnGroupClick={this.onGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -157,7 +158,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="event" myCommunities={this.state.events}/>
+                                        <CommunityListContainer myType="event" myCommunities={this.state.events} invokeOnGroupClick={this.onGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -166,6 +167,10 @@ export default class HomePage extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    onGroupClick(groupName){
+        alert("On click " + groupName + "from homepage");
     }
 
     userLogOut() {

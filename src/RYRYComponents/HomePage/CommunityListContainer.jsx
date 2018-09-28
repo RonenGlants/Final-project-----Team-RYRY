@@ -15,13 +15,13 @@ export default class CommunityListContainer extends React.Component{
         return(
             <div className="community">
                 {this.props.myCommunities.map((community) => {
-                    return <Button className="community-each" onClick={this.onGroupClick} value={community.name}>{community.name}</Button>
+                    return <Button color="primary" className="community-each" onClick={this.onGroupClick} value={community.name}>{community.name}</Button>
                 })}
             </div>
         )
     };
 
     onGroupClick(event){
-        alert("click on" + event.target.value);
+        this.props.invokeOnGroupClick(event.target.value);
     }
 }
