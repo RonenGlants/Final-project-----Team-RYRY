@@ -37,4 +37,8 @@ async function addGroup(newGroup) {
     return status;
 }
 
-module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup}
+async function updateUserProfile(newUser) {
+    let status = await dbManager.updateUserProfile(newUser);
+    return status;
+}
+module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, updateUserProfile}

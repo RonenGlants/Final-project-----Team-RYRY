@@ -61,6 +61,31 @@ module.exports = class UsersDBManager {
             return true;
         }
     }
+
+    async updateUser(db,user){
+        var collection = await db.collection(this.usersDBName);
+        let writeResult = await collection.update(
+            { userName: user.userName }, // key
+            {                            // replace object
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                password: user.userPassword,
+                email: user.email,
+                gender: user.gender,
+                mySkills: user.mySkills,
+                desiredSkills: user.desiredSkills,
+            }
+        );
+
+        if(writeResult.nMatched == 1 && writeResult.nModified <= 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }
 
 
