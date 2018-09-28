@@ -16,15 +16,20 @@ async function getTableFromCursor(cursor) {
 
 
 async function find(collection,item) {
-    var allNamedUsers = await collection.find(item);
+    var cursor = await collection.find(item);
 
-    return await getTableFromCursor(allNamedUsers);
+    return await getTableFromCursor(cursor);
 }
 
 async function update(collection,query, itemToUpdate) {
-    var allNamedUsers = await collection.update(query, itemToUpdate, {upsert: true})
+    var writeResult = await collection.update(query, itemToUpdate, {upsert: true});
 
-    return await getTableFromCursor(allNamedUsers);
+    if(writeResult.nMatched == 1 && writeResult.nModified <= 1){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 module.exports = {getDataBase,getTableFromCursor, find, update}
