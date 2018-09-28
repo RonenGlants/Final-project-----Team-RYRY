@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './LandingPage/LandingPage.jsx';
 import HomePage from './HomePage/HomePage.jsx';
-import UserProfilePage from './UserProfilePage/UserProfilePage.jsx'
+import UserProfilePage from './HomePage/UserProfilePage.jsx'
 import '../HomePage.css';
 
 export default class BaseContainer extends React.Component{
@@ -49,7 +49,7 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <UserProfilePage userFirstName={"Submit"} userLastName={"to Ilan"} />
+                    <UserProfilePage userName={this.state.userName} password={this.state.password} />
                     </div>
                 );
             else
