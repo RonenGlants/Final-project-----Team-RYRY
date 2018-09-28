@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import LandingPage from './LandingPage/LandingPage.jsx';
 import HomePage from './HomePage/HomePage.jsx';
 import GroupPage from './GroupPage/GroupPage.jsx';
-import UserProfilePage from './UserProfilePage/UserProfilePage.jsx'
+import EditProfilePage from './UserProfilePage/EditProfilePage.jsx'
 import '../HomePage.css';
 
 export default class BaseContainer extends React.Component{
@@ -12,7 +12,7 @@ export default class BaseContainer extends React.Component{
         this.landingPage = "landingPage";
         this.homePage = "homePage";
         this.groupPage = "groupPage";
-        this.userProfilePage = "userProfilePage";
+        this.editProfilePage = "editProfilePage";
 
         this.userLoggedOut = this.userLoggedOut.bind(this);
         this.showUserProfile = this.showUserProfile.bind(this);
@@ -48,13 +48,13 @@ export default class BaseContainer extends React.Component{
                     <HomePage userName={this.state.userName} showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut} showGroupPage={this.showGroupPage}/>
                     </div>
                 );
-            else if(this.state.pageType == this.userProfilePage)
+            else if(this.state.pageType == this.editProfilePage)
                 return (
                     <div className="user-profile-page-root">
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                    <UserProfilePage userName={this.state.userName} password={this.state.password} />
+                    <EditProfilePage userName={this.state.userName} password={this.state.password} />
                     </div>
                 );
             else if(this.state.pageType == this.groupPage)
@@ -86,7 +86,7 @@ export default class BaseContainer extends React.Component{
 
     showUserProfile(){
         this.setState(() => ({
-            pageType: this.userProfilePage,
+            pageType: this.editProfilePage,
         }));
     }
 
