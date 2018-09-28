@@ -158,7 +158,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="event" myCommunities={this.state.events} invokeOnGroupClick={this.onGroupClick}/>
+                                        <CommunityListContainer myType="events" myCommunities={this.state.events} invokeOnGroupClick={this.onGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -169,8 +169,16 @@ export default class HomePage extends React.Component {
         );
     }
 
-    onGroupClick(groupName){
-        this.props.showGroupPage(groupName);
+    onGroupClick(groupName, type){
+        let group;
+        if(type == "events"){
+            this.state.events.forEach(event => {
+                if (event.name == groupName){
+                    group = event;
+                }
+            })
+        }
+        this.props.showGroupPage(groupName, group);
     }
 
     userLogOut() {

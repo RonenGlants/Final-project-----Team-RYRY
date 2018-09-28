@@ -22,6 +22,6 @@ export default class CommunityListContainer extends React.Component{
     };
 
     onGroupClick(event){
-        this.props.invokeOnGroupClick(event.target.value);
+        this.props.invokeOnGroupClick(event.target.value, this.props.myType);
     }
 }

@@ -7,7 +7,7 @@ import UserProfilePage from './UserProfilePage/UserProfilePage.jsx'
 import '../HomePage.css';
 
 export default class BaseContainer extends React.Component{
-    constructor(args){
+    constructor(args) {
         super(...args);
         this.landingPage = "landingPage";
         this.homePage = "homePage";
@@ -23,10 +23,11 @@ export default class BaseContainer extends React.Component{
             pageType: this.landingPage,
             userName: '',
             password: '',
-            groupName: ''
-        }
-    }
+            groupName: '',
+            group: null
 
+        };
+    }
     render(){
             if (this.state.pageType == this.landingPage)
                 return(
@@ -62,10 +63,9 @@ export default class BaseContainer extends React.Component{
                         <div className="home-page-menu">
                             <label className="home-page-ryry">RYRY</label>
                         </div>
-                        <GroupPage myName={this.state.groupName}/>
+                        <GroupPage {...this.state.group}/>
                     </div>
                 );
-
     }
 
     handleAuthenticatedUser(userName, passWord){
@@ -78,9 +78,10 @@ export default class BaseContainer extends React.Component{
         this.setState({pageType: this.landingPage})
     }
 
-    showGroupPage(groupName){
+    showGroupPage(groupName, group){
         this.setState({pageType: this.groupPage,
-                        groupName: groupName})
+                        groupName: groupName,
+                        group: group})
     }
 
     showUserProfile(){
@@ -92,3 +93,4 @@ export default class BaseContainer extends React.Component{
     //todo: switching between landing page (after login/signup to homepage
     //todo: implement error page
 }
+
