@@ -147,7 +147,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myCommunities={this.state.communities}/>
+                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -157,7 +157,7 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myCommunities={this.state.events}/>
+                                        <CommunityListContainer myType="event" myCommunities={this.state.events}/>
                                     </CardBody>
                                 </Card>
                             </div>
