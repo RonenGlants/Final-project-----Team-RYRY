@@ -77,7 +77,7 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching feeds succeeded")
                 this.setState({
-                    feeds: content.feeds,
+                    feeds: content,
                 })
             })
             .catch(err => {
