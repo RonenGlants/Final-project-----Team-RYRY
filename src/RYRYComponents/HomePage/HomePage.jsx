@@ -99,8 +99,8 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching full name succeeded")
                 this.setState({
-                    userFirstName: content.firstName,
-                    userLastName: content.lastName,
+                    userFirstName: content.user.firstName,
+                    userLastName: content.user.lastName,
                 })
             })
             .catch(err => {
