@@ -22,7 +22,7 @@ async function getGroups(userName) {
     let groups = await dbManager.getGroupsById(userName);
 
     groups.map((group) => {
-        if (group.endDate) {
+        if (group.endingDate) {
             events.push(group);
         } else {
             communities.push(group);
