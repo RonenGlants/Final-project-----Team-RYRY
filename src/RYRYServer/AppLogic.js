@@ -43,7 +43,7 @@ async function getFeedsByGroup(groupId) {
     return feeds;
 }
 
-async function getFeedsByUser(userId){
+async function getFeedsByUser(userId) {
     let feeds = await dbManager.getFeedsByUser(userId);
 
     return feeds;
@@ -71,5 +71,44 @@ async function updateUserProfile(newUser) {
     return status;
 }
 
-module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, getFeedsByGroup, getFeedsByUser, addFeed, removeUserFromGroup, addUserToGroup, updateUserProfile}
+async function getFriends(friendsIds) {
+    var currentUser;
+    var friends = [];
+
+    friendsIds = this.convertQueryArray(friendsIds);
+
+
+     await friendsIds.map(async friendId => {
+        currentUser = await dbManager.getUserById(friendId);
+
+        friends.push({
+            id: currentUser.userName,
+            firstName: currentUser.firstName,
+            lastName: currentUser.lastName
+        });
+    });
+
+    return friends; // bug!!! needs sync!!!!
+}
+
+function convertQueryArray(queryParams)
+{
+    return queryParams.split(", ");
+}
+
+module.exports = {
+    signUpUser,
+    loginUser,
+    getUser,
+    getGroups,
+    addGroup,
+    getFeedsByGroup,
+    getFeedsByUser,
+    addFeed,
+    removeUserFromGroup,
+    addUserToGroup,
+    updateUserProfile,
+    getFriends,
+    convertQueryArray
+}
 
