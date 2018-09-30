@@ -30,7 +30,9 @@ export default class HomePage extends React.Component {
             feeds: [],
             communityModalOpen: false,
             eventModalOpen: false,
-            typeForModal: ''
+            typeForModal: '',
+            mySkills: [],
+            desiredSkills: [],
         }
     }
 
@@ -102,6 +104,8 @@ export default class HomePage extends React.Component {
                 this.setState({
                     userFirstName: content.user.firstName,
                     userLastName: content.user.lastName,
+                    desiredSkills: content.user.desiredSkills,
+                    mySkills: content.user.mySkills,
                 })
             })
             .catch(err => {

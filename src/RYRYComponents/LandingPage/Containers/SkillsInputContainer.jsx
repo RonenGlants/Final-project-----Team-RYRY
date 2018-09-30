@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import ReactTags from 'react-tag-autocomplete';
 import '../Style/LandingPage.css';
-import { WithContext as ReactTags } from 'react-tag-input';
+import {WithContext as ReactTags} from 'react-tag-input';
 
 const HobbiesToMap = [
     "Ballet",
@@ -71,7 +71,13 @@ export default class SkillsInputContainer extends React.Component {
         this.handleTagClick = this.handleTagClick.bind(this);
     }
 
-    getTags(){
+    componentWillMount() {
+        this.setState({
+            tags: this.props.tags,
+        });
+    }
+
+    getTags() {
         return this.state.tags;
     }
 
@@ -105,16 +111,16 @@ export default class SkillsInputContainer extends React.Component {
         const {tags, suggestions} = this.state;
         return (
             <div> {this.props.skillsTitle}:
-                    <ReactTags
-                        tags={tags}
-                        suggestions={suggestions}
-                        delimiters={delimiters}
-                        placeholder="Add new skill"
-                        handleDelete={this.handleDelete}
-                        handleAddition={this.handleAddition}
-                        handleDrag={this.handleDrag}
-                        handleTagClick={this.handleTagClick}
-                    />
+                <ReactTags
+                    tags={tags}
+                    suggestions={suggestions}
+                    delimiters={delimiters}
+                    placeholder="Add new skill"
+                    handleDelete={this.handleDelete}
+                    handleAddition={this.handleAddition}
+                    handleDrag={this.handleDrag}
+                    handleTagClick={this.handleTagClick}
+                />
             </div>
         );
     }
