@@ -20,10 +20,10 @@ export default class FriendsListContainer extends React.Component {
         return (
             <div className="friend">
                 {this.state.friendsData.map(friend => {
-                    var fullName = friends.firstName + " " + friends.lastName;
+                    var fullName = friend.firstName + " " + friend.lastName;
 
-                    return <Button color="success" className="" onClick={this.onFriendClick}
-                                   value={fullName}>{friend}</Button>
+                    return <button color="success" className="" onClick={this.onFriendClick}
+                                   value={fullName}>{fullName}</button>
                 })}
             </div>
         );
@@ -46,7 +46,7 @@ export default class FriendsListContainer extends React.Component {
             })
             .then(content => {
                 this.setState({
-                    friendsData: content,
+                    friendsData: content.friends,
                 });
             })
             .catch(err => {

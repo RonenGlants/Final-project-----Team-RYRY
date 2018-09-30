@@ -78,17 +78,18 @@ async function getFriends(friendsIds) {
     friendsIds = this.convertQueryArray(friendsIds);
 
 
-     await friendsIds.map(async friendId => {
-        currentUser = await dbManager.getUserById(friendId);
+    for (var friendIdIndex = 0; friendIdIndex < friendsIds.length; friendIdIndex++) {
+        currentUser = await dbManager.getUserById(friendsIds[friendIdIndex]);
+        currentUser = currentUser[0];
 
         friends.push({
             id: currentUser.userName,
             firstName: currentUser.firstName,
             lastName: currentUser.lastName
         });
-    });
+    }
 
-    return friends; // bug!!! needs sync!!!!
+    return friends;
 }
 
 function convertQueryArray(queryParams)
