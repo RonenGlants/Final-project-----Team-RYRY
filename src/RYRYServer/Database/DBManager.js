@@ -137,7 +137,7 @@ module.exports = class DBManager {
         return isInserted;
     }
 
-    async handleGetFeedsByUser(userId, db){
+    async handleGetFeedsByUser(userId, db) {
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByUser(dbase, userId);
         await db.close();
@@ -145,7 +145,7 @@ module.exports = class DBManager {
         return user;
     }
 
-    async handleGetFeedsByGroup(groupId, db){
+    async handleGetFeedsByGroup(groupId, db) {
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByGroup(dbase, groupId);
         await db.close();
@@ -192,18 +192,18 @@ module.exports = class DBManager {
         return isLoggedIn;
     }
 
-    async handleInsertFeed(groupId, userId, db)
-    {
+    async handleInsertFeed(groupId, userId, db) {
         let dbase = await Utils.getDataBase(db);
         let isInserted = await this.feedsManager.insertFeed(dbase, groupId, userId);
         await db.close();
 
         return isInserted;
     }
-    async updateUserProfile(newUser){
+
+    async updateUserProfile(newUser) {
         let status = false;
         await mongo.connect(this.url, this.config).then(async (db) => {
-                status = await this.handleUpdateUser(newUser,db);
+                status = await this.handleUpdateUser(newUser, db);
             }
         );
         return status;
