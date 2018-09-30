@@ -168,6 +168,7 @@ export default class HomePage extends React.Component {
 
     onGroupClick(groupName, type){
         let group;
+
         if(type == "events"){
             this.state.events.forEach(event => {
                 if (event.name == groupName){
@@ -175,6 +176,14 @@ export default class HomePage extends React.Component {
                 }
             })
         }
+        else if(type == "communities"){
+            this.state.communities.forEach(community => {
+                if (community.name == groupName){
+                    group = community;
+                }
+            })
+        }
+
         this.props.showGroupPage(groupName, group);
     }
 
