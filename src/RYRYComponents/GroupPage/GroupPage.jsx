@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-responsive-modal';
 import FriendsListContainer from './FriendsListContainer.jsx';
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, CardFooter, Col, Row} from 'reactstrap';
+import {BrowserRouter} from 'react-router-dom';
 
 
 export default class GroupPage extends React.Component{
@@ -11,6 +12,10 @@ export default class GroupPage extends React.Component{
         this.state={
 
         }
+    }
+
+    componentDidMount(){
+        BrowserRouter.push('/grouppage');
     }
 
     render(){

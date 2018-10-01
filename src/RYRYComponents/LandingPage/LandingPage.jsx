@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginPage from './LoginPage.jsx';
 import SignUpPage from './SignUpPage.jsx';
+import {BrowserRouter} from 'react-router-dom';
 
 
 export default class LandingPage extends React.Component {
@@ -20,6 +21,8 @@ export default class LandingPage extends React.Component {
             type: this.loginType,
         }
     }
+
+
 
     render() {
         if (this.state.type == this.loginType)

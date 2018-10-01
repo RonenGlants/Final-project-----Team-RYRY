@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+import {BrowserRouter} from 'react-router-dom';
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
@@ -28,6 +29,10 @@ export default class UserProfilePage extends React.Component {
 
     componentWillMount() {
         this.getUser();
+    }
+
+    componentDidMount(){
+        BrowserRouter.push('/editprofile');
     }
 
     // todo: set props to states

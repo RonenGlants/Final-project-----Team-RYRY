@@ -8,6 +8,8 @@ import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "./CreateNewEventModal.jsx";
+import {BrowserRouter} from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 require('url');
 
@@ -22,6 +24,7 @@ export default class HomePage extends React.Component {
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onGroupClick = this.onGroupClick.bind(this);
 
+
         this.state = {
             userFirstName: null,
             userLastName: null,
@@ -30,7 +33,8 @@ export default class HomePage extends React.Component {
             feeds: [],
             communityModalOpen: false,
             eventModalOpen: false,
-            typeForModal: ''
+            typeForModal: '',
+            update: true,
         }
     }
 
@@ -40,6 +44,16 @@ export default class HomePage extends React.Component {
         this.getCommunitiesAndEvents();
 
     }
+
+    componentDidUpdate(){
+        if(this.state.update){
+            this.getUser();
+            this.getUserFeeds();
+            this.getCommunitiesAndEvents();
+            this.setState({update: false});
+        }
+    }
+
 
     getCommunitiesAndEvents() {
         return fetch('groups/usersGroups?userName=' + this.props.userName, {
