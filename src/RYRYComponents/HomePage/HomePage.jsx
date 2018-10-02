@@ -34,7 +34,8 @@ export default class HomePage extends React.Component {
             communityModalOpen: false,
             eventModalOpen: false,
             typeForModal: '',
-            redirect: false,
+            redirectGroupPage: false,
+            redirectEditProfilePage: false
             //update: true,
         }
     }
@@ -125,9 +126,14 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        if(this.state.redirect){
+        if(this.state.redirectGroupPage){
             return(
                 <Redirect push to="grouppage"/>
+            )
+        }
+        if(this.state.redirectEditProfilePage){
+            return(
+                <Redirect push to="editprofile"/>
             )
         }
         return(
@@ -203,7 +209,7 @@ export default class HomePage extends React.Component {
             })
         }
         this.props.showGroupPage(groupName, group);
-        this.setState({redirect: true});
+        this.setState({redirectGroupPage: true});
     }
 
     userLogOut() {
@@ -212,6 +218,7 @@ export default class HomePage extends React.Component {
 
     userProfileClick() {
         this.props.showUserProfile();
+        this.setState({redirectEditProfilePage: true});
     }
 
     userSettingsClick() {
@@ -226,10 +233,10 @@ export default class HomePage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    console.log("group inserted?")
+                    console.log("group inserted?");
                     return true;
                 } else {
-                    console.log("403 with addGroup")
+                    console.log("403 with addGroup");
                     return false;
                 }
             });
