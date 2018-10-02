@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../../HomePage.css';
 
 export default class FriendRequestsModal extends React.Component {
@@ -7,6 +7,7 @@ export default class FriendRequestsModal extends React.Component {
         super(props);
         this.onAcceptRequest = this.onAcceptRequest.bind(this);
         this.onRejectRequest = this.onRejectRequest.bind(this);
+        this.removeRequestFromDataBase = this.removeRequestFromDataBase.bind(this);
         this.state = {
             open: false,
             requests: [],
@@ -25,7 +26,20 @@ export default class FriendRequestsModal extends React.Component {
                 <ModalBody>
                     <div className="request">
                         {this.state.requests.map(request => {
-                            return <label>hi</label>
+                            var value = {
+                                groupName: request.groupId,
+                                userId: request.userId
+                            };
+
+                            var valueString = value.groupName + "$" + value.userId;
+
+                            return <form className="request-wrapper">
+                                <label>group requested: {value.groupName}</label>
+                                <label>from: {value.userId}</label>
+                                <Button name="Accept" value={valueString}
+                                        onClick={this.onAcceptRequest}>Accept</Button>
+                                <Button name="Reject" value={valueString} onClick={this.onRejectRequest}>Reject</Button>
+                            </form>
                         })}
                     </div>
                 </ModalBody>
@@ -36,12 +50,34 @@ export default class FriendRequestsModal extends React.Component {
         );
     }
 
-    onAcceptRequest() {
-        //  this.props.onAcceptRequest();
+    onAcceptRequest(event) {
+        var groupName = event.target.value.split("$")[0];
+        var userId = event.target.value.split("$")[1];
+
+        return fetch('/groups/addUserToGroup', {
+            method: 'POST',
+            body: JSON.stringify({
+                groupName: groupName,
+                userId: userId,
+            }),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with addUserToGroup")
+                    this.removeRequestFromDataBase(groupName, userId);
+                } else {
+                    console.log("403 with addUserToGroup")
+                    // this.showLoginErrorMessage("Email or Password are incorrect.")
+                }
+            });
     }
 
-    onRejectRequest(name, value) {
-        // this.onRejectRequest({[name]: value})
+    onRejectRequest(event) {
+        var groupName = event.target.value.split("$")[0];
+        var userId = event.target.value.split("$")[1];
+
+        this.removeRequestFromDataBase(groupName, userId);
     }
 
     getRequestsData() {
@@ -62,6 +98,27 @@ export default class FriendRequestsModal extends React.Component {
             })
             .catch(err => {
                 throw err
+            });
+    }
+
+    removeRequestFromDataBase(groupId, userId) {
+        return fetch('/requests/deleteRequest', {
+            method: 'POST',
+            body: JSON.stringify({
+                adminId: this.props.adminId,
+                userId: userId,
+                groupId: groupId
+            }),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with deleteRequest")
+                    //this.props.loginSuccessHandler(userName, userPassword);
+                } else {
+                    console.log("403 with deleteRequest")
+                    // this.showLoginErrorMessage("Email or Password are incorrect.")
+                }
             });
     }
 }

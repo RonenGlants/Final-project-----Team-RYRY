@@ -188,7 +188,19 @@ module.exports = class DBManager {
             }
         );
 
-        return adminRequests;
+        return status;
+    }
+
+    async removeFriendRequest(request) {
+        let status = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                status = await this.friendRequestsManager.removeRequest(dbase, request);
+            }
+        );
+
+        return status;
     }
 
     async getAllGroups() {

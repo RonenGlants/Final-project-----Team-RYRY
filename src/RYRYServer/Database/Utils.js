@@ -23,13 +23,9 @@ async function find(collection,item) {
 
 async function update(collection,query, itemToUpdate) {
     var writeResult = await collection.update(query, itemToUpdate, {upsert: true});
+    writeResult = writeResult.result;
 
-    if(writeResult.nMatched == 1 && writeResult.nModified <= 1){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return true;
 }
 
 module.exports = {getDataBase,getTableFromCursor, find, update}

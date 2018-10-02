@@ -109,9 +109,13 @@ async function addFriendRequest(request) {
     return await dbManager.addFriendRequest(request);
 }
 
+async function removeFriendRequest(request) {
+    return await dbManager.removeFriendRequest(request);
+}
+
 function convertQueryArray(queryParams)
 {
-    return queryParams.split(", ");
+    return queryParams.split(",");
 }
 
 module.exports = {
@@ -132,5 +136,6 @@ module.exports = {
     getFriendRequests,
     getAllGroups,
     addFriendRequest,
+    removeFriendRequest,
 }
 

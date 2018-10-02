@@ -23,4 +23,17 @@ friendRequestManagement.post('/addRequest',
         }
     });
 
+friendRequestManagement.post('/deleteRequest',
+    async (req, res) => {
+        let request = JSON.parse(req.body);
+        let isDeleted = await appLogic.removeFriendRequest(request);
+
+        if (isDeleted){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 module.exports = friendRequestManagement;

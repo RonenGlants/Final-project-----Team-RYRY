@@ -23,6 +23,21 @@ module.exports = class FriendRequestsDBManager {
         }
     }
 
+    async removeRequest(db, request) {
+        var collection = await db.collection(this.groupsDBName);
+        var isExists = await this.isRequestExists(collection, request);
+
+        if (isExists) {
+            await collection.remove(request);
+            console.log("request removed");
+            return true;
+        }
+        else {
+            console.log("request not exists!!!!!");
+            return false;
+        }
+    }
+
     async getRequests(db, adminId) {
         var collection = await db.collection(this.groupsDBName);
         let allAdminsRequests = await Utils.find(collection, {adminId: adminId});

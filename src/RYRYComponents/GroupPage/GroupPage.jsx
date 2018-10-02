@@ -64,7 +64,7 @@ export default class GroupPage extends React.Component {
     friendRequest() {
         return fetch('/requests/addRequest', {
             method: 'POST',
-            body: JSON.stringify({adminId: this.props.manager, userId: this.props.userId, groupId: this.props.groupId}),
+            body: JSON.stringify({adminId: this.props.manager, userId: this.props.currentUserName, groupId: this.props.name}),
             credentials: 'include'
         })
             .then(response => {        // response is the result
