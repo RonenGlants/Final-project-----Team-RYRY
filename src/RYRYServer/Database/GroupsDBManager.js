@@ -112,6 +112,11 @@ module.exports = class UsersDBManager {
             return false;
         }
     }
+
+    async getAllGroups(db) {
+        var collection = await db.collection(this.groupsDBName);
+        return await Utils.find(collection, {});
+    }
 }
 
 

@@ -4,6 +4,7 @@ const FeedsDBManager = require('./FeedsDBManager.js');
 const Utils = require('./Utils.js');
 const mongo = require('mongodb').MongoClient;
 const assert = require('assert');
+//const FriendRequestsDBManager = require('./FriendRequestsDBManager.js');
 
 module.exports = class DBManager {
     constructor() {
@@ -14,6 +15,7 @@ module.exports = class DBManager {
         this.usersManager = new UsersDBManager();
         this.groupsManager = new GroupsDBManager();
         this.feedsManager = new FeedsDBManager();
+     //   this.friendRequestsManager = new FriendRequestsDBManager();
         this.initDB.bind(this)();
     }
 
@@ -167,6 +169,40 @@ module.exports = class DBManager {
         return status;
     }
 
+    async getFriendRequests(adminId) {
+        let adminRequests = null;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                adminRequests = await this.handleGetFriendRequests(adminId, db);
+            }
+        );
+        return adminRequests;
+    }
+
+    async addFriendRequest(request) {
+        let status = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                status = await this.friendRequestsManager.addRequest(dbase, request);
+            }
+        );
+
+        return adminRequests;
+    }
+
+    async getAllGroups() {
+        let allGroups = [];
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                allGroups = await this.groupsManager.getAllGroups(dbase);
+            }
+        );
+
+        return allGroups;
+    }
+
     async handleGetFeedsByUser(userId, db) {
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByUser(dbase, userId);
@@ -212,6 +248,14 @@ module.exports = class DBManager {
         await db.close();
 
         return isInserted;
+    }
+
+    async handleGetFriendRequests(adminId, db) {
+        let dbase = await Utils.getDataBase(db);
+        let myGroups = await this.friendRequestsManager.getRequests(dbase, adminId);
+        await db.close();
+
+        return myGroups;
     }
 
     async handleLoginUser(user, db) {

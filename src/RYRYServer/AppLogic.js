@@ -97,6 +97,18 @@ async function getFriends(friendsIds) {
     return friends;
 }
 
+async function getAllGroups() {
+    return await dbManager.getAllGroups();
+}
+
+async function getFriendRequests(adminId){
+    return await dbManager.getFriendRequests(adminId);
+}
+
+async function addFriendRequest(request) {
+    return await dbManager.addFriendRequest(request);
+}
+
 function convertQueryArray(queryParams)
 {
     return queryParams.split(", ");
@@ -116,6 +128,9 @@ module.exports = {
     updateUserProfile,
     getFriends,
     convertQueryArray,
-    deleteGroup
+    deleteGroup,
+    getFriendRequests,
+    getAllGroups,
+
 }
 
