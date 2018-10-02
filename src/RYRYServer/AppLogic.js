@@ -37,6 +37,11 @@ async function addGroup(newGroup) {
     return status;
 }
 
+async function deleteGroup(groupName) {
+    let status = await dbManager.deleteGroup(groupName);
+    return status;
+}
+
 async function getFeedsByGroup(groupId) {
     let feeds = await dbManager.getFeedsByGroup(groupId);
 
@@ -92,9 +97,25 @@ async function getFriends(friendsIds) {
     return friends;
 }
 
+async function getAllGroups() {
+    return await dbManager.getAllGroups();
+}
+
+async function getFriendRequests(adminId){
+    return await dbManager.getFriendRequests(adminId);
+}
+
+async function addFriendRequest(request) {
+    return await dbManager.addFriendRequest(request);
+}
+
+async function removeFriendRequest(request) {
+    return await dbManager.removeFriendRequest(request);
+}
+
 function convertQueryArray(queryParams)
 {
-    return queryParams.split(", ");
+    return queryParams.split(",");
 }
 
 module.exports = {
@@ -110,6 +131,11 @@ module.exports = {
     addUserToGroup,
     updateUserProfile,
     getFriends,
-    convertQueryArray
+    convertQueryArray,
+    deleteGroup,
+    getFriendRequests,
+    getAllGroups,
+    addFriendRequest,
+    removeFriendRequest,
 }
 

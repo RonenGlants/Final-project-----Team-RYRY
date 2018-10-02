@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
+import Search from "react-search-box";
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import CommunityListContainer from "./CommunityListContainer.jsx";
@@ -8,7 +9,7 @@ import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "./CreateNewEventModal.jsx";
-
+import FriendRequestsModal from "./FriendRequestsModal.jsx";
 require('url');
 
 export default class HomePage extends React.Component {
@@ -21,16 +22,21 @@ export default class HomePage extends React.Component {
         this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onGroupClick = this.onGroupClick.bind(this);
+        this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
+        this.getAllGroups = this.getAllGroups.bind(this);
+        this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
 
         this.state = {
             userFirstName: null,
             userLastName: null,
-            communities: [],
-            events: [],
+            myCommunities: [],
+            myEvents: [],
             feeds: [],
             communityModalOpen: false,
             eventModalOpen: false,
-            typeForModal: ''
+            friendRequestsModalOpen: false,
+            typeForModal: '',
+            allGroups: [],
         }
     }
 
@@ -38,6 +44,7 @@ export default class HomePage extends React.Component {
         this.getUser();
         this.getUserFeeds();
         this.getCommunitiesAndEvents();
+        this.getAllGroups();
 
     }
 
@@ -55,8 +62,8 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching all groups succeeded")
                 this.setState({
-                    communities: content.communities,
-                    events: content.events,
+                    myCommunities: content.communities,
+                    myEvents: content.events,
                 })
             })
             .catch(err => {
@@ -113,6 +120,11 @@ export default class HomePage extends React.Component {
         return (
             <div className="home-page-root">
                 <div className="home-page-body">
+                    <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
+                        <FriendRequestsModal onAcceptRequest={this.onAcceptRequest}
+                                             onRejectRequest={this.onRejectRequest}
+                                             adminId={this.props.userName}/>
+                    </Modal>
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
                         <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}
                                                  userName={this.props.userName}/>
@@ -135,10 +147,13 @@ export default class HomePage extends React.Component {
                                                                invokeProfilePage={this.userProfileClick}
                                                                invokeSettingsPage={this.userSettingsClick}
                                                                invokeCreateNewCommunity={this.onOpenModalCommunity}
-                                                               invokeCreateNewEvent={this.onOpenModalEvent}/>
+                                                               invokeCreateNewEvent={this.onOpenModalEvent}
+                                                               invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>
                                 </CardBody>
                             </Card>
                         </Col>
+                        <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage} placeholder="search group"
+                                searchKey="name"></Search>
                         <Col className="feeds-wrapper">
                             <NewsfeedContainer myFeeds={this.state.feeds}/>
                         </Col>
@@ -147,7 +162,9 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="communities" myCommunities={this.state.communities} invokeOnGroupClick={this.onGroupClick}/>
+                                        <CommunityListContainer myType="communities"
+                                                                myCommunities={this.state.myCommunities}
+                                                                invokeOnGroupClick={this.onGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -155,7 +172,8 @@ export default class HomePage extends React.Component {
                                 <Card>
                                     <CardHeader>My Events</CardHeader>
                                     <CardBody>
-                                        <CommunityListContainer myType="events" myCommunities={this.state.events} invokeOnGroupClick={this.onGroupClick}/>
+                                        <CommunityListContainer myType="events" myCommunities={this.state.myEvents}
+                                                                invokeOnGroupClick={this.onGroupClick}/>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -166,19 +184,20 @@ export default class HomePage extends React.Component {
         );
     }
 
-    onGroupClick(groupName, type){
+    onGroupClick(groupName, type) {
         let group;
 
-        if(type == "events"){
-            this.state.events.forEach(event => {
-                if (event.name == groupName){
+        if (type == "events") {
+            this.state.myEvents.forEach(event => {
+                if (event.name == groupName) {
                     group = event;
                 }
             })
         }
-        else if(type == "communities"){
-            this.state.communities.forEach(community => {
-                if (community.name == groupName){
+
+        else if (type == "communities") {
+            this.state.myCommunities.forEach(community => {
+                if (community.name == groupName) {
                     group = community;
                 }
             })
@@ -227,7 +246,39 @@ export default class HomePage extends React.Component {
     onCloseModal() {
         this.setState({
             communityModalOpen: false,
-            eventModalOpen: false
+            eventModalOpen: false,
+            friendRequestsModalOpen: false,
         })
     };
+
+    getAllGroups() {
+        return fetch('groups/allGroups', {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching all group names succeeded");
+
+                this.setState({
+                    allGroups: content.allGroups,
+                })
+            })
+            .catch(err => {
+                throw err
+            });
+    };
+
+    showSelectedGroupPage(slectedGroup) {
+        this.props.showGroupPage(slectedGroup.name, slectedGroup)
+    }
+
+    onOpenFriendRequestsModal() {
+       this.setState({friendRequestsModalOpen: true});
+    }
 }

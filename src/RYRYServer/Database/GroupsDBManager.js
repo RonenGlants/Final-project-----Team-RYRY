@@ -96,6 +96,27 @@ module.exports = class UsersDBManager {
 
         return false;
     }
+
+    async deleteGroup(db, groupName){
+        var query = {name: groupName};
+        var collection = await db.collection(this.groupsDBName);
+        var isExists = await this.isGroupExists(collection, query);
+
+        if (isExists) {
+            await collection.remove(query);
+            console.log("group deleted");
+            return true;
+        }
+        else {
+            console.log("group does not exist!!!!!");
+            return false;
+        }
+    }
+
+    async getAllGroups(db) {
+        var collection = await db.collection(this.groupsDBName);
+        return await Utils.find(collection, {});
+    }
 }
 
 

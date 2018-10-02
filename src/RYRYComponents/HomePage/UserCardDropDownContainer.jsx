@@ -12,6 +12,7 @@ export default class UserCardDropDownContainer extends React.Component {
         this.newCommunityClick = this.newCommunityClick.bind(this);
         this.newEventClick = this.newEventClick.bind(this);
         this.logOutClick = this.logOutClick.bind(this);
+        this.friendRequestsManagementClick = this.friendRequestsManagementClick.bind(this);
 
         this.state={
             dropdownOpen: false,
@@ -39,6 +40,7 @@ export default class UserCardDropDownContainer extends React.Component {
                     <DropdownItem onClick={this.settingsClick}>Settings</DropdownItem>
                     <DropdownItem onClick={this.newCommunityClick}>Create new community</DropdownItem>
                     <DropdownItem onClick={this.newEventClick}>Create new event</DropdownItem>
+                    <DropdownItem onClick={this.friendRequestsManagementClick}>Check for pending friend requests</DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem><Button className="btn-danger" onClick={this.logOutClick}>Log out</Button></DropdownItem>
                 </DropdownMenu>
@@ -64,5 +66,9 @@ export default class UserCardDropDownContainer extends React.Component {
 
     logOutClick(){
         this.props.invokeLogOut();
+    }
+
+    friendRequestsManagementClick(){
+        this.props.invokeFriendRequestsManagement();
     }
 }
