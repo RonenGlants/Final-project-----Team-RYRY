@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
+import Search from "react-search-box";
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import CommunityListContainer from "./CommunityListContainer.jsx";
@@ -38,6 +39,7 @@ export default class HomePage extends React.Component {
         this.getUser();
         this.getUserFeeds();
         this.getCommunitiesAndEvents();
+        this.delete = ["hi" , "their"]
 
     }
 
@@ -139,6 +141,7 @@ export default class HomePage extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
+                        <Search data={this.delete} placeholder="search group" searchKey ="number"></Search>
                         <Col className="feeds-wrapper">
                             <NewsfeedContainer myFeeds={this.state.feeds}/>
                         </Col>
@@ -176,6 +179,7 @@ export default class HomePage extends React.Component {
                 }
             })
         }
+
         else if(type == "communities"){
             this.state.communities.forEach(community => {
                 if (community.name == groupName){
