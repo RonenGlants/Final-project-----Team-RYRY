@@ -195,6 +195,13 @@ export default class HomePage extends React.Component {
                 }
             })
         }
+        else{
+            this.state.communities.forEach(community => {
+                if (community.name == groupName){
+                    group = community;
+                }
+            })
+        }
         this.props.showGroupPage(groupName, group);
         this.setState({redirect: true});
     }
