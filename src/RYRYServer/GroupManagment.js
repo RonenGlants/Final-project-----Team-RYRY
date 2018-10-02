@@ -23,6 +23,18 @@ groupManagement.post('/addGroup',
         }
     });
 
+groupManagement.post('/deleteGroup',
+    async (req, res) => {
+        let groupName = JSON.parse(req.body);
+        let isDeleted = await appLogic.deleteGroup(groupName);
+        if (isDeleted){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 groupManagement.post('/removeUserFromGroup',
     async (req, res) => {
         let groupAndUserData = JSON.parse(req.body);

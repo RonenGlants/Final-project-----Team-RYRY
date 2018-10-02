@@ -37,6 +37,11 @@ async function addGroup(newGroup) {
     return status;
 }
 
+async function deleteGroup(groupName) {
+    let status = await dbManager.deleteGroup(groupName);
+    return status;
+}
+
 async function getFeedsByGroup(groupId) {
     let feeds = await dbManager.getFeedsByGroup(groupId);
 
@@ -110,6 +115,7 @@ module.exports = {
     addUserToGroup,
     updateUserProfile,
     getFriends,
-    convertQueryArray
+    convertQueryArray,
+    deleteGroup
 }
 

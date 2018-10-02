@@ -114,6 +114,7 @@ module.exports = class DBManager {
 
     async getFeedsByUser(userId) {
         let feeds = null;
+
         await mongo.connect(this.url, this.config).then(async (db) => {
                 feeds = await this.handleGetFeedsByUser(userId, db);
             }
@@ -122,19 +123,48 @@ module.exports = class DBManager {
     }
 
     async removeUserFromGroup(groupAndUserData) {
-        let dbase = await Utils.getDataBase(db);
-        let isRemoved = await this.groupsManager.removeUserFromGroup(dbase, groupAndUserData);
-        await db.close();
+        let isRemoved = false;
 
-        return isInserted;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isRemoved = await this.groupsManager.removeUserFromGroup(dbase, groupAndUserData);
+            await db.close();
+        });
+
+        return isRemoved;
     }
 
     async addUserToGroup(groupAndUserData) {
-        let dbase = await Utils.getDataBase(db);
-        let isAdded = await this.groupsManager.addUserToGroup(dbase, groupAndUserData);
-        await db.close();
+        let isAdded = false;
 
-        return isInserted;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isAdded = await this.groupsManager.addUserToGroup(dbase, groupAndUserData);
+            await db.close();
+        });
+
+        return isAdded;
+    }
+
+    async deleteGroup(groupName) {
+        let isDeleted = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isDeleted = await this.groupsManager.deleteGroup(dbase, groupName);
+            await db.close();
+        });
+
+        return isDeleted;
+    }
+
+    async updateUserProfile(newUser) {
+        let status = false;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                status = await this.handleUpdateUser(newUser, db);
+            }
+        );
+        return status;
     }
 
     async handleGetFeedsByUser(userId, db) {
@@ -198,15 +228,6 @@ module.exports = class DBManager {
         await db.close();
 
         return isInserted;
-    }
-
-    async updateUserProfile(newUser) {
-        let status = false;
-        await mongo.connect(this.url, this.config).then(async (db) => {
-                status = await this.handleUpdateUser(newUser, db);
-            }
-        );
-        return status;
     }
 
     async handleUpdateUser(newUser, db) {
