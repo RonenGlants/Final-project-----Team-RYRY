@@ -34,7 +34,8 @@ export default class HomePage extends React.Component {
             communityModalOpen: false,
             eventModalOpen: false,
             typeForModal: '',
-            update: true,
+            redirect: false,
+            //update: true,
         }
     }
 
@@ -45,14 +46,14 @@ export default class HomePage extends React.Component {
 
     }
 
-    componentDidUpdate(){
+    /*componentDidUpdate(){
         if(this.state.update){
             this.getUser();
             this.getUserFeeds();
             this.getCommunitiesAndEvents();
             this.setState({update: false});
         }
-    }
+    }*/
 
 
     getCommunitiesAndEvents() {
@@ -124,7 +125,12 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        return (
+        if(this.state.redirect){
+            return(
+                <Redirect push to="grouppage"/>
+            )
+        }
+        return(
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
@@ -190,6 +196,7 @@ export default class HomePage extends React.Component {
             })
         }
         this.props.showGroupPage(groupName, group);
+        this.setState({redirect: true});
     }
 
     userLogOut() {

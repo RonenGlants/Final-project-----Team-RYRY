@@ -18,6 +18,7 @@ export default class BaseContainer extends React.Component{
         this.userLoggedOut = this.userLoggedOut.bind(this);
         this.showUserProfile = this.showUserProfile.bind(this);
         this.showGroupPage = this.showGroupPage.bind(this);
+        this.showHomePage = this.showHomePage.bind(this);
         this.handleAuthenticatedUser = this.handleAuthenticatedUser.bind(this);
 
         this.state = {
@@ -65,6 +66,13 @@ export default class BaseContainer extends React.Component{
         this.setState(() => ({
             pageType: this.editProfilePage,
         }));
+    }
+
+    showHomePage(){
+        if(this.state.userName != ''){ // the user already logged in - only then we can get to the home page
+
+        }
+
     }
 
     //todo: switching between landing page (after login/signup to homepage

@@ -78,8 +78,8 @@ export default class LoginPage extends React.Component {
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
                     console.log("OK with loginUser");
-                    this.setState({redirect: true});
                     this.props.loginSuccessHandler(userName, userPassword);
+                    this.setState({redirect: true});
                 } else {
                     console.log("403 with loginUser");
                     this.showLoginErrorMessage("Email or Password are incorrect.")

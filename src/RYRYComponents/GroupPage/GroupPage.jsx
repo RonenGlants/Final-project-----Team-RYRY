@@ -14,10 +14,6 @@ export default class GroupPage extends React.Component{
         }
     }
 
-    componentDidMount(){
-        BrowserRouter.push('/grouppage');
-    }
-
     render(){
         return(
             <div>
