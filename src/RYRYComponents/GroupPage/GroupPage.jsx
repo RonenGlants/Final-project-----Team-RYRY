@@ -17,7 +17,7 @@ export default class GroupPage extends React.Component{
         return(
             <div>
                 <Card>
-                    <CardHeader>Group name: {this.props.name}</CardHeader>
+                    <CardHeader>Group name: {this.props.name}/CardHeader>
                     <CardBody>
                         <CardTitle>Admin: {this.props.manager}</CardTitle>
                         <CardSubtitle>Description: {this.props.description}</CardSubtitle>
