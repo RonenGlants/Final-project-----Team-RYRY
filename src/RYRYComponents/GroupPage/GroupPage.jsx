@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from 'react-responsive-modal';
 import FriendsListContainer from './FriendsListContainer.jsx';
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, CardFooter, Col, Row} from 'reactstrap';
 
@@ -8,13 +7,20 @@ export default class GroupPage extends React.Component {
     constructor(args) {
         super(...args);
         this.deleteGroup = this.deleteGroup.bind(this);
+        this.friendRequest = this.friendRequest.bind(this);
         this.state = {}
     }
 
     render() {
         var deleteGroupButton = null;
+        var friendRequestButton = null;
+
         if (this.props.currentUserName === this.props.manager) {
             deleteGroupButton = <Button onClick={this.deleteGroup}>Delete This Group</Button>
+        }
+        else if(this.props.friends.filter(friend=>{friend = this.props.currentUserName}).length == 0)
+        {
+            friendRequestButton = <Button onClick={this.friendRequest}>Friend Request</Button>
         }
         return (
             <div>
@@ -33,6 +39,7 @@ export default class GroupPage extends React.Component {
                     </CardBody>
                 </Card>
                 {deleteGroupButton}
+                {friendRequestButton}
             </div>
         )
     }
@@ -50,6 +57,23 @@ export default class GroupPage extends React.Component {
                 } else {
                     console.log("403 with deleteGroup")
                     return false;
+                }
+            });
+    }
+
+    friendRequest() {
+        return fetch('/requests/addRequest', {
+            method: 'POST',
+            body: JSON.stringify({adminId: this.props.manager, userId: this.props.userId, groupId: this.props.groupId}),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with friendRequest")
+                    //this.props.loginSuccessHandler(userName, userPassword);
+                } else {
+                    console.log("403 with friendRequest")
+                    // this.showLoginErrorMessage("Email or Password are incorrect.")
                 }
             });
     }

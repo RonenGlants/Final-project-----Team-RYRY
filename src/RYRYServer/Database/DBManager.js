@@ -4,7 +4,7 @@ const FeedsDBManager = require('./FeedsDBManager.js');
 const Utils = require('./Utils.js');
 const mongo = require('mongodb').MongoClient;
 const assert = require('assert');
-//const FriendRequestsDBManager = require('./FriendRequestsDBManager.js');
+const FriendRequestsDBManager = require('./FriendRequestsDBManager.js');
 
 module.exports = class DBManager {
     constructor() {
@@ -15,7 +15,7 @@ module.exports = class DBManager {
         this.usersManager = new UsersDBManager();
         this.groupsManager = new GroupsDBManager();
         this.feedsManager = new FeedsDBManager();
-     //   this.friendRequestsManager = new FriendRequestsDBManager();
+        this.friendRequestsManager = new FriendRequestsDBManager();
         this.initDB.bind(this)();
     }
 

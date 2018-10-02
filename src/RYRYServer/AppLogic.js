@@ -131,6 +131,6 @@ module.exports = {
     deleteGroup,
     getFriendRequests,
     getAllGroups,
-
+    addFriendRequest,
 }
 

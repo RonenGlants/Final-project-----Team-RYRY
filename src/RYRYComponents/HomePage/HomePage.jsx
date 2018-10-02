@@ -9,7 +9,7 @@ import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "./CreateNewEventModal.jsx";
-// import FriendRequestsModal from "./FriendRequestsModal.jsx";
+import FriendRequestsModal from "./FriendRequestsModal.jsx";
 require('url');
 
 export default class HomePage extends React.Component {
@@ -22,7 +22,7 @@ export default class HomePage extends React.Component {
         this.onOpenModalEvent = this.onOpenModalEvent.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onGroupClick = this.onGroupClick.bind(this);
-        //this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
+        this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
         this.getAllGroups = this.getAllGroups.bind(this);
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
 
@@ -34,9 +34,9 @@ export default class HomePage extends React.Component {
             feeds: [],
             communityModalOpen: false,
             eventModalOpen: false,
+            friendRequestsModalOpen: false,
             typeForModal: '',
             allGroups: [],
-            friendRequestsModalOpen: false,
         }
     }
 
@@ -120,6 +120,11 @@ export default class HomePage extends React.Component {
         return (
             <div className="home-page-root">
                 <div className="home-page-body">
+                    <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
+                        <FriendRequestsModal onAcceptRequest={this.onAcceptRequest}
+                                             onRejectRequest={this.onRejectRequest}
+                                             adminId={this.props.userName}/>
+                    </Modal>
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
                         <CreateNewCommunityModal onCancel={this.onCloseModal} onCreateGroup={this.insertGroup}
                                                  userName={this.props.userName}/>
@@ -142,7 +147,8 @@ export default class HomePage extends React.Component {
                                                                invokeProfilePage={this.userProfileClick}
                                                                invokeSettingsPage={this.userSettingsClick}
                                                                invokeCreateNewCommunity={this.onOpenModalCommunity}
-                                                               invokeCreateNewEvent={this.onOpenModalEvent}/>
+                                                               invokeCreateNewEvent={this.onOpenModalEvent}
+                                                               invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -240,7 +246,8 @@ export default class HomePage extends React.Component {
     onCloseModal() {
         this.setState({
             communityModalOpen: false,
-            eventModalOpen: false
+            eventModalOpen: false,
+            friendRequestsModalOpen: false,
         })
     };
 
@@ -271,7 +278,7 @@ export default class HomePage extends React.Component {
         this.props.showGroupPage(slectedGroup.name, slectedGroup)
     }
 
-    //onOpenFriendRequestsModal() {
-    //   this.setState({friendRequestsModalOpen: true});
-    //}
+    onOpenFriendRequestsModal() {
+       this.setState({friendRequestsModalOpen: true});
+    }
 }
