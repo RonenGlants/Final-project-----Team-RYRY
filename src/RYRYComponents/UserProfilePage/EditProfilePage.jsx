@@ -98,10 +98,10 @@ export default class UserProfilePage extends React.Component {
                     <br/>
                     <Row>
                         <Col>
-                            <SkillsInputContainer tags={this.state.mySkills} ref={(mySkillsCont) => {
+                            <SkillsInputContainer mySkills = {true} userName = {this.props.userName} newUser = {false} tags={this.state.mySkills} ref={(mySkillsCont) => {
                                 window.mySkillsCont = mySkillsCont
                             }} skillsTitle="My Skills"/>
-                            <SkillsInputContainer tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
+                            <SkillsInputContainer desiredSkills = {true} userName = {this.props.userName} getUser = {this.getUser} newUser = {false} tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
                                 window.desiredSkillsCont = desiredSkillsCont
                             }} skillsTitle="My Desired Skills"/>
                         </Col>
@@ -181,7 +181,6 @@ export default class UserProfilePage extends React.Component {
                     console.log("Profile update succeded")
                 } else {
                     console.log("403 with profile update")
-                    this.showLoginErrorMessage("Server isn't able to update profile")
                 }
             });
     }
