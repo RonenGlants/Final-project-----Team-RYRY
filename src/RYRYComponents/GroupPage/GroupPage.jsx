@@ -1,6 +1,7 @@
 import React from 'react';
 import FriendsListContainer from './FriendsListContainer.jsx';
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, CardFooter, Col, Row} from 'reactstrap';
+import {BrowserRouter} from 'react-router-dom';
 
 
 export default class GroupPage extends React.Component {

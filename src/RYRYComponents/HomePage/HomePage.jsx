@@ -9,6 +9,9 @@ import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
 import NewsfeedContainer from "./NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "./CreateNewEventModal.jsx";
+import {BrowserRouter} from 'react-router-dom';
+import { Redirect } from 'react-router';
+
 import FriendRequestsModal from "./FriendRequestsModal.jsx";
 require('url');
 
@@ -26,6 +29,7 @@ export default class HomePage extends React.Component {
         this.getAllGroups = this.getAllGroups.bind(this);
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
 
+
         this.state = {
             userFirstName: null,
             userLastName: null,
@@ -34,9 +38,13 @@ export default class HomePage extends React.Component {
             feeds: [],
             communityModalOpen: false,
             eventModalOpen: false,
-            friendRequestsModalOpen: false,
             typeForModal: '',
+            redirectGroupPage: false,
+            redirectEditProfilePage: false,
+            //update: true,
+            friendRequestsModalOpen: false,
             allGroups: [],
+
         }
     }
 
@@ -47,6 +55,16 @@ export default class HomePage extends React.Component {
         this.getAllGroups();
 
     }
+
+    /*componentDidUpdate(){
+        if(this.state.update){
+            this.getUser();
+            this.getUserFeeds();
+            this.getCommunitiesAndEvents();
+            this.setState({update: false});
+        }
+    }*/
+
 
     getCommunitiesAndEvents() {
         return fetch('groups/usersGroups?userName=' + this.props.userName, {
@@ -117,7 +135,17 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        return (
+        if(this.state.redirectGroupPage){
+            return(
+                <Redirect push to="grouppage"/>
+            )
+        }
+        if(this.state.redirectEditProfilePage){
+            return(
+                <Redirect push to="editprofile"/>
+            )
+        }
+        return(
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
@@ -198,12 +226,14 @@ export default class HomePage extends React.Component {
         else if (type == "communities") {
             this.state.myCommunities.forEach(community => {
                 if (community.name == groupName) {
+
                     group = community;
                 }
             })
         }
 
         this.props.showGroupPage(groupName, group);
+        this.setState({redirectGroupPage: true});
     }
 
     userLogOut() {
@@ -212,6 +242,7 @@ export default class HomePage extends React.Component {
 
     userProfileClick() {
         this.props.showUserProfile();
+        this.setState({redirectEditProfilePage: true});
     }
 
     userSettingsClick() {
@@ -226,10 +257,10 @@ export default class HomePage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    console.log("group inserted?")
+                    console.log("group inserted?");
                     return true;
                 } else {
-                    console.log("403 with addGroup")
+                    console.log("403 with addGroup");
                     return false;
                 }
             });
@@ -274,8 +305,9 @@ export default class HomePage extends React.Component {
             });
     };
 
-    showSelectedGroupPage(slectedGroup) {
-        this.props.showGroupPage(slectedGroup.name, slectedGroup)
+    showSelectedGroupPage(selectedGroup) {
+        this.props.showGroupPage(selectedGroup.name, selectedGroup);
+        this.setState({redirectGroupPage: true});
     }
 
     onOpenFriendRequestsModal() {
