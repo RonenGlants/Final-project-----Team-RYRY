@@ -22,8 +22,6 @@ export default class LandingPage extends React.Component {
         }
     }
 
-
-
     render() {
         if (this.state.type == this.loginType)
             return (

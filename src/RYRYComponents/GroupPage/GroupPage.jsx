@@ -1,16 +1,29 @@
 import React from 'react';
 import FriendsListContainer from './FriendsListContainer.jsx';
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, CardFooter, Col, Row} from 'reactstrap';
-import {BrowserRouter} from 'react-router-dom';
-import NewsfeedContainer from "../HomePage/NewsfeedContainer";
+import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
+import AddNewsfeedContainer from "../Containers/AddNewsfeedContainer.jsx";
+import './GroupPage.css';
 
 
 export default class GroupPage extends React.Component {
     constructor(args) {
         super(...args);
+        this.getFeeds = this.getFeeds.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
         this.friendRequest = this.friendRequest.bind(this);
-        this.state = {}
+        this.state = {myFeeds: []}
+    }
+
+    componentWillMount() {
+        clearInterval(this.interval);
+        this.getFeeds();
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            this.getFeeds();
+        }, 5000);
     }
 
     render() {
@@ -35,7 +48,10 @@ export default class GroupPage extends React.Component {
                     </CardBody>
                 </Card>
                 <br/>
-                <NewsfeedContainer/>
+                <div>
+                    <NewsfeedContainer myFeeds={this.state.myFeeds}/>
+                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}/>
+                </div>
                 <br/>
                 <Card>
                     <CardHeader>Friends List</CardHeader>
@@ -86,4 +102,25 @@ export default class GroupPage extends React.Component {
                 }
             });
     }
+
+    getFeeds() {
+        fetch('feeds/groupsFeeds?groupName=' + this.props.name, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching all group feeds succeeded")
+                this.setState({myFeeds: content.feeds});
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
 }

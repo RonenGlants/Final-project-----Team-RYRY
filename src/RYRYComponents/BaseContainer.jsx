@@ -5,7 +5,7 @@ import LandingPage from './LandingPage/LandingPage.jsx';
 import HomePage from './HomePage/HomePage.jsx';
 import GroupPage from './GroupPage/GroupPage.jsx';
 import EditProfilePage from './UserProfilePage/EditProfilePage.jsx'
-import '../HomePage.css';
+import './HomePage/HomePage.css';
 
 export default class BaseContainer extends React.Component {
     constructor(args) {
