@@ -4,6 +4,7 @@ const FeedsDBManager = require('./FeedsDBManager.js');
 const Utils = require('./Utils.js');
 const mongo = require('mongodb').MongoClient;
 const assert = require('assert');
+const FriendRequestsDBManager = require('./FriendRequestsDBManager.js');
 
 module.exports = class DBManager {
     constructor() {
@@ -14,6 +15,7 @@ module.exports = class DBManager {
         this.usersManager = new UsersDBManager();
         this.groupsManager = new GroupsDBManager();
         this.feedsManager = new FeedsDBManager();
+        this.friendRequestsManager = new FriendRequestsDBManager();
         this.initDB.bind(this)();
     }
 
@@ -114,6 +116,7 @@ module.exports = class DBManager {
 
     async getFeedsByUser(userId) {
         let feeds = null;
+
         await mongo.connect(this.url, this.config).then(async (db) => {
                 feeds = await this.handleGetFeedsByUser(userId, db);
             }
@@ -122,22 +125,97 @@ module.exports = class DBManager {
     }
 
     async removeUserFromGroup(groupAndUserData) {
-        let dbase = await Utils.getDataBase(db);
-        let isRemoved = await this.groupsManager.removeUserFromGroup(dbase, groupAndUserData);
-        await db.close();
+        let isRemoved = false;
 
-        return isInserted;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isRemoved = await this.groupsManager.removeUserFromGroup(dbase, groupAndUserData);
+            await db.close();
+        });
+
+        return isRemoved;
     }
 
     async addUserToGroup(groupAndUserData) {
-        let dbase = await Utils.getDataBase(db);
-        let isAdded = await this.groupsManager.addUserToGroup(dbase, groupAndUserData);
-        await db.close();
+        let isAdded = false;
 
-        return isInserted;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isAdded = await this.groupsManager.addUserToGroup(dbase, groupAndUserData);
+            await db.close();
+        });
+
+        return isAdded;
     }
 
-    async handleGetFeedsByUser(userId, db){
+    async deleteGroup(groupName) {
+        let isDeleted = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isDeleted = await this.groupsManager.deleteGroup(dbase, groupName);
+            await db.close();
+        });
+
+        return isDeleted;
+    }
+
+    async updateUserProfile(newUser) {
+        let status = false;
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                status = await this.handleUpdateUser(newUser, db);
+            }
+        );
+        return status;
+    }
+
+    async getFriendRequests(adminId) {
+        let adminRequests = null;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                adminRequests = await this.handleGetFriendRequests(adminId, db);
+            }
+        );
+        return adminRequests;
+    }
+
+    async addFriendRequest(request) {
+        let status = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                status = await this.friendRequestsManager.addRequest(dbase, request);
+            }
+        );
+
+        return status;
+    }
+
+    async removeFriendRequest(request) {
+        let status = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                status = await this.friendRequestsManager.removeRequest(dbase, request);
+            }
+        );
+
+        return status;
+    }
+
+    async getAllGroups() {
+        let allGroups = [];
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                let dbase = await Utils.getDataBase(db);
+                allGroups = await this.groupsManager.getAllGroups(dbase);
+            }
+        );
+
+        return allGroups;
+    }
+
+    async handleGetFeedsByUser(userId, db) {
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByUser(dbase, userId);
         await db.close();
@@ -145,7 +223,7 @@ module.exports = class DBManager {
         return user;
     }
 
-    async handleGetFeedsByGroup(groupId, db){
+    async handleGetFeedsByGroup(groupId, db) {
         let dbase = await Utils.getDataBase(db);
         let user = await this.feedsManager.getFeedsByGroup(dbase, groupId);
         await db.close();
@@ -184,6 +262,14 @@ module.exports = class DBManager {
         return isInserted;
     }
 
+    async handleGetFriendRequests(adminId, db) {
+        let dbase = await Utils.getDataBase(db);
+        let myGroups = await this.friendRequestsManager.getRequests(dbase, adminId);
+        await db.close();
+
+        return myGroups;
+    }
+
     async handleLoginUser(user, db) {
         let dbase = await Utils.getDataBase(db);
         let isLoggedIn = await this.usersManager.loginUser(dbase, user);
@@ -192,21 +278,12 @@ module.exports = class DBManager {
         return isLoggedIn;
     }
 
-    async handleInsertFeed(groupId, userId, db)
-    {
+    async handleInsertFeed(groupId, userId, db) {
         let dbase = await Utils.getDataBase(db);
         let isInserted = await this.feedsManager.insertFeed(dbase, groupId, userId);
         await db.close();
 
         return isInserted;
-    }
-    async updateUserProfile(newUser){
-        let status = false;
-        await mongo.connect(this.url, this.config).then(async (db) => {
-                status = await this.handleUpdateUser(newUser,db);
-            }
-        );
-        return status;
     }
 
     async handleUpdateUser(newUser, db) {

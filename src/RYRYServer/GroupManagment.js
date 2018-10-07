@@ -11,11 +11,30 @@ groupManagement.get('/usersGroups',
         res.json(groups);
     });
 
+groupManagement.get('/allGroups',
+    async (req, res) => {
+        let allGroups = await appLogic.getAllGroups();
+
+        res.json({allGroups});
+    });
+
 groupManagement.post('/addGroup',
     async (req, res) => {
         let group = JSON.parse(req.body);
         let isAdded = await appLogic.addGroup(group);
         if (isAdded){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
+groupManagement.post('/deleteGroup',
+    async (req, res) => {
+        let groupName = JSON.parse(req.body);
+        let isDeleted = await appLogic.deleteGroup(groupName);
+        if (isDeleted){
             res.sendStatus(200);
         }
         else {

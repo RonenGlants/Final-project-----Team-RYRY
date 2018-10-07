@@ -7,7 +7,7 @@ import GroupPage from './GroupPage/GroupPage.jsx';
 import EditProfilePage from './UserProfilePage/EditProfilePage.jsx'
 import '../HomePage.css';
 
-export default class BaseContainer extends React.Component{
+export default class BaseContainer extends React.Component {
     constructor(args) {
         super(...args);
         this.landingPage = "landingPage";
@@ -30,6 +30,7 @@ export default class BaseContainer extends React.Component{
 
         };
     }
+
     render(){
         return(
             <div className="base-container-root">
@@ -50,19 +51,27 @@ export default class BaseContainer extends React.Component{
         this.setState({pageType: this.homePage,
                        userName: userName,
                        password: passWord});
+
+
+
     }
 
-    userLoggedOut(){
+
+    userLoggedOut() {
         this.setState({pageType: this.landingPage})
     }
 
-    showGroupPage(groupName, group){
-        this.setState({pageType: this.groupPage,
-                        groupName: groupName,
-                        group: group})
+    showGroupPage(groupName, group) {
+        group.currentUserName = this.state.userName;
+
+        this.setState({
+            pageType: this.groupPage,
+            groupName: groupName,
+            group: group
+        })
     }
 
-    showUserProfile(){
+    showUserProfile() {
         this.setState(() => ({
             pageType: this.editProfilePage,
         }));

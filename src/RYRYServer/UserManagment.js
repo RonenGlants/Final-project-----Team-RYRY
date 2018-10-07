@@ -23,6 +23,14 @@ userManagement.get('/user',
         res.json({user});
     });
 
+userManagement.get('/friends',
+    async (req, res) => {
+        let friendsIds = req.query.friendsIds;
+        let friends = await appLogic.getFriends(friendsIds);
+
+        res.json({friends});
+    });
+
 userManagement.post('/loginUser',
     async (req, res) => {
         let user = JSON.parse(req.body);
@@ -48,4 +56,5 @@ userManagement.post('/updateProfile',
             res.sendStatus(403);
         }
     });
+
 module.exports = userManagement;

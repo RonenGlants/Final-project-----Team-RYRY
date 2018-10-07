@@ -37,13 +37,18 @@ async function addGroup(newGroup) {
     return status;
 }
 
+async function deleteGroup(groupName) {
+    let status = await dbManager.deleteGroup(groupName);
+    return status;
+}
+
 async function getFeedsByGroup(groupId) {
     let feeds = await dbManager.getFeedsByGroup(groupId);
 
     return feeds;
 }
 
-async function getFeedsByUser(userId){
+async function getFeedsByUser(userId) {
     let feeds = await dbManager.getFeedsByUser(userId);
 
     return feeds;
@@ -71,5 +76,66 @@ async function updateUserProfile(newUser) {
     return status;
 }
 
-module.exports = {signUpUser, loginUser, getUser, getGroups, addGroup, getFeedsByGroup, getFeedsByUser, addFeed, removeUserFromGroup, addUserToGroup, updateUserProfile}
+async function getFriends(friendsIds) {
+    var currentUser;
+    var friends = [];
+
+    friendsIds = this.convertQueryArray(friendsIds);
+
+
+    for (var friendIdIndex = 0; friendIdIndex < friendsIds.length; friendIdIndex++) {
+        currentUser = await dbManager.getUserById(friendsIds[friendIdIndex]);
+        currentUser = currentUser[0];
+
+        friends.push({
+            id: currentUser.userName,
+            firstName: currentUser.firstName,
+            lastName: currentUser.lastName
+        });
+    }
+
+    return friends;
+}
+
+async function getAllGroups() {
+    return await dbManager.getAllGroups();
+}
+
+async function getFriendRequests(adminId){
+    return await dbManager.getFriendRequests(adminId);
+}
+
+async function addFriendRequest(request) {
+    return await dbManager.addFriendRequest(request);
+}
+
+async function removeFriendRequest(request) {
+    return await dbManager.removeFriendRequest(request);
+}
+
+function convertQueryArray(queryParams)
+{
+    return queryParams.split(",");
+}
+
+module.exports = {
+    signUpUser,
+    loginUser,
+    getUser,
+    getGroups,
+    addGroup,
+    getFeedsByGroup,
+    getFeedsByUser,
+    addFeed,
+    removeUserFromGroup,
+    addUserToGroup,
+    updateUserProfile,
+    getFriends,
+    convertQueryArray,
+    deleteGroup,
+    getFriendRequests,
+    getAllGroups,
+    addFriendRequest,
+    removeFriendRequest,
+}
 

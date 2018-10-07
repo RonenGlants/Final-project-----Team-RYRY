@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userManagement = require('./RYRYServer/UserManagment');
 const groupManagement = require('./RYRYServer/GroupManagment');
 const feedManagement = require('./RYRYServer/FeedManagement');
+const friendRequestManagement = require('./RYRYServer/FriendRequestManagement');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static(path.resolve(__dirname, "..", "public")));
 app.use('/users', userManagement);
 app.use('/groups', groupManagement);
 app.use('/feeds', feedManagement);
+app.use('/requests', friendRequestManagement);
 
 app.listen(3000, console.log('RYRY connect available at localhost:3000'));
 
