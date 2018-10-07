@@ -3,16 +3,17 @@ import Modal from 'react-responsive-modal';
 import Search from "react-search-box";
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
-import CommunityListContainer from "./CommunityListContainer.jsx";
-import '../../HomePage.css';
-import UserCardDropDownContainer from "./UserCardDropDownContainer.jsx";
-import NewsfeedContainer from "./NewsfeedContainer.jsx";
-import CreateNewCommunityModal from "./CreateNewCommunityModal.jsx";
-import CreateNewEventModal from "./CreateNewEventModal.jsx";
+import CommunityListContainer from "../Containers/CommunityListContainer.jsx";
+import './HomePage.css';
+import UserCardDropDownContainer from "../Containers/UserCardDropDownContainer.jsx";
+import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
+import CreateNewCommunityModal from "../Modals/CreateNewCommunityModal.jsx";
+import CreateNewEventModal from "../Modals/CreateNewEventModal.jsx";
 import {BrowserRouter} from 'react-router-dom';
-import { Redirect } from 'react-router';
+import {Redirect} from 'react-router';
 
-import FriendRequestsModal from "./FriendRequestsModal.jsx";
+import FriendRequestsModal from "../Modals/FriendRequestsModal.jsx";
+
 require('url');
 
 export default class HomePage extends React.Component {
@@ -28,6 +29,8 @@ export default class HomePage extends React.Component {
         this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
         this.getAllGroups = this.getAllGroups.bind(this);
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
+        this.getFeeds = this.getFeeds.bind(this);
+        this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
 
 
         this.state = {
@@ -41,7 +44,6 @@ export default class HomePage extends React.Component {
             typeForModal: '',
             redirectGroupPage: false,
             redirectEditProfilePage: false,
-            //update: true,
             friendRequestsModalOpen: false,
             allGroups: [],
 
@@ -49,22 +51,19 @@ export default class HomePage extends React.Component {
     }
 
     componentWillMount() {
+        clearInterval(this.interval);
         this.getUser();
-        this.getUserFeeds();
+        this.getFeeds();
         this.getCommunitiesAndEvents();
         this.getAllGroups();
-
     }
 
-    /*componentDidUpdate(){
-        if(this.state.update){
-            this.getUser();
-            this.getUserFeeds();
-            this.getCommunitiesAndEvents();
-            this.setState({update: false});
-        }
-    }*/
-
+    componentDidMount() {
+        setInterval(() => {
+            this.forceUpdate();
+            this.getFeeds();
+        }, 2000);
+    }
 
     getCommunitiesAndEvents() {
         return fetch('groups/usersGroups?userName=' + this.props.userName, {
@@ -89,8 +88,19 @@ export default class HomePage extends React.Component {
             });
     }
 
-    getUserFeeds() {
-        return fetch('feeds/usersFeeds?userId=' + this.props.userName, {
+    getFeeds() {
+        this.state.feeds = [];
+
+        this.state.myCommunities.map(community => {
+            this.getGroupsFeeds(community.name);
+        });
+        this.state.myEvents.map(event => {
+            this.getGroupsFeeds(event.name);
+        });
+    }
+
+    getGroupsFeeds(groupName) {
+        fetch('feeds/groupsFeeds?groupName=' + groupName, {
             method: 'GET',
             credentials: 'include'
         })
@@ -101,13 +111,13 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching feeds succeeded")
-                this.setState({
-                    feeds: content,
-                })
+                console.log("fetching all group feeds succeeded")
+                content.feeds.map(feed => {
+                    this.state.feeds.push(feed);
+                });
             })
             .catch(err => {
-                throw err;
+                throw err
             });
     }
 
@@ -135,17 +145,17 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        if(this.state.redirectGroupPage){
-            return(
+        if (this.state.redirectGroupPage) {
+            return (
                 <Redirect push to="grouppage"/>
             )
         }
-        if(this.state.redirectEditProfilePage){
-            return(
+        if (this.state.redirectEditProfilePage) {
+            return (
                 <Redirect push to="editprofile"/>
             )
         }
-        return(
+        return (
             <div className="home-page-root">
                 <div className="home-page-body">
                     <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
@@ -180,7 +190,8 @@ export default class HomePage extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage} placeholder="search group"
+                        <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
+                                placeholder="search group"
                                 searchKey="name"></Search>
                         <Col className="feeds-wrapper">
                             <NewsfeedContainer myFeeds={this.state.feeds}/>
@@ -311,6 +322,6 @@ export default class HomePage extends React.Component {
     }
 
     onOpenFriendRequestsModal() {
-       this.setState({friendRequestsModalOpen: true});
+        this.setState({friendRequestsModalOpen: true});
     }
 }

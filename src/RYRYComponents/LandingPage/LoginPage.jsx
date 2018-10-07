@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import loginLogoImage from '../Resources/LoginLogo.jpg';
-import InputContainer from "./Containers/InputContainer.jsx";
+import InputContainer from "../Containers/InputContainer.jsx";
 import {Button, Card, CardBody, CardTitle, CardText, CardHeader, Row, Col} from 'reactstrap';
 
 export default class LoginPage extends React.Component {

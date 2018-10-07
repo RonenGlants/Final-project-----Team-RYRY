@@ -58,13 +58,45 @@ module.exports = class DBManager {
         }.bind(this));
     }
 
+    async getFriends(friendsIds) {
+        var currentUser;
+        var friends = [];
+
+        friendsIds = this.convertQueryArray(friendsIds);
+
+
+        for (var friendIdIndex = 0; friendIdIndex < friendsIds.length; friendIdIndex++) {
+            currentUser = await this.getUserById(friendsIds[friendIdIndex]);
+            currentUser = currentUser[0];
+
+            friends.push({
+                id: currentUser.userName,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName
+            });
+        }
+
+        return friends;
+    }
+
     async getGroupsById(userId) {
-        let myGroups = null;
+        let myGroups = [];
+        let communities = [];
+        let events = [];
         await mongo.connect(this.url, this.config).then(async (db) => {
                 myGroups = await this.handleGetGroupsById(userId, db);
             }
         );
-        return myGroups;
+
+        myGroups.map((group) => {
+            if (group.endingDate) {
+                events.push(group);
+            } else {
+                communities.push(group);
+            }
+        });
+
+        return {events: events, communities: communities};
     }
 
     async insertUser(newUser) {
@@ -95,20 +127,20 @@ module.exports = class DBManager {
         return status;
     }
 
-    async insertFeed(groupId, userId) {
+    async insertFeed(feed) {
         let status = false;
         await mongo.connect(this.url, this.config)
             .then(async (db) => {
-                    status = await this.handleInsertFeed(groupId, userId, db);
+                    status = await this.handleInsertFeed(feed, db);
                 }
             );
         return status;
     }
 
-    async getFeedsByGroup(groupId) {
+    async getFeedsByGroup(groupName) {
         let feeds = null;
         await mongo.connect(this.url, this.config).then(async (db) => {
-                feeds = await this.handleGetFeedsByGroup(groupId, db);
+                feeds = await this.handleGetFeedsByGroup(groupName, db);
             }
         );
         return feeds;
@@ -217,18 +249,18 @@ module.exports = class DBManager {
 
     async handleGetFeedsByUser(userId, db) {
         let dbase = await Utils.getDataBase(db);
-        let user = await this.feedsManager.getFeedsByUser(dbase, userId);
+        let feeds = await this.feedsManager.getFeedsByUser(dbase, userId);
         await db.close();
 
-        return user;
+        return feeds;
     }
 
-    async handleGetFeedsByGroup(groupId, db) {
+    async handleGetFeedsByGroup(groupName, db) {
         let dbase = await Utils.getDataBase(db);
-        let user = await this.feedsManager.getFeedsByGroup(dbase, groupId);
+        let feeds = await this.feedsManager.getFeedsByGroup(dbase, groupName);
         await db.close();
 
-        return user;
+        return feeds;
     }
 
     async handleInsertGroup(newGroup, db) {
@@ -278,9 +310,10 @@ module.exports = class DBManager {
         return isLoggedIn;
     }
 
-    async handleInsertFeed(groupId, userId, db) {
+    async handleInsertFeed(feed, db) {
         let dbase = await Utils.getDataBase(db);
-        let isInserted = await this.feedsManager.insertFeed(dbase, groupId, userId);
+        let isInserted = await this.feedsManager.insertFeed(dbase, feed);
+
         await db.close();
 
         return isInserted;
@@ -291,6 +324,10 @@ module.exports = class DBManager {
         let isUpdated = await this.usersManager.updateUser(dbase, newUser);
         await db.close();
         return isUpdated;
+    }
+
+    convertQueryArray(queryParams) {
+        return queryParams.split(",");
     }
 }
 

@@ -1,32 +1,29 @@
 const express = require('express'); // include express
-const appLogic = require('./AppLogic');
+const DBManager = require('./Database/DBManager.js');
+let dbManager = new DBManager();
 
 const feedManagement = express.Router();
 
-feedManagement.get('/usersFeeds',
+feedManagement.get('/managersFeeds',
     async (req, res) => {
-        let userId = req.query.userId;
-        let feeds = await appLogic.getFeedsByUser(userId);
+        let groupManagerId = req.query.groupManagerId;
+        let feeds = await dbManager.getFeedsByUser(groupManagerId);
 
-        res.json(feeds);
+        res.json({feeds});
     });
 
 feedManagement.get('/groupsFeeds',
     async (req, res) => {
-        let groupId = req.query.groupId;
-        let feeds = await appLogic.getFeedsByGroup(groupId);
+        let groupName = req.query.groupName;
+        let feeds = await dbManager.getFeedsByGroup(groupName);
 
-        res.json(feeds);
+        res.json({feeds});
     });
 
 feedManagement.post('/addFeed',
     async (req, res) => {
-        let feedData = {
-            groupId: req.query.groupId,
-            userId: req.query.userId,
-            feed: req.query.feedString,
-        }
-        let isAdded = await appLogic.addFeed(feedData);
+        let feed = JSON.parse(req.body);
+        let isAdded = await dbManager.insertFeed(feed);
         if (isAdded){
             res.sendStatus(200);
         }
