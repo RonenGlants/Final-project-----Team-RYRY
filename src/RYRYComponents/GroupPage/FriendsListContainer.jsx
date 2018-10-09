@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from 'reactstrap';
 
 export default class FriendsListContainer extends React.Component {
     constructor(args) {
@@ -23,14 +22,16 @@ export default class FriendsListContainer extends React.Component {
                     var fullName = friend.firstName + " " + friend.lastName;
 
                     return <button color="success" className="" onClick={this.onFriendClick}
-                                   value={fullName}>{fullName}</button>
+                                   value={JSON.stringify({friend})}>{fullName}</button>
                 })}
             </div>
         );
     };
 
     onFriendClick(event) {
+        var value = JSON.parse(event.target.value);
 
+        this.props.openFriendInfoModal(value.friend);
     }
 
     getFriendsData(friendsIds) {

@@ -1,9 +1,11 @@
 import React from 'react';
+import Modal from 'react-responsive-modal';
 import FriendsListContainer from './FriendsListContainer.jsx';
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, CardFooter, Col, Row} from 'reactstrap';
 import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
 import AddNewsfeedContainer from "../Containers/AddNewsfeedContainer.jsx";
 import './GroupPage.css';
+import FriendInfoModal from "../Modals/FriendInfoModal.jsx";
 
 
 export default class GroupPage extends React.Component {
@@ -12,7 +14,14 @@ export default class GroupPage extends React.Component {
         this.getFeeds = this.getFeeds.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
         this.friendRequest = this.friendRequest.bind(this);
-        this.state = {myFeeds: []}
+        this.openFriendInfoModal = this.openFriendInfoModal.bind(this);
+        this.onCloseModal = this.onCloseModal.bind(this);
+
+        this.state = {
+            myFeeds: [],
+            friendInfoModal: false,
+            selectedFriend: null,
+        }
     }
 
     componentWillMount() {
@@ -38,8 +47,12 @@ export default class GroupPage extends React.Component {
         }).length == 0) {
             friendRequestButton = <Button onClick={this.friendRequest}>Friend Request</Button>
         }
+
         return (
             <div>
+                <Modal open={this.state.friendInfoModal} onClose={this.onCloseModal}>
+                    <FriendInfoModal {...this.state.selectedFriend}/>
+                </Modal>
                 <Card>
                     <CardHeader>Group name: {this.props.name}</CardHeader>
                     <CardBody>
@@ -56,7 +69,7 @@ export default class GroupPage extends React.Component {
                 <Card>
                     <CardHeader>Friends List</CardHeader>
                     <CardBody>
-                        <FriendsListContainer myFriends={this.props.friends}/>
+                        <FriendsListContainer myFriends={this.props.friends} openFriendInfoModal={this.openFriendInfoModal}/>
                     </CardBody>
                 </Card>
                 {deleteGroupButton}
@@ -123,4 +136,14 @@ export default class GroupPage extends React.Component {
             });
     }
 
+    openFriendInfoModal(friend) {
+        this.setState({
+            selectedFriend: friend,
+            friendInfoModal: true
+        });
+    }
+
+    onCloseModal() {
+        this.setState({friendInfoModal: false});
+    }
 }
