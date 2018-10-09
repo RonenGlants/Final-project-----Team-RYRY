@@ -146,6 +146,17 @@ module.exports = class DBManager {
         return feeds;
     }
 
+    async getFeedsByGroupsNames(groupsNames) {
+        let feeds = null;
+        let groupArrayedNames = this.convertQueryArray(groupsNames);
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+                feeds = await this.handleGetFeedsByGroupsNames(groupArrayedNames, db);
+            }
+        );
+        return feeds;
+    }
+
     async getFeedsByUser(userId) {
         let feeds = null;
 
@@ -258,6 +269,14 @@ module.exports = class DBManager {
     async handleGetFeedsByGroup(groupName, db) {
         let dbase = await Utils.getDataBase(db);
         let feeds = await this.feedsManager.getFeedsByGroup(dbase, groupName);
+        await db.close();
+
+        return feeds;
+    }
+
+    async handleGetFeedsByGroupsNames(groupsNames, db) {
+        let dbase = await Utils.getDataBase(db);
+        let feeds = await this.feedsManager.getFeedsByGroupsNames(dbase, groupsNames);
         await db.close();
 
         return feeds;
