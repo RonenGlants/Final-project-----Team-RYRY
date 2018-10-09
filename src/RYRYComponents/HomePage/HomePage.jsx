@@ -29,8 +29,8 @@ export default class HomePage extends React.Component {
         this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
         this.getAllGroups = this.getAllGroups.bind(this);
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
-        this.getFeeds = this.getFeeds.bind(this);
         this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
+        this.getAllFeeds = this.getAllFeeds.bind(this);
 
 
         this.state = {
@@ -53,16 +53,15 @@ export default class HomePage extends React.Component {
     componentWillMount() {
         clearInterval(this.interval);
         this.getUser();
-        this.getFeeds();
+        this.getAllFeeds();
         this.getCommunitiesAndEvents();
         this.getAllGroups();
     }
 
     componentDidMount() {
         setInterval(() => {
-            this.forceUpdate();
-            this.getFeeds();
-        }, 2000);
+            this.getAllFeeds();
+        }, 1000);
     }
 
     getCommunitiesAndEvents() {
@@ -88,15 +87,29 @@ export default class HomePage extends React.Component {
             });
     }
 
-    getFeeds() {
-        this.state.feeds = [];
+    getAllFeeds() {
+        var allMyGroups = [];
 
-        this.state.myCommunities.map(community => {
-            this.getGroupsFeeds(community.name);
-        });
-        this.state.myEvents.map(event => {
-            this.getGroupsFeeds(event.name);
-        });
+        this.state.myEvents.map(event => allMyGroups.push(event.name));
+        this.state.myCommunities.map(community => allMyGroups.push(community.name));
+
+        fetch('feeds/groupsListFeeds?groupsNames=' + allMyGroups, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                this.setState({feeds: content.feeds})
+
+            })
+            .catch(err => {
+                throw err
+            });
     }
 
     getGroupsFeeds(groupName) {

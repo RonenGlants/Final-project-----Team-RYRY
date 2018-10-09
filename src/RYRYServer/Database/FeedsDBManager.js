@@ -27,6 +27,22 @@ module.exports = class FeedsDBManager {
         return feeds || [];
     }
 
+    async getFeedsByGroupsNames(db, groupsNames) {
+        var collection = await db.collection(this.feedsDBName);
+        var feeds = [];
+        var currentGroupFeeds;
+        var currentGroupName;
+
+        for(var i=0;i<groupsNames.length;i++) {
+            currentGroupName = groupsNames[i];
+            currentGroupFeeds = await Utils.find(collection, {groupName: currentGroupName});
+
+            feeds = feeds.concat(currentGroupFeeds);
+        }
+
+        return feeds || [];
+    }
+
     async getFeedsByUser(db, userId) {
         var collection = await db.collection(this.feedsDBName);
         var feeds = await Utils.find(collection, {groupManagerId: userId});

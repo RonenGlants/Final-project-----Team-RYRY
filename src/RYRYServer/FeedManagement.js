@@ -20,6 +20,14 @@ feedManagement.get('/groupsFeeds',
         res.json({feeds});
     });
 
+feedManagement.get('/groupsListFeeds',
+    async (req, res) => {
+        let groupsNames = req.query.groupsNames;
+        let feeds = await dbManager.getFeedsByGroupsNames(groupsNames);
+
+        res.json({feeds});
+    });
+
 feedManagement.post('/addFeed',
     async (req, res) => {
         let feed = JSON.parse(req.body);
