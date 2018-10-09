@@ -14,7 +14,7 @@ groupManagement.get('/usersGroups',
 
 groupManagement.get('/allGroups',
     async (req, res) => {
-        let allGroups = await dbManager.getGroupsById();
+        let allGroups = await dbManager.getAllGroups();
 
         res.json({allGroups});
     });
@@ -60,6 +60,19 @@ groupManagement.post('/addUserToGroup',
     async (req, res) => {
         let groupAndUserData = JSON.parse(req.body);
         let isAdded = await dbManager.addUserToGroup(groupAndUserData);
+
+        if (isAdded){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
+groupManagement.post('/removeUserToGroup',
+    async (req, res) => {
+        let groupAndUserData = JSON.parse(req.body);
+        let isAdded = await dbManager.removeUserFromGroup(groupAndUserData);
 
         if (isAdded){
             res.sendStatus(200);
