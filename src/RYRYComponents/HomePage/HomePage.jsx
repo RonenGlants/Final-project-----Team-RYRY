@@ -111,7 +111,6 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching all group feeds succeeded")
                 content.feeds.map(feed => {
                     this.state.feeds.push(feed);
                 });

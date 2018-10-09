@@ -33,6 +33,6 @@ export default class FriendInfoModal extends React.Component {
     }
 
     handleRemoveFriend() {
-        //this.props.onRemove();
+        this.props.onRemove(this.props.id);
     }
 }

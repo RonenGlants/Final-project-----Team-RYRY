@@ -16,6 +16,7 @@ export default class GroupPage extends React.Component {
         this.friendRequest = this.friendRequest.bind(this);
         this.openFriendInfoModal = this.openFriendInfoModal.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
+        this.removeFriend = this.removeFriend.bind(this);
 
         this.state = {
             myFeeds: [],
@@ -51,7 +52,7 @@ export default class GroupPage extends React.Component {
         return (
             <div>
                 <Modal open={this.state.friendInfoModal} onClose={this.onCloseModal}>
-                    <FriendInfoModal {...this.state.selectedFriend}/>
+                    <FriendInfoModal {...this.state.selectedFriend} onRemove={this.removeFriend}/>
                 </Modal>
                 <Card>
                     <CardHeader>Group name: {this.props.name}</CardHeader>
@@ -128,7 +129,6 @@ export default class GroupPage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching all group feeds succeeded")
                 this.setState({myFeeds: content.feeds});
             })
             .catch(err => {
@@ -145,5 +145,23 @@ export default class GroupPage extends React.Component {
 
     onCloseModal() {
         this.setState({friendInfoModal: false});
+    }
+
+    removeFriend(friendId){
+        return fetch('/groups/removeUserToGroup', {
+            method: 'POST',
+            body: JSON.stringify({
+                groupName: this.props.name,
+                userId: friendId,
+            }),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with removeUserToGroup")
+                } else {
+                    console.log("403 with removeUserToGroup")
+                }
+            });
     }
 }
