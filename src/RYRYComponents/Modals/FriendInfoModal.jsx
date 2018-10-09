@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../HomePage/HomePage.css';
 
 export default class FriendInfoModal extends React.Component {
@@ -15,6 +15,16 @@ export default class FriendInfoModal extends React.Component {
     render() {
         const {open} = this.state.open;
 
+        var footer = null;
+
+
+        if(this.props.id === this.props.manager) {
+            footer = <label>Manager</label>;
+        }
+        else if (this.props.isManager) {
+            footer = <Button color="danger" onClick={this.handleRemoveFriend}>Remove Friend</Button>;
+        }
+
         return (
             <div>
                 <ModalHeader>Friend Info</ModalHeader>
@@ -26,7 +36,7 @@ export default class FriendInfoModal extends React.Component {
                     <label>email: {this.props.id}</label>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="danger" onClick={this.handleRemoveFriend}>Remove Friend</Button>
+                    {footer}
                 </ModalFooter>
             </div>
         );

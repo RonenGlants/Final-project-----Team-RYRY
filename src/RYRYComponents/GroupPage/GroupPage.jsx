@@ -52,7 +52,7 @@ export default class GroupPage extends React.Component {
         return (
             <div>
                 <Modal open={this.state.friendInfoModal} onClose={this.onCloseModal}>
-                    <FriendInfoModal {...this.state.selectedFriend} onRemove={this.removeFriend}/>
+                    <FriendInfoModal {...this.state.selectedFriend} manager={this.props.manager} isManager={this.props.manager === this.props.currentUserName} onRemove={this.removeFriend}/>
                 </Modal>
                 <Card>
                     <CardHeader>Group name: {this.props.name}</CardHeader>
