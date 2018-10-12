@@ -23,6 +23,23 @@ import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
 import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'react-shapes';
 import '../HomePage/HomePage.css';
 
+const avatar1 = <img className="avatar-img" name="Avatar1" src={Avatar1}/>;
+const avatar2 = <img className="avatar-img" name="Avatar2" src={Avatar2}/>;
+const avatar3 = <img className="avatar-img" name="Avatar3" src={Avatar3}/>;
+const avatar4 = <img className="avatar-img" name="Avatar4" src={Avatar4}/>;
+const avatar5 = <img className="avatar-img" name="Avatar5" src={Avatar5}/>;
+const avatar6 = <img className="avatar-img" name="Avatar6" src={Avatar6}/>;
+const avatar7 = <img className="avatar-img" name="Avatar7" src={Avatar7}/>;
+const avatar8 = <img className="avatar-img" name="Avatar8" src={Avatar8}/>;
+const avatar9 = <img className="avatar-img" name="Avatar9" src={Avatar9}/>;
+const avatar10 = <img className="avatar-img" name="Avatar10" src={Avatar10}/>;
+const avatar11 = <img className="avatar-img" name="Avatar11" src={Avatar11}/>;
+const avatar12 = <img className="avatar-img" name="Avatar12" src={Avatar12}/>;
+const avatar13 = <img className="avatar-img" name="Avatar13" src={Avatar13}/>;
+const avatar14 = <img className="avatar-img" name="Avatar14" src={Avatar14}/>;
+const avatar15 = <img className="avatar-img" name="Avatar15" src={Avatar15}/>;
+const avatar16 = <img className="avatar-img" name="Avatar16" src={Avatar16}/>;
+
 export default class UserProfilePage extends React.Component {
     constructor(args) {
         super(...args);
@@ -43,9 +60,11 @@ export default class UserProfilePage extends React.Component {
             redirect: false,
 
             path: '/RYRYComponents/Resources/avatar1.jpeg',
-            myAvatar: {Avatar1},
+            myAvatar: avatar1,
 
-        }
+        };
+
+
 
         this.onAvatarClick = this.onAvatarClick.bind(this);
         this.toggleFirstName = this.toggleFirstName.bind(this);
@@ -74,7 +93,7 @@ export default class UserProfilePage extends React.Component {
         return (
             <Card>
                 <CardHeader>
-                    <Button><img src={this.state.myAvatar}/></Button>
+                    <Button>{this.state.myAvatar}</Button>
                 </CardHeader>
                 <CardBody>
                     <Row>
@@ -159,9 +178,57 @@ export default class UserProfilePage extends React.Component {
         )
     };
 
-    onAvatarClick(element){
-        this.setState({myAvatar: element.target.name});
+    onAvatarClick(element) {
+        if (element.target.name === 'Avatar1') {
+            this.setState({myAvatar: avatar1});
+        }
+        else if (element.target.name === 'Avatar2') {
+            this.setState({myAvatar: avatar2})
+        }
+        else if (element.target.name === 'Avatar3') {
+            this.setState({myAvatar: avatar3})
+        }
+        else if (element.target.name === 'Avatar4') {
+            this.setState({myAvatar: avatar4})
+        }
+        else if (element.target.name === 'Avatar5') {
+            this.setState({myAvatar: avatar5})
+        }
+        else if (element.target.name === 'Avatar6') {
+            this.setState({myAvatar: avatar6})
+        }
+        else if (element.target.name === 'Avatar7') {
+            this.setState({myAvatar: avatar7})
+        }
+        else if (element.target.name === 'Avatar8') {
+            this.setState({myAvatar: avatar8})
+        }
+        else if (element.target.name === 'Avatar9') {
+            this.setState({myAvatar: avatar9})
+        }
+        else if (element.target.name === 'Avatar10') {
+            this.setState({myAvatar: avatar10})
+        }
+        else if (element.target.name === 'Avatar11') {
+            this.setState({myAvatar: avatar11})
+        }
+        else if (element.target.name === 'Avatar12') {
+            this.setState({myAvatar: avatar12})
+        }
+        else if (element.target.name === 'Avatar13') {
+            this.setState({myAvatar: avatar13})
+        }
+        else if (element.target.name === 'Avatar14') {
+            this.setState({myAvatar: avatar14})
+        }
+        else if (element.target.name === 'Avatar15') {
+            this.setState({myAvatar: avatar15})
+        }
+        else {
+            this.setState({myAvatar: avatar16})
+        }
     }
+
 
     handleChange() {
         this.setState({
