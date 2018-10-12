@@ -52,7 +52,7 @@ export default class UserProfilePage extends React.Component {
         return (
             <Card>
                 <CardHeader>
-                    <Button><CardImg top width="20%" src={UserProfileLogo}/></Button>
+                    <Button className="profileImg"><CardImg  src={UserProfileLogo}/></Button>
                 </CardHeader>
                 <CardBody>
                     <Row className="edit-profile-row">
