@@ -29,11 +29,13 @@ export default class FriendInfoModal extends React.Component {
             <div>
                 <ModalHeader>Friend Info</ModalHeader>
                 <ModalBody>
-                    <label>first name: {this.props.firstName}</label>
+                    <label>First name: {this.props.firstName}</label>
                     <br/>
-                    <label>last name: {this.props.lastName}</label>
+                    <label>Last name: {this.props.lastName}</label>
                     <br/>
-                    <label>email: {this.props.id}</label>
+                    <label>Email: {this.props.id}</label>
+                    <br/>
+                    <label>Match Points: {this.props.calcMatchPoints(this.props.currentUserId, this.props.id)}</label>
                 </ModalBody>
                 <ModalFooter>
                     {footer}
