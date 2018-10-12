@@ -6,6 +6,7 @@ import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
 import AddNewsfeedContainer from "../Containers/AddNewsfeedContainer.jsx";
 import './GroupPage.css';
 import FriendInfoModal from "../Modals/FriendInfoModal.jsx";
+import { Redirect } from 'react-router';
 
 
 export default class GroupPage extends React.Component {
@@ -17,6 +18,7 @@ export default class GroupPage extends React.Component {
         this.openFriendInfoModal = this.openFriendInfoModal.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.removeFriend = this.removeFriend.bind(this);
+        this.intervalID = -1;
         this.calcMatchPoints = this.calcMatchPoints.bind(this);
         this.getFriendsData =this.getFriendsData.bind(this);
         this.getSharedSkills = this.getSharedSkills.bind(this);
@@ -26,6 +28,7 @@ export default class GroupPage extends React.Component {
             myFeeds: [],
             friendInfoModal: false,
             selectedFriend: null,
+            redirect: false,
             friendsData:[],
         }
     }
@@ -37,22 +40,30 @@ export default class GroupPage extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => {
+        this.intervalID = setInterval(() => {
             this.getFeeds();
         }, 5000);
     }
 
     render() {
+        if(this.state.redirect){
+            return(
+                <Redirect push to="/homepage"/>
+            )
+        }
         var deleteGroupButton = null;
         var friendRequestButton = null;
-
+        var dateExpiredLabel = null;
+        if(this.isDateExpired(this.props.endingDate,this.props.endingTime)){
+            dateExpiredLabel = <label> Event is expired </label>
+        }
         if (this.props.currentUserName === this.props.manager) {
-            deleteGroupButton = <Button onClick={this.deleteGroup}>Delete This Group</Button>
+            deleteGroupButton = <Button onClick={this.deleteGroup}>Delete group</Button>
         }
         else if (this.props.friends.filter(friend => {
             friend = this.props.currentUserName
         }).length == 0) {
-            friendRequestButton = <Button onClick={this.friendRequest}>Friend Request</Button>
+            friendRequestButton = <Button onClick={this.friendRequest}>Join group</Button>
         }
 
         return (
@@ -67,16 +78,20 @@ export default class GroupPage extends React.Component {
                                      getSkillsThatCanBeTaught = {this.getSkillsThatCanBeTaught}/>
                 </Modal>
                 <Card>
-                    <CardHeader>Group name: {this.props.name}</CardHeader>
+                    <CardHeader>{this.props.name}</CardHeader>
                     <CardBody>
                         <CardTitle>Admin: {this.props.manager}</CardTitle>
                         <CardSubtitle>Description: {this.props.description}</CardSubtitle>
+                        {dateExpiredLabel}
+                        <br/>
+                        {deleteGroupButton}
+                        {friendRequestButton}
                     </CardBody>
                 </Card>
                 <br/>
                 <div>
-                    <NewsfeedContainer myFeeds={this.state.myFeeds}/>
                     <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}/>
+                    <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
                 </div>
                 <br/>
                 <Card>
@@ -87,12 +102,35 @@ export default class GroupPage extends React.Component {
                                               friendsData = {this.state.friendsData}/>
                     </CardBody>
                 </Card>
-                {deleteGroupButton}
-                {friendRequestButton}
             </div>
         )
     }
 
+    isDateExpired(endDate,endTime){
+        if(endDate != null && endTime != null){
+            var date = endDate.split("-");
+            var time = endTime.split(":");
+            var year = parseInt(date[0]);
+            var month = parseInt(date[1]);
+            var day = parseInt(date[2]);
+            var hour = parseInt(time[0]);
+            var min = parseInt(time[1]);
+            var eventEndDate = new Date();
+            eventEndDate.setFullYear(year, month - 1, day);
+            eventEndDate.setHours(hour);
+            eventEndDate.setMinutes(min);
+            if(new Date() > eventEndDate){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        else{
+            return false;
+        }
+    }
     deleteGroup() {
         return fetch('/groups/deleteGroup', {
             method: 'POST',
@@ -102,6 +140,8 @@ export default class GroupPage extends React.Component {
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
                     console.log("group deleted")
+                    clearInterval(this.intervalID);
+                    this.setState({redirect: true});
                     return true;
                 } else {
                     console.log("403 with deleteGroup")

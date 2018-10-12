@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import ReactTags from 'react-tag-autocomplete';
 import '../LandingPage/Style/LandingPage.css';
-import { WithContext as ReactTags } from 'react-tag-input';
+import {WithContext as ReactTags} from 'react-tag-input';
+import '../LandingPage/Style/LandingPage.css';
+//import ReactTags from 'react-tag-autocomplete';
 
 const HobbiesToMap = [
     "Ballet",
@@ -60,10 +60,14 @@ const suggestions = HobbiesToMap.map((Hobby) => {
 export default class SkillsInputContainer extends React.Component {
     constructor(props) {
         super(props);
+        if (!this.props.newUser) {
+            this.getUser();
+        }
 
         this.state = {
             tags: [],
             suggestions: suggestions,
+            newUser: true,
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -71,7 +75,44 @@ export default class SkillsInputContainer extends React.Component {
         this.handleTagClick = this.handleTagClick.bind(this);
     }
 
-    getTags(){
+    componentWillMount() {
+        this.setState({
+            newUser: this.props.newUser,
+        });
+    }
+
+    getUser() {
+        return fetch('users/user?userName=' + this.props.userName, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                console.log("fetching full name succeeded")
+                if (this.props.mySkills != undefined && this.props.mySkills) {
+                    this.setState({
+                        tags: content.user.mySkills,
+                    })
+                }
+                else if (this.props.desiredSkills != undefined && this.props.desiredSkills) {
+                    this.setState({
+                        tags: content.user.desiredSkills,
+                    })
+                }
+
+
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
+    getTags() {
         return this.state.tags;
     }
 
@@ -104,17 +145,17 @@ export default class SkillsInputContainer extends React.Component {
     render() {
         const {tags, suggestions} = this.state;
         return (
-            <div> {this.props.skillsTitle}:
-                    <ReactTags
-                        tags={tags}
-                        suggestions={suggestions}
-                        delimiters={delimiters}
-                        placeholder="Add new skill"
-                        handleDelete={this.handleDelete}
-                        handleAddition={this.handleAddition}
-                        handleDrag={this.handleDrag}
-                        handleTagClick={this.handleTagClick}
-                    />
+            <div className={this.props.myClass}> {this.props.skillsTitle}:
+                <ReactTags
+                    tags={tags}
+                    suggestions={suggestions}
+                    delimiters={delimiters}
+                    placeholder="Add new skill"
+                    handleDelete={this.handleDelete}
+                    handleAddition={this.handleAddition}
+                    handleDrag={this.handleDrag}
+                    handleTagClick={this.handleTagClick}
+                />
             </div>
         );
     }

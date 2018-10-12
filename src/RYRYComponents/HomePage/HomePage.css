@@ -34,6 +34,18 @@ community-root {
 
 }
 
+.skills-top{
+    z-index: 2;
+}
+
+/*.skills-bottom{
+    z-index: 1;
+}*/
+
+.edit-profile-row{
+    width: 600px;
+}
+
 .group-each {
     background-color: #4169aa;
     width: 100%;

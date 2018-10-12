@@ -13,6 +13,9 @@
   margin-top: 20px;
 }
 
+.skills-root{
+  //z-index: 1;
+}
 .username-label{
   //margin-bottom: 2px;
 }

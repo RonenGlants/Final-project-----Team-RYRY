@@ -9,7 +9,7 @@ import UserCardDropDownContainer from "../Containers/UserCardDropDownContainer.j
 import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "../Modals/CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "../Modals/CreateNewEventModal.jsx";
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRout} from 'react-router-dom';
 import {Redirect} from 'react-router';
 
 import FriendRequestsModal from "../Modals/FriendRequestsModal.jsx";
@@ -32,7 +32,6 @@ export default class HomePage extends React.Component {
         this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
         this.getAllFeeds = this.getAllFeeds.bind(this);
 
-
         this.state = {
             user: null,
             myCommunities: [],
@@ -41,8 +40,11 @@ export default class HomePage extends React.Component {
             communityModalOpen: false,
             eventModalOpen: false,
             typeForModal: '',
+            mySkills: [],
+            desiredSkills: [],
             redirectGroupPage: false,
             redirectEditProfilePage: false,
+            redirectLandingPage: false,
             friendRequestsModalOpen: false,
             allGroups: [],
 
@@ -146,6 +148,10 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching full name succeeded");
                 this.setState({
+                    userFirstName: content.user.firstName,
+                    userLastName: content.user.lastName,
+                    desiredSkills: content.user.desiredSkills,
+                    mySkills: content.user.mySkills,
                     user: content.user,
                 })
             })
@@ -170,6 +176,11 @@ export default class HomePage extends React.Component {
         if (this.state.redirectEditProfilePage) {
             return (
                 <Redirect push to="editprofile"/>
+            )
+        }
+        if(this.state.redirectLandingPage){
+            return (
+                <Redirect push to="/"/>
             )
         }
         return (
@@ -207,13 +218,13 @@ export default class HomePage extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
-                                placeholder="search group"
-                                searchKey="name"></Search>
                         <Col className="feeds-wrapper">
-                            <NewsfeedContainer myFeeds={this.state.feeds}/>
+                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
                         </Col>
                         <Col className="groups-wrapper">
+                            <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
+                                    placeholder="Search Group"
+                                    searchKey="name"></Search>
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
@@ -265,7 +276,7 @@ export default class HomePage extends React.Component {
     }
 
     userLogOut() {
-        this.props.invokeDisplayLandingPage();
+        this.setState({redirectLandingPage: true});
     }
 
     userProfileClick() {
@@ -308,6 +319,8 @@ export default class HomePage extends React.Component {
             eventModalOpen: false,
             friendRequestsModalOpen: false,
         })
+        this.getCommunitiesAndEvents();
+
     };
 
     getAllGroups() {

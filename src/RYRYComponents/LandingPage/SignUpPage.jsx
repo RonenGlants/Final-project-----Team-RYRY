@@ -38,10 +38,10 @@ export default class SignUpPage extends React.Component {
                             <InputContainer myName="password" ref="password-container" labelClassName="password-label" labelValue="Password" type="password" handleMyChange={this.handleChange} inputChangeValidation={this.props.passwordChangeValidation}/>
                             <InputContainer myName="email" ref="email-container" labelClassName="mail-label" labelValue="Email" type="email" handleMyChange={this.handleChange}/>
                             <RadioContainer myName="gender" choiceTitle="Gender" choiceOptions={genderOptions} handleMyChange={this.handleChange}/>
-                            <SkillsInputContainer ref={(mySkillsCont) => {
+                            <SkillsInputContainer tags = {[]} ref={(mySkillsCont) => {
                                 window.mySkillsCont = mySkillsCont
                             }} skillsTitle="My Skills"/>
-                            <SkillsInputContainer ref={(desiredSkillsCont) => {
+                            <SkillsInputContainer tags = {[]} ref={(desiredSkillsCont) => {
                                 window.desiredSkillsCont = desiredSkillsCont
                             }} skillsTitle="My Desired Skills"/>
                             <input className="submit-btn btn" type="submit" value="Sign Up"/>

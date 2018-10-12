@@ -16,10 +16,11 @@ export default class AddNewsfeedContainer extends React.Component {
     render() {
         return (
             <div>
-                <label className="feed-input-label">"Add feed:"</label>
+                <label className="feed-input-label">Write something to your group</label>
+                <br/>
                 <input className="feed-input" name="new feed" type="text" onChange={this.onChange}
-                       placeholder="enter text here..."/>
-                <button onClick={this.onAdd}>submit</button>
+                       placeholder="Enter text here..."/>
+                <button onClick={this.onAdd}>Share</button>
             </div>
         )
     };
