@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../HomePage/HomePage.css';
+import {Col, Row} from 'reactstrap';
 
 export default class FriendRequestsModal extends React.Component {
     constructor(props) {
@@ -34,11 +35,21 @@ export default class FriendRequestsModal extends React.Component {
                             var valueString = value.groupName + "$" + value.userId;
 
                             return <form className="request-wrapper">
-                                <label>group requested: {value.groupName}</label>
-                                <label>from: {value.userId}</label>
-                                <Button name="Accept" value={valueString}
-                                        onClick={this.onAcceptRequest}>Accept</Button>
-                                <Button name="Reject" value={valueString} onClick={this.onRejectRequest}>Reject</Button>
+                                <Row>
+                                    <Col>
+                                         <label>group: {value.groupName}</label>
+                                    </Col>
+                                    <Col>
+                                         <label>user: {value.userId}</label>
+                                    </Col>
+                                    <Col>
+                                        <Button color="success" name="Accept" value={valueString}
+                                                onClick={this.onAcceptRequest}>Accept</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button color="danger" name="Reject" value={valueString} onClick={this.onRejectRequest}>Reject</Button>
+                                    </Col>
+                                </Row>
                             </form>
                         })}
                     </div>
@@ -53,6 +64,7 @@ export default class FriendRequestsModal extends React.Component {
     onAcceptRequest(event) {
         var groupName = event.target.value.split("$")[0];
         var userId = event.target.value.split("$")[1];
+        this.props.closeModal();
 
         return fetch('/groups/addUserToGroup', {
             method: 'POST',
@@ -76,7 +88,7 @@ export default class FriendRequestsModal extends React.Component {
     onRejectRequest(event) {
         var groupName = event.target.value.split("$")[0];
         var userId = event.target.value.split("$")[1];
-
+        this.props.closeModal();
         this.removeRequestFromDataBase(groupName, userId);
     }
 
