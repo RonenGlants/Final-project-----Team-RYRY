@@ -34,8 +34,7 @@ export default class HomePage extends React.Component {
 
 
         this.state = {
-            userFirstName: null,
-            userLastName: null,
+            user: null,
             myCommunities: [],
             myEvents: [],
             feeds: [],
@@ -147,8 +146,7 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching full name succeeded");
                 this.setState({
-                    userFirstName: content.user.firstName,
-                    userLastName: content.user.lastName,
+                    user: content.user,
                 })
             })
             .catch(err => {
@@ -157,6 +155,13 @@ export default class HomePage extends React.Component {
     }
 
     render() {
+        var firstName, lastName;
+
+        if(this.state.user) {
+            firstName = this.state.user.firstName;
+            lastName = this.state.user.lastName;
+        }
+
         if (this.state.redirectGroupPage) {
             return (
                 <Redirect push to="grouppage"/>
@@ -189,10 +194,10 @@ export default class HomePage extends React.Component {
                                 <CardHeader>
                                     <Button onClick={this.userProfileClick}><CardImg top width="100%"
                                                                                      src={UserProfileLogo}/></Button>
-                                    Hello, {this.state.userFirstName} {this.state.userLastName}
+                                    Hello, {firstName} {lastName}
                                 </CardHeader>
                                 <CardBody>
-                                    <UserCardDropDownContainer userName={this.state.userFirstName}
+                                    <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
                                                                invokeSettingsPage={this.userSettingsClick}
