@@ -72,7 +72,9 @@ module.exports = class DBManager {
             friends.push({
                 id: currentUser.userName,
                 firstName: currentUser.firstName,
-                lastName: currentUser.lastName
+                lastName: currentUser.lastName,
+                mySkills: currentUser.mySkills,
+                desiredSkills:  currentUser.desiredSkills,
             });
         }
 

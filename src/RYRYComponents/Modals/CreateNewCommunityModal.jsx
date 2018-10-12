@@ -22,9 +22,9 @@ export default class CreateNewCommunityModal extends React.Component {
         const { open } = this.state.open;
         return (
             <div>
-                <ModalHeader>Create new event</ModalHeader>
+                <ModalHeader>Create new community</ModalHeader>
                 <ModalBody>
-                    <InputContainer myName="communityTitle" labelClassName="community-title-class" labelValue="Community title" type="text" handleMyChange={this.handleChange}/>
+                    <InputContainer myName="communityTitle" labelClassName="community-title-class" labelValue="Name" type="text" handleMyChange={this.handleChange}/>
                     <InputContainer myName="description" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                 </ModalBody>
                 <ModalFooter>
@@ -43,19 +43,27 @@ export default class CreateNewCommunityModal extends React.Component {
             friends: [this.props.userName],
             description: this.state.description,
         }
+        if(this.isCommunityValid(newCommunity)){
+            this.props.onCreateGroup(newCommunity).then(isCreated => {
+                if (isCreated === true) {
+                    this.setState({
+                        createCommunityStatus: 'Community created!'
+                    });
+                    setTimeout(this.handleCancel,1000);
+                }
+                else {
+                    this.setState({
+                        createCommunityStatus: 'Event or Community with that title already exists!'
+                    });
+                }
+            });
+        }
+        else{
+            this.setState({
+                createCommunityStatus: 'One of the fields above is missing'
+            });
+        }
 
-        this.props.onCreateGroup(newCommunity).then(isCreated => {
-            if (isCreated === true) {
-                this.setState({
-                    createCommunityStatus: 'Community created!'
-                });
-            }
-            else {
-                this.setState({
-                    createCommunityStatus: 'Event or Community with that title already exists!'
-                });
-            }
-        });
     }
 
     handleCancel(){
@@ -64,5 +72,14 @@ export default class CreateNewCommunityModal extends React.Component {
 
     handleChange(name, value){
         this.setState({[name]: value})
+    }
+
+    isCommunityValid(newCommunity){
+        if(newCommunity.name != "" && newCommunity.description != ""){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
