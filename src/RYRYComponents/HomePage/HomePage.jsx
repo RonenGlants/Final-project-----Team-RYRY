@@ -220,5 +220,7 @@ export default class HomePage extends React.Component {
             communityModalOpen: false,
             eventModalOpen: false
         })
+        this.getCommunitiesAndEvents();
+
     };
 }

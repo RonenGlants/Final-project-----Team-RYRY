@@ -61,6 +61,7 @@ export default class CreateNewEventModal extends React.Component {
                 this.setState({
                     createEventStatus: 'Event created!'
                 });
+                setTimeout(this.handleCancel, 500);
             }
             else {
                 this.setState({
@@ -77,7 +78,7 @@ export default class CreateNewEventModal extends React.Component {
             startingTime: '',
             endingDate: '',
             endingTime: ''});
-        this.props.whenCancel();
+        this.props.onCancel();
     }
 
     handleChange(name, value){
