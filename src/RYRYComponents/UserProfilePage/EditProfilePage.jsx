@@ -2,7 +2,6 @@ import React from 'react';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import SkillsInputContainer from "../LandingPage/Containers/SkillsInputContainer.jsx";
-import RadioContainer from "../LandingPage/Containers/RadioContainer.jsx";
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
@@ -52,15 +51,12 @@ export default class UserProfilePage extends React.Component {
                         </Col>
                         <Col>
                             <Fade in={this.state.firstNameInput} tag="h5" className="mt-3">
-                                <form onSubmit={(clickEvent) =>
-                                    this.setState({
-                                        firstName: clickEvent.target.elements[0].value,
-                                        firstNameInput: !this.state.firstName,
-                                    })}>
-                                    <input/>
-                                    <Button color="primary" className="submit-btn btn" type="submit"
-                                            value="submit">submit</Button>
-                                </form>
+                                <form>
+                                    <input onChange={(event) =>
+                                        this.setState({
+                                            firstName: event.target.value,
+                                        })}/>
+                                  </form>
                             </Fade>
                         </Col>
                     </Row>
@@ -74,14 +70,11 @@ export default class UserProfilePage extends React.Component {
 
                         <Col>
                             <Fade in={this.state.lastNameInput} tag="h5" className="mt-3">
-                                <form onSubmit={(clickEvent) =>
-                                    this.setState({
-                                        lastName: clickEvent.target.elements[0].value,
-                                        lastNameInput: !this.state.lastName,
-                                    })}>
-                                    <input/>
-                                    <Button color="primary" type="submit"
-                                            value="submit">submit</Button>
+                                <form >
+                                    <input onChange={(event) =>
+                                        this.setState({
+                                            lastName: event.target.value,
+                                        })}/>
                                 </form>
                             </Fade>
                         </Col>
@@ -167,7 +160,7 @@ export default class UserProfilePage extends React.Component {
                 userName: this.props.userName,
                 userPassword: this.props.password,
                 lastName: this.state.lastName,
-                firstName: this.state.lastName,
+                firstName: this.state.firstName,
                 mySkills: window.mySkillsCont.getTags(),
                 desiredSkills: window.desiredSkillsCont.getTags(),
                 gender: this.state.gender,
