@@ -209,7 +209,7 @@ export default class HomePage extends React.Component {
                             </Card>
                         </Col>
                         <Col className="feeds-wrapper">
-                            <NewsfeedContainer myFeeds={this.state.feeds}/>
+                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
                         </Col>
                         <Col className="groups-wrapper">
                             <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}

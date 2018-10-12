@@ -77,8 +77,8 @@ export default class GroupPage extends React.Component {
                 </Card>
                 <br/>
                 <div>
-                    <NewsfeedContainer myFeeds={this.state.myFeeds}/>
                     <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}/>
+                    <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
                 </div>
                 <br/>
                 <Card>
