@@ -44,6 +44,7 @@ export default class GroupPage extends React.Component {
     componentDidMount() {
         this.intervalID = setInterval(() => {
             this.getFeeds();
+            this.getFriendsData();
         }, 5000);
     }
 
@@ -218,6 +219,7 @@ export default class GroupPage extends React.Component {
     }
 
     removeFriend(friendId) {
+        this.onCloseModal();
         return fetch('/groups/removeUserToGroup', {
             method: 'POST',
             body: JSON.stringify({
