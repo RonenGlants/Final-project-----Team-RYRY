@@ -22,7 +22,7 @@ export default class NewsfeedContainer extends React.Component {
                             <Card width="100px">
                                 <CardBody>
                                     {groupName}
-                                    <CardText className="feed-user-name">Name: {feed.userId}</CardText>
+                                    <CardText className="feed-user-name">Name: {feed.userFirstName} {feed.userLastName}</CardText>
                                     <CardText className="feed-text">Message: {feed.feed}</CardText>
                                     <small className="text-muted">Post time {feed.postTime}</small>
                                 </CardBody>
