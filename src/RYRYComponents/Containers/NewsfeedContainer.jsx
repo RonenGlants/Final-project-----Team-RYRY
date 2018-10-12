@@ -17,10 +17,10 @@ export default class NewsfeedContainer extends React.Component {
                         <div className="feed-wrapper">
                             <Card width="100px">
                                 <CardBody>
-                                    <CardText className="feed-user-name">user: {feed.userId}</CardText>
-                                    <CardText className="feed-group-name">group: {feed.groupName}</CardText>
-                                    <CardText className="feed-text">feed: '{feed.feed}'</CardText>
-                                    <small className="text-muted">Post tims: {feed.postTime}</small>
+                                    <CardText className="feed-user-name">Name: {feed.userId}</CardText>
+                                    <CardText className="feed-group-name">Group: {feed.groupName}</CardText>
+                                    <CardText className="feed-text">Message: {feed.feed}</CardText>
+                                    <small className="text-muted">Post time {feed.postTime}</small>
                                 </CardBody>
                             </Card>
                         </div>
