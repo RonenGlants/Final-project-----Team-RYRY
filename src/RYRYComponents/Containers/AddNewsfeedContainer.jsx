@@ -34,9 +34,12 @@ export default class AddNewsfeedContainer extends React.Component {
         return fetch('/feeds/addFeed', {
             method: 'POST',
             body: JSON.stringify({
+                postTime: new Date(),
                 feed: this.state.value,
                 groupName: this.props.groupName,
                 userId: this.props.currentUserId,
+                userFirstName: this.props.firstName,
+                userLastName: this.props.lastName
             }),
             credentials: 'include'
         }).then(response => {        // response is the result

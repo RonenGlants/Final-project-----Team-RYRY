@@ -28,6 +28,8 @@ export default class GroupPage extends React.Component {
             selectedFriend: null,
             redirect: false,
             friendsData:[],
+            firstName: "",
+            lastName: "",
         }
     }
 
@@ -86,7 +88,7 @@ export default class GroupPage extends React.Component {
                 </Card>
                 <br/>
                 <div>
-                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}/>
+                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
                     <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
                 </div>
                 <br/>

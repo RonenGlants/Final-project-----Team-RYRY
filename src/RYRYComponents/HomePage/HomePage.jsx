@@ -266,7 +266,7 @@ export default class HomePage extends React.Component {
             })
         }
 
-        this.props.showGroupPage(groupName, group);
+        this.props.showGroupPage(groupName, group,this.state.user);
         this.setState({redirectGroupPage: true});
     }
 
