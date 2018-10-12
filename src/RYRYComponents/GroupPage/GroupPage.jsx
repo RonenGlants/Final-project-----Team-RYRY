@@ -57,6 +57,17 @@ export default class GroupPage extends React.Component {
         var deleteGroupButton = null;
         var friendRequestButton = null;
         var dateExpiredLabel = null;
+        var endTimeValue = "";
+        var startTimeValue = "";
+        var endTime = null;
+        var startTime = null;
+        if(this.props.startingDate != "" && this.props.startingTime != "" && this.props.endingDate != "" && this.props.endingTime != ""){
+            startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
+            startTime = <CardSubtitle>Start: {startTimeValue}</CardSubtitle>
+            endTimeValue = this.props.endingTime + "  " + this.props.endingDate;
+            endTime = <CardSubtitle>End {endTimeValue}</CardSubtitle>
+        }
+
         if(this.isDateExpired(this.props.endingDate,this.props.endingTime)){
             dateExpiredLabel = <label> Event is expired </label>
         }
@@ -83,7 +94,9 @@ export default class GroupPage extends React.Component {
                 <Card>
                     <CardHeader>{this.props.name}</CardHeader>
                     <CardBody>
-                        <CardTitle>Admin: {this.props.manager}</CardTitle>
+                        <CardTitle>Group admin: {this.props.manager}</CardTitle>
+                        {startTime}
+                        {endTime}
                         <CardSubtitle>Description: {this.props.description}</CardSubtitle>
                         {dateExpiredLabel}
                         <br/>
