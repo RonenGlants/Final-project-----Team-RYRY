@@ -211,7 +211,6 @@ export default class HomePage extends React.Component {
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
-                                                               invokeSettingsPage={this.userSettingsClick}
                                                                invokeCreateNewCommunity={this.onOpenModalCommunity}
                                                                invokeCreateNewEvent={this.onOpenModalEvent}
                                                                invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>

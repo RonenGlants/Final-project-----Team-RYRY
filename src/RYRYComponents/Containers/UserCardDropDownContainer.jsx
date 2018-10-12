@@ -8,7 +8,6 @@ export default class UserCardDropDownContainer extends React.Component {
 
         this.toggle = this.toggle.bind(this);
         this.profileClick = this.profileClick.bind(this);
-        this.settingsClick = this.settingsClick.bind(this);
         this.newCommunityClick = this.newCommunityClick.bind(this);
         this.newEventClick = this.newEventClick.bind(this);
         this.logOutClick = this.logOutClick.bind(this);
@@ -37,7 +36,6 @@ export default class UserCardDropDownContainer extends React.Component {
                 <DropdownMenu>
                     <DropdownItem header>{this.props.userName}</DropdownItem>
                     <DropdownItem onClick={this.profileClick}>Edit profile</DropdownItem>
-                    <DropdownItem onClick={this.settingsClick}>Settings</DropdownItem>
                     <DropdownItem onClick={this.newCommunityClick}>Create new community</DropdownItem>
                     <DropdownItem onClick={this.newEventClick}>Create new event</DropdownItem>
                     <DropdownItem onClick={this.friendRequestsManagementClick}>Check for pending friend requests</DropdownItem>
@@ -50,10 +48,6 @@ export default class UserCardDropDownContainer extends React.Component {
 
     profileClick(){
         this.props.invokeProfilePage();
-    }
-
-    settingsClick(){
-        this.props.invokeSettingsPage();
     }
 
     newCommunityClick(){

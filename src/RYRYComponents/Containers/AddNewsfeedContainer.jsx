@@ -20,7 +20,7 @@ export default class AddNewsfeedContainer extends React.Component {
                 <br/>
                 <input className="feed-input" name="new feed" type="text" onChange={this.onChange}
                        placeholder="Enter text here..."/>
-                <button onClick={this.onAdd}>Share</button>
+                <button onClick={this.onAdd}>Post</button>
             </div>
         )
     };
