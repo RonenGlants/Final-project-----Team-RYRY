@@ -145,7 +145,7 @@ export default class SkillsInputContainer extends React.Component {
     render() {
         const {tags, suggestions} = this.state;
         return (
-            <div> {this.props.skillsTitle}:
+            <div className={this.props.myClass}> {this.props.skillsTitle}:
                 <ReactTags
                     tags={tags}
                     suggestions={suggestions}

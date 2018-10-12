@@ -3,6 +3,7 @@ import {Redirect} from 'react-router';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
+import '../HomePage/HomePage.css';
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
@@ -54,7 +55,7 @@ export default class UserProfilePage extends React.Component {
                     <Button><CardImg top width="20%" src={UserProfileLogo}/></Button>
                 </CardHeader>
                 <CardBody>
-                    <Row>
+                    <Row className="edit-profile-row">
                         <Col>
                             First name: {this.state.firstName}
                             <br/>
@@ -72,7 +73,7 @@ export default class UserProfilePage extends React.Component {
                         </Col>
                     </Row>
 
-                    <Row>
+                    <Row className="edit-profile-row">
                         <Col>
                             Last name: {this.state.lastName}
                             <br/>
@@ -101,14 +102,14 @@ export default class UserProfilePage extends React.Component {
 
                     <br/>
                     <Row>
-                        <Col>
-                            <SkillsInputContainer mySkills = {true} userName = {this.props.userName} newUser = {false} tags={this.state.mySkills} ref={(mySkillsCont) => {
+
+                            <SkillsInputContainer myClass="skills-top" mySkills = {true} userName = {this.props.userName} newUser = {false} tags={this.state.mySkills} ref={(mySkillsCont) => {
                                 window.mySkillsCont = mySkillsCont
                             }} skillsTitle="My Skills"/>
-                            <SkillsInputContainer desiredSkills = {true} userName = {this.props.userName} getUser = {this.getUser} newUser = {false} tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
+                            <SkillsInputContainer myClass="skills-bottom" desiredSkills = {true} userName = {this.props.userName} getUser = {this.getUser} newUser = {false} tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
                                 window.desiredSkillsCont = desiredSkillsCont
                             }} skillsTitle="My Desired Skills"/>
-                        </Col>
+
                     </Row>
 
                     <Button onClick={this.saveChanges} color="primary" className="submit-btn btn">Save changes</Button>
