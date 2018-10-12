@@ -19,6 +19,8 @@ export default class GroupPage extends React.Component {
         this.removeFriend = this.removeFriend.bind(this);
         this.calcMatchPoints = this.calcMatchPoints.bind(this);
         this.getFriendsData =this.getFriendsData.bind(this);
+        this.getSharedSkills = this.getSharedSkills.bind(this);
+        this.getSkillsThatCanBeTaught = this.getSkillsThatCanBeTaught.bind(this);
 
         this.state = {
             myFeeds: [],
@@ -60,7 +62,9 @@ export default class GroupPage extends React.Component {
                                      isManager={this.props.manager === this.props.currentUserName}
                                      onRemove={this.removeFriend}
                                      calcMatchPoints={this.calcMatchPoints}
-                                     currentUserId={this.props.currentUserName}/>
+                                     currentUserId={this.props.currentUserName}
+                                     getSharedSkills = {this.getSharedSkills}
+                                     getSkillsThatCanBeTaught = {this.getSkillsThatCanBeTaught}/>
                 </Modal>
                 <Card>
                     <CardHeader>Group name: {this.props.name}</CardHeader>
@@ -217,19 +221,55 @@ export default class GroupPage extends React.Component {
             });
     }
 
-    calcPointsByLists(firsList,secondList,value){
-        var points =0;
+
+    calcPointsByLists(firsList, secondList, value) {
+        var sharedSkills = this.getSharedSkillsByLists(firsList, secondList);
+        var points = sharedSkills.length * value;
+
+        return points;
+    }
+
+    getSharedSkills(currentUserId, fiendId) {
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.mySkills, fiend.mySkills);
+    }
+
+    getSkillsThatCanBeTaught(currentUserId, fiendId) {
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.desiredSkills, fiend.mySkills);
+    }
+
+    getSharedSkillsByLists(firsList, secondList) {
+        var sharedSkills = [];
 
         if (firsList && secondList) {
             firsList.map(firstsSkill => {
                 secondList.map(secondsSkill => {
                     if (firstsSkill.id === secondsSkill.id) {
-                        points += value;
+                        sharedSkills.push(firstsSkill)
                     }
                 })
             });
         }
 
-        return points;
+        return sharedSkills;
     }
 }

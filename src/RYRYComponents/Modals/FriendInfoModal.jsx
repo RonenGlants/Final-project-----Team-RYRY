@@ -16,13 +16,44 @@ export default class FriendInfoModal extends React.Component {
         const {open} = this.state.open;
 
         var footer = null;
-
+        var sharedSkillsElement= <div className="title"><label>No mutual skills</label><br/></div>;
+        var skillsThatCanBeTaughtElement= <div className="title">This friend can not teach you any thing<br/></div>;
+        var skillsThatCanBeTaught = this.props.getSkillsThatCanBeTaught(this.props.currentUserId, this.props.id);
+        var sharedSkills= this.props.getSharedSkills(this.props.currentUserId, this.props.id);
 
         if(this.props.id === this.props.manager) {
             footer = <label>Manager</label>;
         }
         else if (this.props.isManager) {
             footer = <Button color="danger" onClick={this.handleRemoveFriend}>Remove Friend</Button>;
+        }
+
+        if(sharedSkills.length >0) {
+            sharedSkillsElement =
+                <div>
+                    <label className="title">Mutual skills</label>
+                    {sharedSkills.map(sharedSkill => {
+                        return(
+                        <div>
+                            <small>   {sharedSkill.text}</small>
+                            <br/>
+                        </div>);
+                    })}
+                </div>
+        }
+
+        if(skillsThatCanBeTaught.length >0) {
+            skillsThatCanBeTaughtElement =
+                <div>
+                    <label className="title">Skills that friend can teach you</label>
+                    {skillsThatCanBeTaught.map((skill) => {
+                        return(
+                        <div>
+                            <small>   {skill.text}</small>
+                            <br/>
+                        </div>);
+                    })}
+                </div>
         }
 
         return (
@@ -36,6 +67,9 @@ export default class FriendInfoModal extends React.Component {
                     <label>Email: {this.props.id}</label>
                     <br/>
                     <label>Match Points: {this.props.calcMatchPoints(this.props.currentUserId, this.props.id)}</label>
+                    <br/>
+                    {sharedSkillsElement}
+                    {skillsThatCanBeTaughtElement}
                 </ModalBody>
                 <ModalFooter>
                     {footer}
