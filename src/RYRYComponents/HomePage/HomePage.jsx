@@ -43,6 +43,7 @@ export default class HomePage extends React.Component {
             typeForModal: '',
             redirectGroupPage: false,
             redirectEditProfilePage: false,
+            redirectLandingPage: false,
             friendRequestsModalOpen: false,
             allGroups: [],
 
@@ -172,6 +173,11 @@ export default class HomePage extends React.Component {
                 <Redirect push to="editprofile"/>
             )
         }
+        if(this.state.redirectLandingPage){
+            return (
+                <Redirect push to="/"/>
+            )
+        }
         return (
             <div className="home-page-root">
                 <div className="home-page-body">
@@ -207,13 +213,13 @@ export default class HomePage extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
-                                placeholder="search group"
-                                searchKey="name"></Search>
                         <Col className="feeds-wrapper">
-                            <NewsfeedContainer myFeeds={this.state.feeds}/>
+                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
                         </Col>
                         <Col className="groups-wrapper">
+                            <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
+                                    placeholder="Search Group"
+                                    searchKey="name"></Search>
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
@@ -265,7 +271,7 @@ export default class HomePage extends React.Component {
     }
 
     userLogOut() {
-        this.props.invokeDisplayLandingPage();
+        this.setState({redirectLandingPage: true});
     }
 
     userProfileClick() {
