@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+import { Redirect } from 'react-router';
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
@@ -19,6 +20,8 @@ export default class UserProfilePage extends React.Component {
 
             desiredSkills: [],
             desiredSkillsInput: false,
+
+            redirect: false,
         }
 
         this.toggleFirstName = this.toggleFirstName.bind(this);
@@ -30,9 +33,15 @@ export default class UserProfilePage extends React.Component {
         this.getUser();
     }
 
+
     // todo: set props to states
 
     render() {
+        if(this.state.redirect){
+            return(
+                <Redirect push to="/homepage"/>
+            )
+        }
         return (
             <Card>
                 <CardHeader>
@@ -138,10 +147,11 @@ export default class UserProfilePage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    console.log("Profile update succeded")
+                    console.log("Profile update succeded");
+                    this.setState({redirect: true});
                 } else {
-                    console.log("403 with profile update")
-                    this.showLoginErrorMessage("Server isn't able to update profile")
+                    console.log("403 with profile update");
+                    this.showLoginErrorMessage("Server isn't able to update profile");
                 }
             });
     }

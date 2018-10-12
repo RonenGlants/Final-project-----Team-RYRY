@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link, Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import loginLogoImage from '../Resources/LoginLogo.jpg';
-import InputContainer from "./Containers/InputContainer.jsx";
+import InputContainer from "../Containers/InputContainer.jsx";
 import {Button, Card, CardBody, CardTitle, CardText, CardHeader, Row, Col} from 'reactstrap';
 
 export default class LoginPage extends React.Component {
@@ -15,12 +17,18 @@ export default class LoginPage extends React.Component {
         this.state = {
             errMessage: "",
             password: "",
-            email: ""
+            email: "",
+            redirect: false,
         }
     }
 
     render() {
-        return (
+            if(this.state.redirect){
+                return(
+                    <Redirect push to="/homepage"/>
+                )
+            }
+            return(
             <Row className="login-page-wrapper">
                 <Col sm={{size: 'auto', offset: 1}}>
                     <img className="login-logo" src={loginLogoImage}/>
@@ -61,8 +69,6 @@ export default class LoginPage extends React.Component {
         loginClickEvent.preventDefault(); // calls console.warn
         const userName = this.state.email;
         const userPassword = this.state.password;
-        //const userName = loginClickEvent.target.elements[0].value; // target is the form elements are the labels
-        //const userPassword = loginClickEvent.target.elements[1].value;
         this.showLoginErrorMessage("");
         return fetch('/users/loginUser', {
             method: 'POST',
@@ -71,10 +77,11 @@ export default class LoginPage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    console.log("OK with loginUser")
+                    console.log("OK with loginUser");
                     this.props.loginSuccessHandler(userName, userPassword);
+                    this.setState({redirect: true});
                 } else {
-                    console.log("403 with loginUser")
+                    console.log("403 with loginUser");
                     this.showLoginErrorMessage("Email or Password are incorrect.")
                 }
             });
