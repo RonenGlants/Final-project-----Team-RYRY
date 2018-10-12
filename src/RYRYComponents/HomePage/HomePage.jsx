@@ -303,6 +303,8 @@ export default class HomePage extends React.Component {
             eventModalOpen: false,
             friendRequestsModalOpen: false,
         })
+        this.getCommunitiesAndEvents();
+
     };
 
     getAllGroups() {
