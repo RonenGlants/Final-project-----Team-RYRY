@@ -6,14 +6,13 @@ module.exports = class FeedsDBManager {
         this.feedsDBName = "feed-data";
     }
 
-    async insertFeed(feedData) {
-        var newDate = new Date();
-        var datetime = newDate.today() + "@" + newDate.timeNow();
+    async insertFeed(db, feedObj) {
+        var currentDate = new Date();
         var collection = await db.collection(this.feedsDBName);
 
-        feedData.postTime = datetime;
+        feedObj.postTime = currentDate;
 
-        await collection.insertOne(feedData, function (err, result) {
+        await collection.insertOne(feedObj, function (err, result) {
             assert.equal(null, err);
         });
         console.log("feed inserted");
@@ -21,16 +20,32 @@ module.exports = class FeedsDBManager {
         return true;
     }
 
-    async getFeedsByGroup(db, groupId) {
+    async getFeedsByGroup(db, groupName) {
         var collection = await db.collection(this.feedsDBName);
-        var feeds = await Utils.find(collection, {groupId: groupId});
+        var feeds = await Utils.find(collection, {groupName: groupName});
 
-        return feeds;
+        return feeds || [];
+    }
+
+    async getFeedsByGroupsNames(db, groupsNames) {
+        var collection = await db.collection(this.feedsDBName);
+        var feeds = [];
+        var currentGroupFeeds;
+        var currentGroupName;
+
+        for(var i=0;i<groupsNames.length;i++) {
+            currentGroupName = groupsNames[i];
+            currentGroupFeeds = await Utils.find(collection, {groupName: currentGroupName});
+
+            feeds = feeds.concat(currentGroupFeeds);
+        }
+
+        return feeds || [];
     }
 
     async getFeedsByUser(db, userId) {
         var collection = await db.collection(this.feedsDBName);
-        var feeds = await Utils.find(collection, {userId: userId});
+        var feeds = await Utils.find(collection, {groupManagerId: userId});
 
         return feeds;
     }

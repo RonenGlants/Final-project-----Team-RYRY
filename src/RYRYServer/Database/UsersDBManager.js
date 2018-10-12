@@ -64,8 +64,9 @@ module.exports = class UsersDBManager {
 
     async updateUser(db,user){
         var collection = await db.collection(this.usersDBName);
-        let writeResult = await collection.update(
-            { userName: user.userName }, // key
+        let status = await Utils.update(
+            collection,
+            { userName: user.userName },
             {                            // replace object
                 userName: user.userName,
                 firstName: user.firstName,
@@ -76,14 +77,8 @@ module.exports = class UsersDBManager {
                 mySkills: user.mySkills,
                 desiredSkills: user.desiredSkills,
             }
-        );
-
-        if(writeResult.nMatched == 1 && writeResult.nModified <= 1){
-            return true;
-        }
-        else{
-            return false;
-        }
+            );
+        return status;
     }
 
 }

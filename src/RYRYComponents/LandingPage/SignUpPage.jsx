@@ -1,9 +1,9 @@
 import React from 'react';
 import SignUpLogoImage from '../Resources/SignUpLogo.jpg';
-import InputContainer from "./Containers/InputContainer.jsx";
-import RadioContainer from "./Containers/RadioContainer.jsx";
+import InputContainer from "../Containers/InputContainer.jsx";
+import RadioContainer from "../Containers/RadioContainer.jsx";
 import './Style/LandingPage.css';
-import SkillsInputContainer from './Containers/SkillsInputContainer.jsx';
+import SkillsInputContainer from '../Containers/SkillsInputContainer.jsx';
 import {Button, Card, CardBody, CardHeader, Row, Col} from 'reactstrap';
 
 export default class SignUpPage extends React.Component {
