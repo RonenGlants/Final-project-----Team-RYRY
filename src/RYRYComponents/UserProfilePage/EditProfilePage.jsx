@@ -2,7 +2,25 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+import Avatar1 from '../Resources/avatar1.jpeg';
+import Avatar2 from '../Resources/avatar2.jpeg';
+import Avatar3 from '../Resources/avatar3.jpeg';
+import Avatar4 from '../Resources/avatar4.jpeg';
+import Avatar5 from '../Resources/avatar5.jpeg';
+import Avatar6 from '../Resources/avatar6.jpeg';
+import Avatar7 from '../Resources/avatar7.jpeg';
+import Avatar8 from '../Resources/avatar8.jpeg';
+import Avatar9 from '../Resources/avatar9.jpeg';
+import Avatar10 from '../Resources/avatar10.jpeg';
+import Avatar11 from '../Resources/avatar11.jpeg';
+import Avatar12 from '../Resources/avatar12.jpeg';
+import Avatar13 from '../Resources/avatar13.jpeg';
+import Avatar14 from '../Resources/avatar14.jpeg';
+import Avatar15 from '../Resources/avatar15.jpeg';
+import Avatar16 from '../Resources/avatar16.jpeg';
+
 import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
+import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'react-shapes';
 import '../HomePage/HomePage.css';
 
 export default class UserProfilePage extends React.Component {
@@ -24,8 +42,12 @@ export default class UserProfilePage extends React.Component {
 
             redirect: false,
 
+            path: '/RYRYComponents/Resources/avatar1.jpeg',
+            myAvatar: {Avatar1},
+
         }
 
+        this.onAvatarClick = this.onAvatarClick.bind(this);
         this.toggleFirstName = this.toggleFirstName.bind(this);
         this.toggleLastName = this.toggleLastName.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
@@ -52,9 +74,27 @@ export default class UserProfilePage extends React.Component {
         return (
             <Card>
                 <CardHeader>
-                    <Button><CardImg top width="20%" src={UserProfileLogo}/></Button>
+                    <Button><img src={this.state.myAvatar}/></Button>
                 </CardHeader>
                 <CardBody>
+                    <Row>
+                        <img className="avatar-img" name="Avatar1" src={Avatar1} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar2" src={Avatar2} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar3" src={Avatar3} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar4" src={Avatar4} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar5" src={Avatar5} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar6" src={Avatar6} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar7" src={Avatar7} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar8" src={Avatar8} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar9" src={Avatar9} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar10" src={Avatar10} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar11" src={Avatar11} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar12" src={Avatar12} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar13" src={Avatar13} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar14" src={Avatar14} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar15" src={Avatar15} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar16" src={Avatar16} onClick={this.onAvatarClick}/>
+                    </Row>
                     <Row className="edit-profile-row">
                         <Col>
                             First name: {this.state.firstName}
@@ -118,6 +158,10 @@ export default class UserProfilePage extends React.Component {
             </Card>
         )
     };
+
+    onAvatarClick(element){
+        this.setState({myAvatar: element.target.name});
+    }
 
     handleChange() {
         this.setState({
