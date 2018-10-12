@@ -189,6 +189,7 @@ export default class HomePage extends React.Component {
                     <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
                         <FriendRequestsModal onAcceptRequest={this.onAcceptRequest}
                                              onRejectRequest={this.onRejectRequest}
+                                             closeModal={this.onCloseModal}
                                              adminId={this.props.userName}/>
                     </Modal>
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
@@ -265,7 +266,6 @@ export default class HomePage extends React.Component {
         else if (type == "communities") {
             this.state.myCommunities.forEach(community => {
                 if (community.name == groupName) {
-
                     group = community;
                 }
             })
