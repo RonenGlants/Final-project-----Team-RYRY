@@ -17,17 +17,21 @@ export default class GroupPage extends React.Component {
         this.openFriendInfoModal = this.openFriendInfoModal.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.removeFriend = this.removeFriend.bind(this);
+        this.calcMatchPoints = this.calcMatchPoints.bind(this);
+        this.getFriendsData =this.getFriendsData.bind(this);
 
         this.state = {
             myFeeds: [],
             friendInfoModal: false,
             selectedFriend: null,
+            friendsData:[],
         }
     }
 
     componentWillMount() {
         clearInterval(this.interval);
         this.getFeeds();
+        this.getFriendsData(this.props.friends);
     }
 
     componentDidMount() {
@@ -52,7 +56,11 @@ export default class GroupPage extends React.Component {
         return (
             <div>
                 <Modal open={this.state.friendInfoModal} onClose={this.onCloseModal}>
-                    <FriendInfoModal {...this.state.selectedFriend} manager={this.props.manager} isManager={this.props.manager === this.props.currentUserName} onRemove={this.removeFriend}/>
+                    <FriendInfoModal {...this.state.selectedFriend} manager={this.props.manager}
+                                     isManager={this.props.manager === this.props.currentUserName}
+                                     onRemove={this.removeFriend}
+                                     calcMatchPoints={this.calcMatchPoints}
+                                     currentUserId={this.props.currentUserName}/>
                 </Modal>
                 <Card>
                     <CardHeader>Group name: {this.props.name}</CardHeader>
@@ -70,7 +78,9 @@ export default class GroupPage extends React.Component {
                 <Card>
                     <CardHeader>Friends List</CardHeader>
                     <CardBody>
-                        <FriendsListContainer myFriends={this.props.friends} openFriendInfoModal={this.openFriendInfoModal}/>
+                        <FriendsListContainer myFriends={this.props.friends}
+                                              openFriendInfoModal={this.openFriendInfoModal}
+                                              friendsData = {this.state.friendsData}/>
                     </CardBody>
                 </Card>
                 {deleteGroupButton}
@@ -102,7 +112,8 @@ export default class GroupPage extends React.Component {
             body: JSON.stringify({
                 adminId: this.props.manager,
                 userId: this.props.currentUserName,
-                groupId: this.props.name
+                groupId: this.props.name,
+                skills: this.props.mySkills,
             }),
             credentials: 'include'
         })
@@ -147,7 +158,7 @@ export default class GroupPage extends React.Component {
         this.setState({friendInfoModal: false});
     }
 
-    removeFriend(friendId){
+    removeFriend(friendId) {
         return fetch('/groups/removeUserToGroup', {
             method: 'POST',
             body: JSON.stringify({
@@ -163,5 +174,62 @@ export default class GroupPage extends React.Component {
                     console.log("403 with removeUserToGroup")
                 }
             });
+    }
+
+    calcMatchPoints(currentUserId, fiendId) {
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+        var points = 0;
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return 0;
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        points += this.calcPointsByLists(currentUser.mySkills, fiend.mySkills, 14);
+        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.desiredSkills, 5);
+        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.mySkills, 50);
+        points += this.calcPointsByLists(currentUser.mySkills, fiend.desiredSkills, 25);
+
+        return points;
+    }
+
+    getFriendsData(friendsIds) {
+        fetch('users/friends?friendsIds=' + friendsIds, {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(content => {
+                this.setState({
+                    friendsData: content.friends,
+                });
+            })
+            .catch(err => {
+                throw err
+            });
+    }
+
+    calcPointsByLists(firsList,secondList,value){
+        var points =0;
+
+        if (firsList && secondList) {
+            firsList.map(firstsSkill => {
+                secondList.map(secondsSkill => {
+                    if (firstsSkill.id === secondsSkill.id) {
+                        points += value;
+                    }
+                })
+            });
+        }
+
+        return points;
     }
 }
