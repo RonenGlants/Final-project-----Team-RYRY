@@ -17,12 +17,12 @@ export default class FriendInfoModal extends React.Component {
 
         var footer = null;
         var sharedSkillsElement= <div className="title"><label>No mutual skills</label><br/></div>;
-        var skillsThatCanBeTaughtElement= <div className="title">This friend can not teach you any thing<br/></div>;
+        var skillsThatCanBeTaughtElement= <div className="title">This friend can not teach you anything<br/></div>;
         var skillsThatCanBeTaught = this.props.getSkillsThatCanBeTaught(this.props.currentUserId, this.props.id);
         var sharedSkills= this.props.getSharedSkills(this.props.currentUserId, this.props.id);
 
         if(this.props.id === this.props.manager) {
-            footer = <label>Manager</label>;
+            footer = <label>Group Admin</label>;
         }
         else if (this.props.isManager) {
             footer = <Button color="danger" onClick={this.handleRemoveFriend}>Remove Friend</Button>;
@@ -69,6 +69,7 @@ export default class FriendInfoModal extends React.Component {
                     <label>Match Points: {this.props.calcMatchPoints(this.props.currentUserId, this.props.id)}</label>
                     <br/>
                     {sharedSkillsElement}
+                    <br/>
                     {skillsThatCanBeTaughtElement}
                 </ModalBody>
                 <ModalFooter>
