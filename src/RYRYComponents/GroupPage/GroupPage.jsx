@@ -23,6 +23,7 @@ export default class GroupPage extends React.Component {
         this.getFriendsData =this.getFriendsData.bind(this);
         this.getSharedSkills = this.getSharedSkills.bind(this);
         this.getSkillsThatCanBeTaught = this.getSkillsThatCanBeTaught.bind(this);
+        this.leaveGroup = this.leaveGroup.bind(this);
 
         this.state = {
             myFeeds: [],
@@ -61,7 +62,9 @@ export default class GroupPage extends React.Component {
         var startTimeValue = "";
         var endTime = null;
         var startTime = null;
-        if(this.props.startingDate != "" && this.props.startingTime != "" && this.props.endingDate != "" && this.props.endingTime != ""){
+        var leaveGroupButton = null;
+
+        if(this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined){
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
             startTime = <CardSubtitle>Start: {startTimeValue}</CardSubtitle>
             endTimeValue = this.props.endingTime + "  " + this.props.endingDate;
@@ -78,6 +81,9 @@ export default class GroupPage extends React.Component {
             friend = this.props.currentUserName
         }).length == 0) {
             friendRequestButton = <Button onClick={this.friendRequest}>Join group</Button>
+        }
+        else{
+            leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
         }
 
         return (
@@ -102,6 +108,7 @@ export default class GroupPage extends React.Component {
                         <br/>
                         {deleteGroupButton}
                         {friendRequestButton}
+                        {leaveGroupButton}
                     </CardBody>
                 </Card>
                 <br/>
@@ -216,6 +223,23 @@ export default class GroupPage extends React.Component {
 
     onCloseModal() {
         this.setState({friendInfoModal: false});
+    }
+    leaveGroup() {
+        return fetch('/groups/removeUserToGroup', {
+            method: 'POST',
+            body: JSON.stringify({
+                groupName: this.props.name,
+                userId: this.props.currentUserName,
+            }),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with removeUserToGroup")
+                } else {
+                    console.log("403 with removeUserToGroup")
+                }
+            });
     }
 
     removeFriend(friendId) {
