@@ -138,3 +138,7 @@ card-communities-wrapper {
 .user-profile-wrapper {
     width: 200px
 }
+
+.title{
+    font-weight: bold;
+}
