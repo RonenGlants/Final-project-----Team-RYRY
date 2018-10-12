@@ -28,7 +28,7 @@ export default class CreateNewEventModal extends React.Component {
             <div>
                 <ModalHeader>Create new event</ModalHeader>
                 <ModalBody>
-                    <InputContainer myName="eventTitle" labelClassName="event-title-class" labelValue="Event title" type="text" handleMyChange={this.handleChange} />
+                    <InputContainer myName="eventTitle" labelClassName="event-title-class" labelValue="Name" type="text" handleMyChange={this.handleChange} />
                     <InputContainer myName="description" labelClassName="" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingDate" labelClassName="starting-date-class" labelValue="Starting date" type="date" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingTime" labelClassName="starting-time-class" labelValue="Starting time" type="time" handleMyChange={this.handleChange} />
@@ -55,20 +55,27 @@ export default class CreateNewEventModal extends React.Component {
             endingDate: this.state.endingDate,
             endingTime: this.state.endingTime
         }
+        if(this.isEventValid(newEvent)){
+            this.props.onCreateGroup(newEvent).then(isCreated => {
+                if (isCreated === true) {
+                    this.setState({
+                        createEventStatus: 'Event created!'
+                    });
+                    setTimeout(this.handleCancel, 1000);
+                }
+                else {
+                    this.setState({
+                        createEventStatus: 'Event or Community with that title already exists!'
+                    });
+                }
+            });
+        }
+        else{
+            this.setState({
+                createEventStatus: 'One of the fields above is missing'
+            });
+        }
 
-        this.props.onCreateGroup(newEvent).then(isCreated => {
-            if (isCreated === true) {
-                this.setState({
-                    createEventStatus: 'Event created!'
-                });
-                setTimeout(this.handleCancel, 500);
-            }
-            else {
-                this.setState({
-                    createEventStatus: 'Event or Community with that title already exists!'
-                });
-            }
-        });
     }
 
     handleCancel(){
@@ -83,5 +90,14 @@ export default class CreateNewEventModal extends React.Component {
 
     handleChange(name, value){
         this.setState({[name]: value})
+    }
+
+    isEventValid(newEvent){
+        if(newEvent.name != "" && newEvent.description != "" && newEvent.startingDate != "" && newEvent.startingTime != "" && newEvent.endingDate != "" && newEvent.endingTime != ""){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
