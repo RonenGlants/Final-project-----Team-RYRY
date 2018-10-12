@@ -9,7 +9,7 @@ import UserCardDropDownContainer from "../Containers/UserCardDropDownContainer.j
 import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
 import CreateNewCommunityModal from "../Modals/CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "../Modals/CreateNewEventModal.jsx";
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRout} from 'react-router-dom';
 import {Redirect} from 'react-router';
 
 import FriendRequestsModal from "../Modals/FriendRequestsModal.jsx";
@@ -32,7 +32,6 @@ export default class HomePage extends React.Component {
         this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
         this.getAllFeeds = this.getAllFeeds.bind(this);
 
-
         this.state = {
             user: null,
             myCommunities: [],
@@ -41,6 +40,8 @@ export default class HomePage extends React.Component {
             communityModalOpen: false,
             eventModalOpen: false,
             typeForModal: '',
+            mySkills: [],
+            desiredSkills: [],
             redirectGroupPage: false,
             redirectEditProfilePage: false,
             redirectLandingPage: false,
@@ -147,6 +148,10 @@ export default class HomePage extends React.Component {
             .then(content => {
                 console.log("fetching full name succeeded");
                 this.setState({
+                    userFirstName: content.user.firstName,
+                    userLastName: content.user.lastName,
+                    desiredSkills: content.user.desiredSkills,
+                    mySkills: content.user.mySkills,
                     user: content.user,
                 })
             })
