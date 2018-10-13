@@ -98,8 +98,11 @@ module.exports = class DBManager {
             }
         });
         events.sort(function(a,b){
-            return new Date(b.startingTime) - new Date(a.startingTime);
+            var dateA = Utils.getDate(a.startingDate,a.startingTime);
+            var dateB = Utils.getDate(b.startingDate,b.startingTime);
+            return dateA - dateB;
         });
+
         return {events: events, communities: communities};
     }
 
