@@ -94,7 +94,6 @@ export default class SkillsInputContainer extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded")
                 if (this.props.mySkills != undefined && this.props.mySkills) {
                     this.setState({
                         tags: content.user.mySkills,
