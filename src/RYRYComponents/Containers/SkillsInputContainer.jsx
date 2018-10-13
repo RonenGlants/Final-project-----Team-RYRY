@@ -68,6 +68,7 @@ export default class SkillsInputContainer extends React.Component {
             tags: [],
             suggestions: suggestions,
             newUser: true,
+            errMsg: "",
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -124,7 +125,12 @@ export default class SkillsInputContainer extends React.Component {
     }
 
     handleAddition(tag) {
-        this.setState(state => ({tags: [...state.tags, tag]}));
+        if(HobbiesToMap.indexOf(tag.text) != -1) {
+            this.setState(state => ({tags: [...state.tags, tag],errMsg:""}));
+        }
+        else{
+            this.setState(state => ({errMsg:tag.text + " is not a valid skill"}));
+        }
     }
 
     handleDrag(tag, currPos, newPos) {
@@ -156,6 +162,7 @@ export default class SkillsInputContainer extends React.Component {
                     handleDrag={this.handleDrag}
                     handleTagClick={this.handleTagClick}
                 />
+                {this.state.errMsg}
             </div>
         );
     }
