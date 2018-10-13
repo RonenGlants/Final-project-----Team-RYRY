@@ -4,6 +4,14 @@ let dbManager = new DBManager();
 
 const friendRequestManagement = express.Router();
 
+friendRequestManagement.get('/',
+    (req, res) => {
+        res.writeHead(302, {
+            'Location': 'http://localhost:3000/'
+        });
+        res.end();
+    });
+
 friendRequestManagement.get('/requests',
     async (req, res) => {
         let adminId = req.query.adminId;
