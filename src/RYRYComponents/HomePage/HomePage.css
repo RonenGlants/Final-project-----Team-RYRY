@@ -90,9 +90,8 @@ news-feed-col {
     height: 100%;
     width: 500px;
 }
-
 #search-groups{
-    padding-left: 25px;
+    padding-left: -50px;
 }
 
 .row-root {
@@ -126,7 +125,9 @@ card-communities-wrapper {
     font-family: "Arial Black";
     margin: 5px;
 }
-
+.createButton{
+    align: right;
+}
 .modal-root {
     padding-top: 20px;
     margin-top: 20px;

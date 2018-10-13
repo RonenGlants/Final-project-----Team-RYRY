@@ -23,6 +23,7 @@ import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
 import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'react-shapes';
 import '../HomePage/HomePage.css';
 
+
 const avatar1 = <img className="avatar-img" name="Avatar1" src={Avatar1}/>;
 const avatar2 = <img className="avatar-img" name="Avatar2" src={Avatar2}/>;
 const avatar3 = <img className="avatar-img" name="Avatar3" src={Avatar3}/>;
@@ -91,6 +92,7 @@ export default class UserProfilePage extends React.Component {
                 </CardHeader>
                 <CardBody>
                     <Row>
+                        <label>Select avatar </label>
                         <img className="avatar-img" name="Avatar1" src={Avatar1} onClick={this.onAvatarClick}/>
                         <img className="avatar-img" name="Avatar2" src={Avatar2} onClick={this.onAvatarClick}/>
                         <img className="avatar-img" name="Avatar3" src={Avatar3} onClick={this.onAvatarClick}/>
@@ -108,10 +110,10 @@ export default class UserProfilePage extends React.Component {
                         <img className="avatar-img" name="Avatar15" src={Avatar15} onClick={this.onAvatarClick}/>
                         <img className="avatar-img" name="Avatar16" src={Avatar16} onClick={this.onAvatarClick}/>
                     </Row>
+                    <br/>
                     <Row className="edit-profile-row">
                         <Col>
                             First name: {this.state.firstName}
-                            <br/>
                             <Button color="primary" onClick={this.toggleFirstName}>Edit</Button>
                         </Col>
                         <Col>
@@ -129,7 +131,6 @@ export default class UserProfilePage extends React.Component {
                     <Row className="edit-profile-row">
                         <Col>
                             Last name: {this.state.lastName}
-                            <br/>
                             <Button color="primary" onClick={this.toggleLastName}>Edit</Button>
                         </Col>
 
@@ -147,7 +148,6 @@ export default class UserProfilePage extends React.Component {
 
                     <Row>
                         <Col>Gender: {this.state.gender}
-                            <br/>
                             <Button color="primary" onClick={this.handleChange}>Change
                             </Button>
                         </Col>
@@ -167,7 +167,7 @@ export default class UserProfilePage extends React.Component {
                         }} skillsTitle="My Desired Skills"/>
 
                     </Row>
-
+                    <br/>
                     <Button onClick={this.saveChanges} color="primary" className="submit-btn btn">Save changes</Button>
 
                 </CardBody>

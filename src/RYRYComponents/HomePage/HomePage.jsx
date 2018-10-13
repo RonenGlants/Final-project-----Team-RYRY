@@ -233,28 +233,28 @@ export default class HomePage extends React.Component {
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
-                                                               invokeCreateNewCommunity={this.onOpenModalCommunity}
-                                                               invokeCreateNewEvent={this.onOpenModalEvent}
                                                                invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>
                                 </CardBody>
                             </Card>
-                        </Col>
-                        <Col className="feeds-wrapper">
-                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
-                        </Col>
-                        <Col className="groups-wrapper">
+                            <br/>
+                            <br/>
                             <div id="search-groups">
                                 <Search data={this.state.allGroups}
                                         onChange={this.showSelectedGroupPage}
                                         placeholder="Search"
                                         searchKey="name"
-                                        width={300}
+                                        width={200}
                                         height={40}>
                                 </Search>
                             </div>
+                        </Col>
+                        <Col className="feeds-wrapper">
+                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
+                        </Col>
+                        <Col className="groups-wrapper">
                             <div className="card-wrapper">
                                 <Card>
-                                    <CardHeader>My Communities</CardHeader>
+                                    <CardHeader>My Communities <Button className="createButton" onClick={this.onOpenModalCommunity}>+</Button></CardHeader>
                                     <CardBody>
                                         <CommunityListContainer myType="communities"
                                                                 myCommunities={this.state.myCommunities}
@@ -264,7 +264,7 @@ export default class HomePage extends React.Component {
                             </div>
                             <div className="card-wrapper">
                                 <Card>
-                                    <CardHeader>My Events</CardHeader>
+                                    <CardHeader>My Events <Button className="createButton" onClick={this.onOpenModalEvent}>+</Button></CardHeader>
                                     <CardBody>
                                         <CommunityListContainer myType="events" myCommunities={this.state.myEvents}
                                                                 invokeOnGroupClick={this.onGroupClick}/>

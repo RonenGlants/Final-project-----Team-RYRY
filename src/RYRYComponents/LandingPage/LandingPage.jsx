@@ -59,7 +59,7 @@ export default class LandingPage extends React.Component {
 
     getEmptyErrorMessage(value) {
         if (!this.isUsernameValid(value))
-            return "filed can not be empty";
+            return "Field can not be empty";
         else {
             return "";
         }

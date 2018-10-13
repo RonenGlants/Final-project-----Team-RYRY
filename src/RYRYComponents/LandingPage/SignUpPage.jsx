@@ -4,7 +4,7 @@ import InputContainer from "../Containers/InputContainer.jsx";
 import RadioContainer from "../Containers/RadioContainer.jsx";
 import './Style/LandingPage.css';
 import SkillsInputContainer from '../Containers/SkillsInputContainer.jsx';
-import {Button, Card, CardBody, CardHeader, Row, Col} from 'reactstrap';
+import {Button, Card, CardBody, CardHeader, Row, Col, CardText} from 'reactstrap';
 
 export default class SignUpPage extends React.Component {
     constructor(args) {
@@ -50,9 +50,10 @@ export default class SignUpPage extends React.Component {
                     </Col>
                     <Col>
                         <Card body outline color="primary" className="alredySignedUpCard"
-                              style={{width: "80%", height: "60%"}}>
-                            <CardHeader tag="h3">Already signed up</CardHeader>
+                              style={{width: "60%", height: "40%"}}>
+                            <CardHeader tag="h3">Already signed up?</CardHeader>
                             <CardBody>
+                             <CardText>Let's earn new skills and enrich others!</CardText>
                                 <Button color="danger" onClick={this.signInButtonClick}
                                         className="submit-btn btn" type="submit" value="SignIn">Sign In</Button>
                             </CardBody>
