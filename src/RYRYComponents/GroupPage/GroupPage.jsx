@@ -6,7 +6,7 @@ import NewsfeedContainer from "../Containers/NewsfeedContainer.jsx";
 import AddNewsfeedContainer from "../Containers/AddNewsfeedContainer.jsx";
 import './GroupPage.css';
 import FriendInfoModal from "../Modals/FriendInfoModal.jsx";
-import { Redirect } from 'react-router';
+import {Redirect} from 'react-router';
 
 
 export default class GroupPage extends React.Component {
@@ -20,17 +20,18 @@ export default class GroupPage extends React.Component {
         this.removeFriend = this.removeFriend.bind(this);
         this.intervalID = -1;
         this.calcMatchPoints = this.calcMatchPoints.bind(this);
-        this.getFriendsData =this.getFriendsData.bind(this);
+        this.getFriendsData = this.getFriendsData.bind(this);
         this.getSharedSkills = this.getSharedSkills.bind(this);
         this.getSkillsThatCanBeTaught = this.getSkillsThatCanBeTaught.bind(this);
         this.leaveGroup = this.leaveGroup.bind(this);
+        this.isGuest = this.isGuest.bind(this);
 
         this.state = {
             myFeeds: [],
             friendInfoModal: false,
             selectedFriend: null,
             redirect: false,
-            friendsData:[],
+            friendsData: [],
             firstName: "",
             lastName: "",
             joinGroupButton: "Join group",
@@ -52,10 +53,10 @@ export default class GroupPage extends React.Component {
     }
 
     render() {
-        if(this.state.redirect){
+        if (this.state.redirect) {
             clearInterval(this.intervalID);
 
-            return(
+            return (
                 <Redirect push to="/homepage"/>
             )
         }
@@ -68,28 +69,48 @@ export default class GroupPage extends React.Component {
         var startTime = null;
         var leaveGroupButton = null;
         var isGroupAdmin = false;
+        var elementsForFriend = <div>
+            <Card>
+            <CardHeader>Friends List</CardHeader>
+            <CardBody>
+                <FriendsListContainer
+                    currUserId={this.props.currentUserName}
+                    calcFriendScore={this.calcMatchPoints}
+                    myFriends={this.props.friends}
+                    openFriendInfoModal={this.openFriendInfoModal}
+                    friendsData={this.state.friendsData}/>
+            </CardBody>
+        </Card>
+            <br/>
+            <div>
+                <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
+                                      firstName={this.props.userInfo.firstName}
+                                      lastName={this.props.userInfo.lastName}/>
+                <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
+            </div>
+            <br/></div>
 
-        if(this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined){
+        if (this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined) {
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
             startTime = <CardSubtitle>Start: {startTimeValue}</CardSubtitle>
             endTimeValue = this.props.endingTime + "  " + this.props.endingDate;
             endTime = <CardSubtitle>End {endTimeValue}</CardSubtitle>
         }
 
-        if(this.isDateExpired(this.props.endingDate,this.props.endingTime)){
+        if (this.isDateExpired(this.props.endingDate, this.props.endingTime)) {
             dateExpiredLabel = <label> Event is expired </label>
         }
         if (this.props.currentUserName === this.props.manager) {
             deleteGroupButton = <Button onClick={this.deleteGroup}>Delete group</Button>
             isGroupAdmin = true;
         }
-        else if (this.props.friends.filter(friend => {
-            return friend == this.props.currentUserName
-        }).length == 0) {
-            friendRequestButton = <Button disabled={this.state.disableJoinButton} onClick={this.friendRequest}>{this.state.joinGroupButton}</Button>
+        else if (this.isGuest()) {
+            elementsForFriend = null;
+            friendRequestButton = <Button disabled={this.state.disableJoinButton}
+                                          onClick={this.friendRequest}>{this.state.joinGroupButton}</Button>
         }
-        else{
-            if(!isGroupAdmin){
+        else {
+            if (!isGroupAdmin) {
                 leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
             }
         }
@@ -102,8 +123,8 @@ export default class GroupPage extends React.Component {
                                      onRemove={this.removeFriend}
                                      calcMatchPoints={this.calcMatchPoints}
                                      currentUserId={this.props.currentUserName}
-                                     getSharedSkills = {this.getSharedSkills}
-                                     getSkillsThatCanBeTaught = {this.getSkillsThatCanBeTaught}/>
+                                     getSharedSkills={this.getSharedSkills}
+                                     getSkillsThatCanBeTaught={this.getSkillsThatCanBeTaught}/>
                 </Modal>
                 <Card>
                     <CardHeader>{this.props.name}</CardHeader>
@@ -119,29 +140,13 @@ export default class GroupPage extends React.Component {
                         {leaveGroupButton}
                     </CardBody>
                 </Card>
-                <Card>
-                    <CardHeader>Friends List</CardHeader>
-                    <CardBody>
-                        <FriendsListContainer
-                            currUserId={this.props.currentUserName}
-                            calcFriendScore={this.calcMatchPoints}
-                            myFriends={this.props.friends}
-                            openFriendInfoModal={this.openFriendInfoModal}
-                            friendsData = {this.state.friendsData}/>
-                    </CardBody>
-                </Card>
-                <br/>
-                <div>
-                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
-                    <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
-                </div>
-                <br/>
+                {elementsForFriend}
             </div>
         )
     }
 
-    isDateExpired(endDate,endTime){
-        if(endDate != null && endTime != null){
+    isDateExpired(endDate, endTime) {
+        if (endDate != null && endTime != null) {
             var date = endDate.split("-");
             var time = endTime.split(":");
             var year = parseInt(date[0]);
@@ -153,18 +158,19 @@ export default class GroupPage extends React.Component {
             eventEndDate.setFullYear(year, month - 1, day);
             eventEndDate.setHours(hour);
             eventEndDate.setMinutes(min);
-            if(new Date() > eventEndDate){
+            if (new Date() > eventEndDate) {
                 return true;
             }
-            else{
+            else {
                 return false;
             }
 
         }
-        else{
+        else {
             return false;
         }
     }
+
     deleteGroup() {
         return fetch('/groups/deleteGroup', {
             method: 'POST',
@@ -185,7 +191,7 @@ export default class GroupPage extends React.Component {
     }
 
     friendRequest() {
-        this.setState({joinGroupButton : "Request sent",disableJoinButton:true});
+        this.setState({joinGroupButton: "Request sent", disableJoinButton: true});
 
         return fetch('/requests/addRequest', {
             method: 'POST',
@@ -237,6 +243,7 @@ export default class GroupPage extends React.Component {
     onCloseModal() {
         this.setState({friendInfoModal: false});
     }
+
     leaveGroup() {
         return fetch('/groups/removeUserToGroup', {
             method: 'POST',
@@ -367,5 +374,11 @@ export default class GroupPage extends React.Component {
         }
 
         return sharedSkills;
+    }
+
+    isGuest() {
+        return this.props.friends.filter(friend => {
+            return friend == this.props.currentUserName
+        }).length == 0
     }
 }
