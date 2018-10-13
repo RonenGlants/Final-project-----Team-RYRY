@@ -33,6 +33,7 @@ export default class GroupPage extends React.Component {
             friendsData:[],
             firstName: "",
             lastName: "",
+            joinGroupButton: "Join group",
         }
     }
 
@@ -80,7 +81,7 @@ export default class GroupPage extends React.Component {
         else if (this.props.friends.filter(friend => {
             friend = this.props.currentUserName
         }).length == 0) {
-            friendRequestButton = <Button onClick={this.friendRequest}>Join group</Button>
+            friendRequestButton = <Button onClick={this.friendRequest}>{this.state.joinGroupButton}</Button>
         }
         else{
             leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
@@ -174,6 +175,7 @@ export default class GroupPage extends React.Component {
     }
 
     friendRequest() {
+        this.setState({joinGroupButton : "Request sent"});
         return fetch('/requests/addRequest', {
             method: 'POST',
             body: JSON.stringify({
