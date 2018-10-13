@@ -2,8 +2,43 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
 import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+import Avatar1 from '../Resources/avatar1.jpeg';
+import Avatar2 from '../Resources/avatar2.jpeg';
+import Avatar3 from '../Resources/avatar3.jpeg';
+import Avatar4 from '../Resources/avatar4.jpeg';
+import Avatar5 from '../Resources/avatar5.jpeg';
+import Avatar6 from '../Resources/avatar6.jpeg';
+import Avatar7 from '../Resources/avatar7.jpeg';
+import Avatar8 from '../Resources/avatar8.jpeg';
+import Avatar9 from '../Resources/avatar9.jpeg';
+import Avatar10 from '../Resources/avatar10.jpeg';
+import Avatar11 from '../Resources/avatar11.jpeg';
+import Avatar12 from '../Resources/avatar12.jpeg';
+import Avatar13 from '../Resources/avatar13.jpeg';
+import Avatar14 from '../Resources/avatar14.jpeg';
+import Avatar15 from '../Resources/avatar15.jpeg';
+import Avatar16 from '../Resources/avatar16.jpeg';
+
 import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
+import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'react-shapes';
 import '../HomePage/HomePage.css';
+
+const avatar1 = <img className="avatar-img" name="Avatar1" src={Avatar1}/>;
+const avatar2 = <img className="avatar-img" name="Avatar2" src={Avatar2}/>;
+const avatar3 = <img className="avatar-img" name="Avatar3" src={Avatar3}/>;
+const avatar4 = <img className="avatar-img" name="Avatar4" src={Avatar4}/>;
+const avatar5 = <img className="avatar-img" name="Avatar5" src={Avatar5}/>;
+const avatar6 = <img className="avatar-img" name="Avatar6" src={Avatar6}/>;
+const avatar7 = <img className="avatar-img" name="Avatar7" src={Avatar7}/>;
+const avatar8 = <img className="avatar-img" name="Avatar8" src={Avatar8}/>;
+const avatar9 = <img className="avatar-img" name="Avatar9" src={Avatar9}/>;
+const avatar10 = <img className="avatar-img" name="Avatar10" src={Avatar10}/>;
+const avatar11 = <img className="avatar-img" name="Avatar11" src={Avatar11}/>;
+const avatar12 = <img className="avatar-img" name="Avatar12" src={Avatar12}/>;
+const avatar13 = <img className="avatar-img" name="Avatar13" src={Avatar13}/>;
+const avatar14 = <img className="avatar-img" name="Avatar14" src={Avatar14}/>;
+const avatar15 = <img className="avatar-img" name="Avatar15" src={Avatar15}/>;
+const avatar16 = <img className="avatar-img" name="Avatar16" src={Avatar16}/>;
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
@@ -24,8 +59,14 @@ export default class UserProfilePage extends React.Component {
 
             redirect: false,
 
-        }
+            path: '/RYRYComponents/Resources/avatar1.jpeg',
+            myAvatar: avatar1,
 
+        };
+
+
+
+        this.onAvatarClick = this.onAvatarClick.bind(this);
         this.toggleFirstName = this.toggleFirstName.bind(this);
         this.toggleLastName = this.toggleLastName.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
@@ -52,9 +93,28 @@ export default class UserProfilePage extends React.Component {
         return (
             <Card>
                 <CardHeader>
+                    <Button>{this.state.myAvatar}</Button>
                     <Button className="profileImg"><CardImg  src={UserProfileLogo}/></Button>
                 </CardHeader>
                 <CardBody>
+                    <Row>
+                        <img className="avatar-img" name="Avatar1" src={Avatar1} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar2" src={Avatar2} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar3" src={Avatar3} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar4" src={Avatar4} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar5" src={Avatar5} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar6" src={Avatar6} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar7" src={Avatar7} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar8" src={Avatar8} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar9" src={Avatar9} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar10" src={Avatar10} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar11" src={Avatar11} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar12" src={Avatar12} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar13" src={Avatar13} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar14" src={Avatar14} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar15" src={Avatar15} onClick={this.onAvatarClick}/>
+                        <img className="avatar-img" name="Avatar16" src={Avatar16} onClick={this.onAvatarClick}/>
+                    </Row>
                     <Row className="edit-profile-row">
                         <Col>
                             First name: {this.state.firstName}
@@ -118,6 +178,58 @@ export default class UserProfilePage extends React.Component {
             </Card>
         )
     };
+
+    onAvatarClick(element) {
+        if (element.target.name === 'Avatar1') {
+            this.setState({myAvatar: avatar1});
+        }
+        else if (element.target.name === 'Avatar2') {
+            this.setState({myAvatar: avatar2})
+        }
+        else if (element.target.name === 'Avatar3') {
+            this.setState({myAvatar: avatar3})
+        }
+        else if (element.target.name === 'Avatar4') {
+            this.setState({myAvatar: avatar4})
+        }
+        else if (element.target.name === 'Avatar5') {
+            this.setState({myAvatar: avatar5})
+        }
+        else if (element.target.name === 'Avatar6') {
+            this.setState({myAvatar: avatar6})
+        }
+        else if (element.target.name === 'Avatar7') {
+            this.setState({myAvatar: avatar7})
+        }
+        else if (element.target.name === 'Avatar8') {
+            this.setState({myAvatar: avatar8})
+        }
+        else if (element.target.name === 'Avatar9') {
+            this.setState({myAvatar: avatar9})
+        }
+        else if (element.target.name === 'Avatar10') {
+            this.setState({myAvatar: avatar10})
+        }
+        else if (element.target.name === 'Avatar11') {
+            this.setState({myAvatar: avatar11})
+        }
+        else if (element.target.name === 'Avatar12') {
+            this.setState({myAvatar: avatar12})
+        }
+        else if (element.target.name === 'Avatar13') {
+            this.setState({myAvatar: avatar13})
+        }
+        else if (element.target.name === 'Avatar14') {
+            this.setState({myAvatar: avatar14})
+        }
+        else if (element.target.name === 'Avatar15') {
+            this.setState({myAvatar: avatar15})
+        }
+        else {
+            this.setState({myAvatar: avatar16})
+        }
+    }
+
 
     handleChange() {
         this.setState({
