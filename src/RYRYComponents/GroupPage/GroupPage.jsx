@@ -45,7 +45,7 @@ export default class GroupPage extends React.Component {
     componentDidMount() {
         this.intervalID = setInterval(() => {
             this.getFeeds();
-            this.getFriendsData();
+            this.getFriendsData(this.props.friends);
         }, 5000);
     }
 
@@ -63,6 +63,7 @@ export default class GroupPage extends React.Component {
         var endTime = null;
         var startTime = null;
         var leaveGroupButton = null;
+        var isGroupAdmin = false;
 
         if(this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined){
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
@@ -76,14 +77,17 @@ export default class GroupPage extends React.Component {
         }
         if (this.props.currentUserName === this.props.manager) {
             deleteGroupButton = <Button onClick={this.deleteGroup}>Delete group</Button>
+            isGroupAdmin = true;
         }
         else if (this.props.friends.filter(friend => {
-            friend = this.props.currentUserName
+            return friend == this.props.currentUserName
         }).length == 0) {
             friendRequestButton = <Button onClick={this.friendRequest}>Join group</Button>
         }
         else{
-            leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
+            if(!isGroupAdmin){
+                leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
+            }
         }
 
         return (
@@ -235,7 +239,9 @@ export default class GroupPage extends React.Component {
         })
             .then(response => {        // response is the result
                 if (response.ok) {      // ok == 200
-                    console.log("OK with removeUserToGroup")
+                    this.setState({
+                        redirect: true,
+                    });
                 } else {
                     console.log("403 with removeUserToGroup")
                 }
