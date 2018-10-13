@@ -113,8 +113,8 @@ export default class UserProfilePage extends React.Component {
                     <br/>
                     <Row className="edit-profile-row">
                         <Col>
+                            <Button className="input-change-button" color="primary" onClick={this.toggleFirstName}>Edit</Button>
                             First name: {this.state.firstName}
-                            <Button color="primary" onClick={this.toggleFirstName}>Edit</Button>
                         </Col>
                         <Col>
                             <Fade in={this.state.firstNameInput} tag="h5" className="mt-3">
@@ -130,8 +130,8 @@ export default class UserProfilePage extends React.Component {
 
                     <Row className="edit-profile-row">
                         <Col>
+                            <Button className="input-change-button" color="primary" onClick={this.toggleLastName}>Edit</Button>
                             Last name: {this.state.lastName}
-                            <Button color="primary" onClick={this.toggleLastName}>Edit</Button>
                         </Col>
 
                         <Col>
@@ -147,20 +147,19 @@ export default class UserProfilePage extends React.Component {
                     </Row>
 
                     <Row>
+                        <Button className="input-change-button" color="primary" onClick={this.handleChange}>Change</Button>
                         <Col>Gender: {this.state.gender}
-                            <Button color="primary" onClick={this.handleChange}>Change
-                            </Button>
                         </Col>
                     </Row>
 
                     <br/>
                     <Row>
 
-                        <SkillsInputContainer myClass="skills-top" mySkills={true} userName={this.props.userName}
+                        <SkillsInputContainer myClass="skills-edit-wrapper skills-top" mySkills={true} userName={this.props.userName}
                                               newUser={false} tags={this.state.mySkills} ref={(mySkillsCont) => {
                             window.mySkillsCont = mySkillsCont
                         }} skillsTitle="My Skills"/>
-                        <SkillsInputContainer myClass="skills-bottom" desiredSkills={true}
+                        <SkillsInputContainer myClass="skills-edit-wrapper skills-bottom" desiredSkills={true}
                                               userName={this.props.userName} getUser={this.getUser} newUser={false}
                                               tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
                             window.desiredSkillsCont = desiredSkillsCont

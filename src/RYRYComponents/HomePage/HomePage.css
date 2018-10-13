@@ -161,3 +161,13 @@ card-communities-wrapper {
 .title{
     font-weight: bold;
 }
+
+.input-change-button{
+    margin-right: 20px;
+}
+
+.skills-edit-wrapper{
+    border-color: black;
+    border-style: double;
+    padding: 10px;
+}

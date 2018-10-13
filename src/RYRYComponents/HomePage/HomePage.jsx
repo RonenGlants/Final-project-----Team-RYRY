@@ -83,7 +83,7 @@ export default class HomePage extends React.Component {
             this.getAllFeeds();
             this.getCommunitiesAndEvents();
             this.getAllGroups();
-        }, 1000);
+        }, 3000);
     }
 
     getCommunitiesAndEvents() {
