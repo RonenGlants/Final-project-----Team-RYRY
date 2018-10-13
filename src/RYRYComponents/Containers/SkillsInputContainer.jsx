@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../LandingPage/Style/LandingPage.css';
 import {WithContext as ReactTags} from 'react-tag-input';
-import '../LandingPage/Style/LandingPage.css';
 //import ReactTags from 'react-tag-autocomplete';
 
 const HobbiesToMap = [
@@ -149,8 +148,10 @@ export default class SkillsInputContainer extends React.Component {
 
     render() {
         const {tags, suggestions} = this.state;
+        var className = this.props.myClass + " " +"skills-edit-wrapper";
+
         return (
-            <div className={this.props.myClass}> {this.props.skillsTitle}:
+            <div className={className}> {this.props.skillsTitle}:
                 <ReactTags
                     tags={tags}
                     suggestions={suggestions}

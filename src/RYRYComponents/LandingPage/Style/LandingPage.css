@@ -108,6 +108,12 @@ label.errMessage{
   color: #cc0000;
 }
 
+.skills-edit-wrapper {
+  border-color: black;
+  border-style: double;
+  padding: 10px;
+}
+
 div.signup-page-wrapper {
   position: relative;
 }
