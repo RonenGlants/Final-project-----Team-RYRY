@@ -48,7 +48,7 @@ export default class GroupPage extends React.Component {
         this.intervalID = setInterval(() => {
             this.getFeeds();
             this.getFriendsData(this.props.friends);
-        }, 5000);
+        }, 1000);
     }
 
     render() {

@@ -63,6 +63,8 @@ export default class HomePage extends React.Component {
     componentDidMount() {
         setInterval(() => {
             this.getAllFeeds();
+            this.getCommunitiesAndEvents();
+            this.getAllGroups();
         }, 1000);
     }
 
