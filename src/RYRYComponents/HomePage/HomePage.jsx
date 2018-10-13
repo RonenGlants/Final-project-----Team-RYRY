@@ -48,6 +48,7 @@ export default class HomePage extends React.Component {
             redirectLandingPage: false,
             friendRequestsModalOpen: false,
             allGroups: [],
+            avatarNumber: 1,
         }
     }
 
@@ -283,7 +284,7 @@ export default class HomePage extends React.Component {
     }
 
     userProfileClick() {
-        this.props.showUserProfile();
+        this.props.showUserProfile(this.state.avatarNumber);
         this.setState({redirectEditProfilePage: true});
     }
 
