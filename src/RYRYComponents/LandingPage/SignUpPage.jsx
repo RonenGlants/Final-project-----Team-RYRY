@@ -82,6 +82,7 @@ export default class SignUpPage extends React.Component {
             gender: gender,
             mySkills: mySkills,
             desiredSkills: desiredSkills,
+            avatarNumber: "1",
         }
         if (this.props.isSignupValid(newUser.userName, newUser.password)) {
             return fetch('/users/signUpUser', {

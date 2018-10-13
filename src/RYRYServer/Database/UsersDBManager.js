@@ -76,6 +76,7 @@ module.exports = class UsersDBManager {
                 gender: user.gender,
                 mySkills: user.mySkills,
                 desiredSkills: user.desiredSkills,
+                avatarNumber: user.avatarNumber,
             }
             );
         return status;

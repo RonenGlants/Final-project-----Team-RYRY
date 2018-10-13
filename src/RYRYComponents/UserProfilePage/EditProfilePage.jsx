@@ -46,21 +46,14 @@ export default class UserProfilePage extends React.Component {
         this.state = {
             firstName: null,
             firstNameInput: false,
-
             lastName: null,
             lastNameInput: false,
-
             gender: null,
-
             mySkills: [],
             desiredSkills: [],
-
             desiredSkillsInput: false,
-
             redirect: false,
-
-            path: '/RYRYComponents/Resources/avatar1.jpeg',
-            myAvatar: avatar1,
+            avatarNumber: 1,
 
         };
 
@@ -70,6 +63,7 @@ export default class UserProfilePage extends React.Component {
         this.toggleLastName = this.toggleLastName.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.setMyAvatar = this.setMyAvatar.bind(this);
     }
 
     componentWillMount() {
@@ -93,7 +87,7 @@ export default class UserProfilePage extends React.Component {
         return (
             <Card>
                 <CardHeader>
-                    <Button>{this.state.myAvatar}</Button>
+                    <Button>{this.getAvatarByNumber(this.state.avatarNumber)}</Button>
                 </CardHeader>
                 <CardBody>
                     <Row>
@@ -182,11 +176,9 @@ export default class UserProfilePage extends React.Component {
     };
 
     onAvatarClick(element) {
-        var avatar = this.getAvatarByNumber(
-            element.target.name.replace( /^\D+/g, '')  // get stringed number
-        );
+        var avatarNumber = element.target.name.replace(/^\D+/g, '');  // get stringed number
 
-        this.setState({myAvatar: avatar});
+        this.setState({avatarNumber: avatarNumber});
     }
 
 
@@ -209,7 +201,6 @@ export default class UserProfilePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded")
                 this.setState({
                     firstName: content.user.firstName,
                     lastName: content.user.lastName,
@@ -247,6 +238,7 @@ export default class UserProfilePage extends React.Component {
                 mySkills: window.mySkillsCont.getTags(),
                 desiredSkills: window.desiredSkillsCont.getTags(),
                 gender: this.state.gender,
+                avatarNumber: this.state.avatarNumber,
             }),
             credentials: 'include'
 
@@ -263,7 +255,7 @@ export default class UserProfilePage extends React.Component {
     }
 
     setMyAvatar() {
-        this.state.myAvatar = this.props.avatarNumber
+        this.state.avatarNumber = this.props.avatarNumber.toString();
     }
 
     getAvatarByNumber(number) {
