@@ -17,6 +17,11 @@ export default class NewsfeedContainer extends React.Component {
                     if(this.props.showGroupName){
                         groupName = <CardText className="feed-group-name">Group: {feed.groupName}</CardText>
                     }
+                    var year = feed.postTime.split("T")[0];
+                    var time = feed.postTime.split("T")[1];
+                    var hr = time.split(":")[0];
+                    var min = time.split(":")[1];
+
                     return (
                         <div className="feed-wrapper">
                             <Card width="100px">
@@ -24,7 +29,7 @@ export default class NewsfeedContainer extends React.Component {
                                     {groupName}
                                     <CardText className="feed-user-name">Name: {feed.userFirstName} {feed.userLastName}</CardText>
                                     <CardText className="feed-text">Message: {feed.feed}</CardText>
-                                    <small className="text-muted">Post time {feed.postTime}</small>
+                                    <small className="text-muted">Post time {hr}:{min}   {year}</small>
                                 </CardBody>
                             </Card>
                         </div>

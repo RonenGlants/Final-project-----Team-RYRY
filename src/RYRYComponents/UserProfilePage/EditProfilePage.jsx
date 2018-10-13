@@ -24,22 +24,22 @@ import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'r
 import '../HomePage/HomePage.css';
 
 
-const avatar1 = <img className="avatar-img" name="Avatar1" src={Avatar1}/>;
-const avatar2 = <img className="avatar-img" name="Avatar2" src={Avatar2}/>;
-const avatar3 = <img className="avatar-img" name="Avatar3" src={Avatar3}/>;
-const avatar4 = <img className="avatar-img" name="Avatar4" src={Avatar4}/>;
-const avatar5 = <img className="avatar-img" name="Avatar5" src={Avatar5}/>;
-const avatar6 = <img className="avatar-img" name="Avatar6" src={Avatar6}/>;
-const avatar7 = <img className="avatar-img" name="Avatar7" src={Avatar7}/>;
-const avatar8 = <img className="avatar-img" name="Avatar8" src={Avatar8}/>;
-const avatar9 = <img className="avatar-img" name="Avatar9" src={Avatar9}/>;
-const avatar10 = <img className="avatar-img" name="Avatar10" src={Avatar10}/>;
-const avatar11 = <img className="avatar-img" name="Avatar11" src={Avatar11}/>;
-const avatar12 = <img className="avatar-img" name="Avatar12" src={Avatar12}/>;
-const avatar13 = <img className="avatar-img" name="Avatar13" src={Avatar13}/>;
-const avatar14 = <img className="avatar-img" name="Avatar14" src={Avatar14}/>;
-const avatar15 = <img className="avatar-img" name="Avatar15" src={Avatar15}/>;
-const avatar16 = <img className="avatar-img" name="Avatar16" src={Avatar16}/>;
+const avatar1 = <img className="avatar-imgMain" name="Avatar1" src={Avatar1}/>;
+const avatar2 = <img className="avatar-imgMain" name="Avatar2" src={Avatar2}/>;
+const avatar3 = <img className="avatar-imgMain" name="Avatar3" src={Avatar3}/>;
+const avatar4 = <img className="avatar-imgMain" name="Avatar4" src={Avatar4}/>;
+const avatar5 = <img className="avatar-imgMain" name="Avatar5" src={Avatar5}/>;
+const avatar6 = <img className="avatar-imgMain" name="Avatar6" src={Avatar6}/>;
+const avatar7 = <img className="avatar-imgMain" name="Avatar7" src={Avatar7}/>;
+const avatar8 = <img className="avatar-imgMain" name="Avatar8" src={Avatar8}/>;
+const avatar9 = <img className="avatar-imgMain" name="Avatar9" src={Avatar9}/>;
+const avatar10 = <img className="avatar-imgMain" name="Avatar10" src={Avatar10}/>;
+const avatar11 = <img className="avatar-imgMain" name="Avatar11" src={Avatar11}/>;
+const avatar12 = <img className="avatar-imgMain" name="Avatar12" src={Avatar12}/>;
+const avatar13 = <img className="avatar-imgMain" name="Avatar13" src={Avatar13}/>;
+const avatar14 = <img className="avatar-imgMain" name="Avatar14" src={Avatar14}/>;
+const avatar15 = <img className="avatar-imgMain" name="Avatar15" src={Avatar15}/>;
+const avatar16 = <img className="avatar-imgMain" name="Avatar16" src={Avatar16}/>;
 
 export default class UserProfilePage extends React.Component {
     constructor(args) {
