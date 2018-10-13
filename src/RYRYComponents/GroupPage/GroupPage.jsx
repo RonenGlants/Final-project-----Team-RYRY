@@ -117,20 +117,23 @@ export default class GroupPage extends React.Component {
                         {leaveGroupButton}
                     </CardBody>
                 </Card>
+                <Card>
+                    <CardHeader>Friends List</CardHeader>
+                    <CardBody>
+                        <FriendsListContainer
+                            currUserId={this.props.currentUserName}
+                            calcFriendScore={this.calcMatchPoints}
+                            myFriends={this.props.friends}
+                            openFriendInfoModal={this.openFriendInfoModal}
+                            friendsData = {this.state.friendsData}/>
+                    </CardBody>
+                </Card>
                 <br/>
                 <div>
                     <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
                     <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
                 </div>
                 <br/>
-                <Card>
-                    <CardHeader>Friends List</CardHeader>
-                    <CardBody>
-                        <FriendsListContainer myFriends={this.props.friends}
-                                              openFriendInfoModal={this.openFriendInfoModal}
-                                              friendsData = {this.state.friendsData}/>
-                    </CardBody>
-                </Card>
             </div>
         )
     }
