@@ -45,7 +45,7 @@ export default class LoginPage extends React.Component {
                 </Col>
                 <Col sm={{size: 'auto', offset: 1}} className="login-page-not-signed-yet">
                     <Card body outline color="primary" className="notSignedYetCard"
-                          style={{width: "80%", height: "60%"}}>
+                          style={{width: "80%", height: "65%"}}>
                         <CardHeader tag="h3">Not signed yet?</CardHeader>
                         <CardBody>
                             <CardText>Join us to earn new skills and enrich others</CardText>

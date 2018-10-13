@@ -11,6 +11,22 @@ import CreateNewCommunityModal from "../Modals/CreateNewCommunityModal.jsx";
 import CreateNewEventModal from "../Modals/CreateNewEventModal.jsx";
 import {BrowserRout} from 'react-router-dom';
 import {Redirect} from 'react-router';
+import Avatar1 from '../Resources/avatar1.jpeg';
+import Avatar2 from '../Resources/avatar2.jpeg';
+import Avatar3 from '../Resources/avatar3.jpeg';
+import Avatar4 from '../Resources/avatar4.jpeg';
+import Avatar5 from '../Resources/avatar5.jpeg';
+import Avatar6 from '../Resources/avatar6.jpeg';
+import Avatar7 from '../Resources/avatar7.jpeg';
+import Avatar8 from '../Resources/avatar8.jpeg';
+import Avatar9 from '../Resources/avatar9.jpeg';
+import Avatar10 from '../Resources/avatar10.jpeg';
+import Avatar11 from '../Resources/avatar11.jpeg';
+import Avatar12 from '../Resources/avatar12.jpeg';
+import Avatar13 from '../Resources/avatar13.jpeg';
+import Avatar14 from '../Resources/avatar14.jpeg';
+import Avatar15 from '../Resources/avatar15.jpeg';
+import Avatar16 from '../Resources/avatar16.jpeg';
 
 import FriendRequestsModal from "../Modals/FriendRequestsModal.jsx";
 
@@ -32,6 +48,7 @@ export default class HomePage extends React.Component {
         this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
         this.getAllFeeds = this.getAllFeeds.bind(this);
         this.deleteAllDBs = this.deleteAllDBs.bind(this);
+        this.getLogoByNumber = this.getLogoByNumber.bind(this);
 
         this.state = {
             user: null,
@@ -48,6 +65,8 @@ export default class HomePage extends React.Component {
             redirectLandingPage: false,
             friendRequestsModalOpen: false,
             allGroups: [],
+            avatarNumber: "1",
+            userProfileLogo: UserProfileLogo,
         }
     }
 
@@ -79,7 +98,6 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching all groups succeeded")
                 this.setState({
                     myCommunities: content.communities,
                     myEvents: content.events,
@@ -148,13 +166,14 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded");
                 this.setState({
                     userFirstName: content.user.firstName,
                     userLastName: content.user.lastName,
                     desiredSkills: content.user.desiredSkills,
                     mySkills: content.user.mySkills,
                     user: content.user,
+                    avatarNumber: content.user.avatarNumber || "1",
+                    userProfileLogo: this.getLogoByNumber(content.user.avatarNumber),
                 })
             })
             .catch(err => {
@@ -207,7 +226,7 @@ export default class HomePage extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <Button onClick={this.userProfileClick}><CardImg top width="100%"
-                                                                                     src={UserProfileLogo}/></Button>
+                                                                                     src={this.state.userProfileLogo}/></Button>
                                     Hello, {firstName} {lastName}
                                 </CardHeader>
                                 <CardBody>
@@ -227,8 +246,11 @@ export default class HomePage extends React.Component {
                             <div id="search-groups">
                                 <Search data={this.state.allGroups}
                                         onChange={this.showSelectedGroupPage}
-                                        placeholder="Search Group"
-                                        searchKey="name"></Search>
+                                        placeholder="Search"
+                                        searchKey="name"
+                                        width={300}
+                                        height={40}>
+                                </Search>
                             </div>
                             <div className="card-wrapper">
                                 <Card>
@@ -285,7 +307,7 @@ export default class HomePage extends React.Component {
     }
 
     userProfileClick() {
-        this.props.showUserProfile();
+        this.props.showUserProfile(this.state.avatarNumber);
         this.setState({redirectEditProfilePage: true});
     }
 
@@ -340,9 +362,7 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching all group names succeeded");
-
-                this.setState({
+              this.setState({
                     allGroups: content.allGroups,
                 })
             })
@@ -371,5 +391,41 @@ export default class HomePage extends React.Component {
                 console.log("delete all DBs : response not ok")
             }
         });
+    }
+
+    getLogoByNumber(number) {
+        if (number === "1") {
+            return Avatar1
+        } else if (number === "2") {
+            return Avatar2
+        } else if (number === "3") {
+            return Avatar3
+        } else if (number === "4") {
+            return Avatar4
+        } else if (number === "5") {
+            return Avatar5
+        } else if (number === "6") {
+            return Avatar6
+        } else if (number === "7") {
+            return Avatar7
+        } else if (number === "8") {
+            return Avatar8
+        } else if (number === "9") {
+            return Avatar9
+        } else if (number === "10") {
+            return Avatar10
+        } else if (number === "11") {
+            return Avatar11
+        } else if (number === "12") {
+            return Avatar12
+        } else if (number === "13") {
+            return Avatar13
+        } else if (number === "14") {
+            return Avatar14
+        } else if (number === "15") {
+            return Avatar15
+        } else {
+            return Avatar16
+        }
     }
 }

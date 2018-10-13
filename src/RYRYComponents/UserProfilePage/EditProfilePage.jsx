@@ -46,24 +46,16 @@ export default class UserProfilePage extends React.Component {
         this.state = {
             firstName: null,
             firstNameInput: false,
-
             lastName: null,
             lastNameInput: false,
-
             gender: null,
-
             mySkills: [],
             desiredSkills: [],
-
             desiredSkillsInput: false,
-
             redirect: false,
-
-            path: '/RYRYComponents/Resources/avatar1.jpeg',
-            myAvatar: avatar1,
+            avatarNumber: 1,
 
         };
-
 
 
         this.onAvatarClick = this.onAvatarClick.bind(this);
@@ -71,10 +63,12 @@ export default class UserProfilePage extends React.Component {
         this.toggleLastName = this.toggleLastName.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.setMyAvatar = this.setMyAvatar.bind(this);
     }
 
     componentWillMount() {
         this.getUser();
+        this.setMyAvatar();
     }
 
 
@@ -85,16 +79,15 @@ export default class UserProfilePage extends React.Component {
     }
 
     render() {
-        if(this.state.redirect){
-            return(
+        if (this.state.redirect) {
+            return (
                 <Redirect push to="/homepage"/>
             )
         }
         return (
             <Card>
                 <CardHeader>
-                    <Button>{this.state.myAvatar}</Button>
-                    <Button className="profileImg"><CardImg  src={UserProfileLogo}/></Button>
+                    <Button>{this.getAvatarByNumber(this.state.avatarNumber)}</Button>
                 </CardHeader>
                 <CardBody>
                     <Row>
@@ -128,7 +121,7 @@ export default class UserProfilePage extends React.Component {
                                         this.setState({
                                             firstName: event.target.value,
                                         })}/>
-                                  </form>
+                                </form>
                             </Fade>
                         </Col>
                     </Row>
@@ -142,7 +135,7 @@ export default class UserProfilePage extends React.Component {
 
                         <Col>
                             <Fade in={this.state.lastNameInput} tag="h5" className="mt-3">
-                                <form >
+                                <form>
                                     <input onChange={(event) =>
                                         this.setState({
                                             lastName: event.target.value,
@@ -163,12 +156,15 @@ export default class UserProfilePage extends React.Component {
                     <br/>
                     <Row>
 
-                            <SkillsInputContainer myClass="skills-top" mySkills = {true} userName = {this.props.userName} newUser = {false} tags={this.state.mySkills} ref={(mySkillsCont) => {
-                                window.mySkillsCont = mySkillsCont
-                            }} skillsTitle="My Skills"/>
-                            <SkillsInputContainer myClass="skills-bottom" desiredSkills = {true} userName = {this.props.userName} getUser = {this.getUser} newUser = {false} tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
-                                window.desiredSkillsCont = desiredSkillsCont
-                            }} skillsTitle="My Desired Skills"/>
+                        <SkillsInputContainer myClass="skills-top" mySkills={true} userName={this.props.userName}
+                                              newUser={false} tags={this.state.mySkills} ref={(mySkillsCont) => {
+                            window.mySkillsCont = mySkillsCont
+                        }} skillsTitle="My Skills"/>
+                        <SkillsInputContainer myClass="skills-bottom" desiredSkills={true}
+                                              userName={this.props.userName} getUser={this.getUser} newUser={false}
+                                              tags={this.state.desiredSkills} ref={(desiredSkillsCont) => {
+                            window.desiredSkillsCont = desiredSkillsCont
+                        }} skillsTitle="My Desired Skills"/>
 
                     </Row>
 
@@ -180,54 +176,9 @@ export default class UserProfilePage extends React.Component {
     };
 
     onAvatarClick(element) {
-        if (element.target.name === 'Avatar1') {
-            this.setState({myAvatar: avatar1});
-        }
-        else if (element.target.name === 'Avatar2') {
-            this.setState({myAvatar: avatar2})
-        }
-        else if (element.target.name === 'Avatar3') {
-            this.setState({myAvatar: avatar3})
-        }
-        else if (element.target.name === 'Avatar4') {
-            this.setState({myAvatar: avatar4})
-        }
-        else if (element.target.name === 'Avatar5') {
-            this.setState({myAvatar: avatar5})
-        }
-        else if (element.target.name === 'Avatar6') {
-            this.setState({myAvatar: avatar6})
-        }
-        else if (element.target.name === 'Avatar7') {
-            this.setState({myAvatar: avatar7})
-        }
-        else if (element.target.name === 'Avatar8') {
-            this.setState({myAvatar: avatar8})
-        }
-        else if (element.target.name === 'Avatar9') {
-            this.setState({myAvatar: avatar9})
-        }
-        else if (element.target.name === 'Avatar10') {
-            this.setState({myAvatar: avatar10})
-        }
-        else if (element.target.name === 'Avatar11') {
-            this.setState({myAvatar: avatar11})
-        }
-        else if (element.target.name === 'Avatar12') {
-            this.setState({myAvatar: avatar12})
-        }
-        else if (element.target.name === 'Avatar13') {
-            this.setState({myAvatar: avatar13})
-        }
-        else if (element.target.name === 'Avatar14') {
-            this.setState({myAvatar: avatar14})
-        }
-        else if (element.target.name === 'Avatar15') {
-            this.setState({myAvatar: avatar15})
-        }
-        else {
-            this.setState({myAvatar: avatar16})
-        }
+        var avatarNumber = element.target.name.replace(/^\D+/g, '');  // get stringed number
+
+        this.setState({avatarNumber: avatarNumber});
     }
 
 
@@ -250,7 +201,6 @@ export default class UserProfilePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-                console.log("fetching full name succeeded")
                 this.setState({
                     firstName: content.user.firstName,
                     lastName: content.user.lastName,
@@ -288,6 +238,7 @@ export default class UserProfilePage extends React.Component {
                 mySkills: window.mySkillsCont.getTags(),
                 desiredSkills: window.desiredSkillsCont.getTags(),
                 gender: this.state.gender,
+                avatarNumber: this.state.avatarNumber,
             }),
             credentials: 'include'
 
@@ -301,5 +252,45 @@ export default class UserProfilePage extends React.Component {
                     console.log("403 with profile update")
                 }
             });
+    }
+
+    setMyAvatar() {
+        this.state.avatarNumber = this.props.avatarNumber.toString();
+    }
+
+    getAvatarByNumber(number) {
+        if (number === "1") {
+            return avatar1
+        } else if (number === "2") {
+            return avatar2
+        } else if (number === "3") {
+            return avatar3
+        } else if (number === "4") {
+            return avatar4
+        } else if (number === "5") {
+            return avatar5
+        } else if (number === "6") {
+            return avatar6
+        } else if (number === "7") {
+            return avatar7
+        } else if (number === "8") {
+            return avatar8
+        } else if (number === "9") {
+            return avatar9
+        } else if (number === "10") {
+            return avatar10
+        } else if (number === "11") {
+            return avatar11
+        } else if (number === "12") {
+            return avatar12
+        } else if (number === "13") {
+            return avatar13
+        } else if (number === "14") {
+            return avatar14
+        } else if (number === "15") {
+            return avatar15
+        } else {
+            return avatar16
+        }
     }
 }

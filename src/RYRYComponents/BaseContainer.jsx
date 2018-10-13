@@ -27,8 +27,8 @@ export default class BaseContainer extends React.Component {
             password: '',
             groupName: '',
             group: null,
-            user: null
-
+            user: null,
+            avatarNumber: 1,
         };
     }
 
@@ -41,7 +41,7 @@ export default class BaseContainer extends React.Component {
                 <Switch>
                     <Route exact path="/" render={() => <LandingPage handleAuthenticatedUser={this.handleAuthenticatedUser}/>}/>
                     <Route path="/homepage" render={() => <HomePage userName={this.state.userName} showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut} showGroupPage={this.showGroupPage}/>}/>
-                    <Route path="/editprofile" render={() => <EditProfilePage userName={this.state.userName} password={this.state.password} />}/>
+                    <Route path="/editprofile" render={() => <EditProfilePage userName={this.state.userName} password={this.state.password} avatarNumber={this.state.avatarNumber}/>}/>
                     <Route path="/grouppage" render={() => <GroupPage {...this.state.group} userInfo={this.state.user}/>}/>
                 </Switch>
             </div>
@@ -73,8 +73,9 @@ export default class BaseContainer extends React.Component {
         })
     }
 
-    showUserProfile() {
+    showUserProfile(avatarNumber) {
         this.setState(() => ({
+            avatarNumber: avatarNumber,
             pageType: this.editProfilePage,
         }));
     }

@@ -4,6 +4,14 @@ let dbManager = new DBManager();
 
 const userManagement = express.Router();
 
+userManagement.get('/',
+    (req, res) => {
+        res.writeHead(302, {
+            'Location': 'http://localhost:3000/'
+        });
+        res.end();
+    });
+
 userManagement.post('/signUpUser',
     async (req, res) => {
         let body = JSON.parse(req.body);

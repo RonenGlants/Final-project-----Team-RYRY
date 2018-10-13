@@ -4,6 +4,14 @@ let dbManager = new DBManager();
 
 const groupManagement = express.Router();
 
+groupManagement.get('/',
+    (req, res) => {
+        res.writeHead(302, {
+            'Location': 'http://localhost:3000/'
+        });
+        res.end();
+    });
+
 groupManagement.get('/usersGroups',
     async (req, res) => {
         let userName = req.query.userName;
