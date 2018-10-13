@@ -126,9 +126,12 @@ export default class GroupPage extends React.Component {
                 <Card>
                     <CardHeader>Friends List</CardHeader>
                     <CardBody>
-                        <FriendsListContainer myFriends={this.props.friends}
-                                              openFriendInfoModal={this.openFriendInfoModal}
-                                              friendsData = {this.state.friendsData}/>
+                        <FriendsListContainer
+                            currUserId={this.props.currentUserName}
+                            calcFriendScore={this.calcMatchPoints}
+                            myFriends={this.props.friends}
+                            openFriendInfoModal={this.openFriendInfoModal}
+                            friendsData = {this.state.friendsData}/>
                     </CardBody>
                 </Card>
             </div>
