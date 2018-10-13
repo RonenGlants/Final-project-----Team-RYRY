@@ -47,7 +47,6 @@ export default class HomePage extends React.Component {
             redirectLandingPage: false,
             friendRequestsModalOpen: false,
             allGroups: [],
-
         }
     }
 
@@ -163,7 +162,7 @@ export default class HomePage extends React.Component {
     render() {
         var firstName, lastName;
 
-        if(this.state.user) {
+        if (this.state.user) {
             firstName = this.state.user.firstName;
             lastName = this.state.user.lastName;
         }
@@ -178,7 +177,7 @@ export default class HomePage extends React.Component {
                 <Redirect push to="editprofile"/>
             )
         }
-        if(this.state.redirectLandingPage){
+        if (this.state.redirectLandingPage) {
             return (
                 <Redirect push to="/"/>
             )
@@ -222,9 +221,12 @@ export default class HomePage extends React.Component {
                             <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
                         </Col>
                         <Col className="groups-wrapper">
-                            <Search data={this.state.allGroups} onChange={this.showSelectedGroupPage}
-                                    placeholder="Search Group"
-                                    searchKey="name"></Search>
+                            <div id="search-groups">
+                                <Search data={this.state.allGroups}
+                                        onChange={this.showSelectedGroupPage}
+                                        placeholder="Search Group"
+                                        searchKey="name"></Search>
+                            </div>
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>My Communities</CardHeader>
@@ -270,7 +272,7 @@ export default class HomePage extends React.Component {
             })
         }
 
-        this.props.showGroupPage(groupName, group,this.state.user);
+        this.props.showGroupPage(groupName, group, this.state.user);
         this.setState({redirectGroupPage: true});
     }
 
@@ -346,7 +348,7 @@ export default class HomePage extends React.Component {
     };
 
     showSelectedGroupPage(selectedGroup) {
-        this.props.showGroupPage(selectedGroup.name, selectedGroup,this.state.user);
+        this.props.showGroupPage(selectedGroup.name, selectedGroup, this.state.user);
         this.setState({redirectGroupPage: true});
     }
 

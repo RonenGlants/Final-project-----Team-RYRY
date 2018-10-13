@@ -38,6 +38,11 @@ community-root {
     z-index: 2;
 }
 
+.avatar-img{
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+}
 /*.skills-bottom{
     z-index: 1;
 }*/
@@ -84,6 +89,10 @@ news-feed-col {
     background-color: #bfbfbf;
     height: 100%;
     width: 500px;
+}
+
+#search-groups{
+    padding-left: 25px;
 }
 
 .row-root {
