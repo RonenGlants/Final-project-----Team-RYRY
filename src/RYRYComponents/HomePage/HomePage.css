@@ -86,6 +86,10 @@ news-feed-col {
     width: 500px;
 }
 
+#search-groups{
+    padding-left: 25px;
+}
+
 .row-root {
     width: 100%;
     -webkit-flex: 1; /* Safari 6.1+ */
