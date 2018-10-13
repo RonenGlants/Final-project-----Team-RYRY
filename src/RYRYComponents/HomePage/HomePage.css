@@ -6,6 +6,10 @@ base-container-root {
     background-color: #EEEEE0;
 }
 
+.user-profile-page-wrapper{
+    background-color: #EEEEE0;
+}
+
 .base-container-menu {
     margin-top: 0px;
     width: 100%;
@@ -166,6 +170,8 @@ card-communities-wrapper {
 
 .title {
     font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .input-change-button {

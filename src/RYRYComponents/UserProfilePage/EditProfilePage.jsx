@@ -18,9 +18,7 @@ import Avatar13 from '../Resources/avatar13.jpeg';
 import Avatar14 from '../Resources/avatar14.jpeg';
 import Avatar15 from '../Resources/avatar15.jpeg';
 import Avatar16 from '../Resources/avatar16.jpeg';
-
 import SkillsInputContainer from "../Containers/SkillsInputContainer.jsx";
-import {Rectangle, Circle, Ellipse, Line, Polyline, CornerBox, Triangle} from 'react-shapes';
 import '../HomePage/HomePage.css';
 
 
@@ -86,13 +84,13 @@ export default class UserProfilePage extends React.Component {
             )
         }
         return (
-            <Card>
+            <Card className="user-profile-page-wrapper">
                 <CardHeader>
                     <Button>{this.getAvatarByNumber(this.state.avatarNumber)}</Button>
                 </CardHeader>
                 <CardBody>
                     <Row>
-                        <label>Select avatar </label>
+                        <label className="title">Select avatar</label>
                         <img className="avatar-img" name="Avatar1" src={Avatar1} onClick={this.onAvatarClick}/>
                         <img className="avatar-img" name="Avatar2" src={Avatar2} onClick={this.onAvatarClick}/>
                         <img className="avatar-img" name="Avatar3" src={Avatar3} onClick={this.onAvatarClick}/>
@@ -114,7 +112,8 @@ export default class UserProfilePage extends React.Component {
                     <Row className="edit-profile-row">
                         <Col>
                             <Button className="input-change-button" color="primary" onClick={this.toggleFirstName}>Edit</Button>
-                            First name: {this.state.firstName}
+                            <label>First name: </label>
+                            <label className="title">{this.state.firstName}</label>
                         </Col>
                         <Col>
                             <Fade in={this.state.firstNameInput} tag="h5" className="mt-3">
@@ -131,7 +130,8 @@ export default class UserProfilePage extends React.Component {
                     <Row className="edit-profile-row">
                         <Col>
                             <Button className="input-change-button" color="primary" onClick={this.toggleLastName}>Edit</Button>
-                            Last name: {this.state.lastName}
+                            <label>Last name: </label>
+                            <label className="title">{this.state.lastName}</label>
                         </Col>
 
                         <Col>
@@ -148,7 +148,9 @@ export default class UserProfilePage extends React.Component {
 
                     <Row>
                         <Button className="input-change-button" color="primary" onClick={this.handleChange}>Change</Button>
-                        <Col>Gender: {this.state.gender}
+                        <Col>
+                            <label>Gender: </label>
+                            <label className="title">{this.state.gender}</label>
                         </Col>
                     </Row>
 
