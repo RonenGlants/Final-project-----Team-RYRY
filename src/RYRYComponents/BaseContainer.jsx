@@ -26,7 +26,8 @@ export default class BaseContainer extends React.Component {
             userName: '',
             password: '',
             groupName: '',
-            group: null
+            group: null,
+            user: null
 
         };
     }
@@ -41,7 +42,7 @@ export default class BaseContainer extends React.Component {
                     <Route exact path="/" render={() => <LandingPage handleAuthenticatedUser={this.handleAuthenticatedUser}/>}/>
                     <Route path="/homepage" render={() => <HomePage userName={this.state.userName} showUserProfile={this.showUserProfile} invokeDisplayLandingPage={this.userLoggedOut} showGroupPage={this.showGroupPage}/>}/>
                     <Route path="/editprofile" render={() => <EditProfilePage userName={this.state.userName} password={this.state.password} />}/>
-                    <Route path="/grouppage" render={() => <GroupPage {...this.state.group}/>}/>
+                    <Route path="/grouppage" render={() => <GroupPage {...this.state.group} userInfo={this.state.user}/>}/>
                 </Switch>
             </div>
         )
@@ -61,13 +62,14 @@ export default class BaseContainer extends React.Component {
         this.setState({pageType: this.landingPage})
     }
 
-    showGroupPage(groupName, group) {
+    showGroupPage(groupName, group,userInfo) {
         group.currentUserName = this.state.userName;
 
         this.setState({
             pageType: this.groupPage,
             groupName: groupName,
-            group: group
+            group: group,
+            user: userInfo
         })
     }
 

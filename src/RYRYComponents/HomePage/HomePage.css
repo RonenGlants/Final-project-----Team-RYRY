@@ -51,6 +51,11 @@ community-root {
     width: 600px;
 }
 
+.profileImg{
+    width: 15%;
+    height: 15%;
+}
+
 .group-each {
     background-color: #4169aa;
     width: 100%;
@@ -142,4 +147,8 @@ card-communities-wrapper {
 
 .user-profile-wrapper {
     width: 200px
+}
+
+.title{
+    font-weight: bold;
 }

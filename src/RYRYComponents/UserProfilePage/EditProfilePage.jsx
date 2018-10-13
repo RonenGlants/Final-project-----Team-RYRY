@@ -94,6 +94,7 @@ export default class UserProfilePage extends React.Component {
             <Card>
                 <CardHeader>
                     <Button>{this.state.myAvatar}</Button>
+                    <Button className="profileImg"><CardImg  src={UserProfileLogo}/></Button>
                 </CardHeader>
                 <CardBody>
                     <Row>

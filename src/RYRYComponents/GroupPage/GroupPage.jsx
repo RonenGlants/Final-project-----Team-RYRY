@@ -21,6 +21,9 @@ export default class GroupPage extends React.Component {
         this.intervalID = -1;
         this.calcMatchPoints = this.calcMatchPoints.bind(this);
         this.getFriendsData =this.getFriendsData.bind(this);
+        this.getSharedSkills = this.getSharedSkills.bind(this);
+        this.getSkillsThatCanBeTaught = this.getSkillsThatCanBeTaught.bind(this);
+        this.leaveGroup = this.leaveGroup.bind(this);
 
         this.state = {
             myFeeds: [],
@@ -28,6 +31,8 @@ export default class GroupPage extends React.Component {
             selectedFriend: null,
             redirect: false,
             friendsData:[],
+            firstName: "",
+            lastName: "",
         }
     }
 
@@ -40,6 +45,7 @@ export default class GroupPage extends React.Component {
     componentDidMount() {
         this.intervalID = setInterval(() => {
             this.getFeeds();
+            this.getFriendsData();
         }, 5000);
     }
 
@@ -52,6 +58,19 @@ export default class GroupPage extends React.Component {
         var deleteGroupButton = null;
         var friendRequestButton = null;
         var dateExpiredLabel = null;
+        var endTimeValue = "";
+        var startTimeValue = "";
+        var endTime = null;
+        var startTime = null;
+        var leaveGroupButton = null;
+
+        if(this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined){
+            startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
+            startTime = <CardSubtitle>Start: {startTimeValue}</CardSubtitle>
+            endTimeValue = this.props.endingTime + "  " + this.props.endingDate;
+            endTime = <CardSubtitle>End {endTimeValue}</CardSubtitle>
+        }
+
         if(this.isDateExpired(this.props.endingDate,this.props.endingTime)){
             dateExpiredLabel = <label> Event is expired </label>
         }
@@ -63,6 +82,9 @@ export default class GroupPage extends React.Component {
         }).length == 0) {
             friendRequestButton = <Button onClick={this.friendRequest}>Join group</Button>
         }
+        else{
+            leaveGroupButton = <Button onClick={this.leaveGroup}>Leave group</Button>
+        }
 
         return (
             <div>
@@ -71,22 +93,27 @@ export default class GroupPage extends React.Component {
                                      isManager={this.props.manager === this.props.currentUserName}
                                      onRemove={this.removeFriend}
                                      calcMatchPoints={this.calcMatchPoints}
-                                     currentUserId={this.props.currentUserName}/>
+                                     currentUserId={this.props.currentUserName}
+                                     getSharedSkills = {this.getSharedSkills}
+                                     getSkillsThatCanBeTaught = {this.getSkillsThatCanBeTaught}/>
                 </Modal>
                 <Card>
                     <CardHeader>{this.props.name}</CardHeader>
                     <CardBody>
-                        <CardTitle>Admin: {this.props.manager}</CardTitle>
+                        <CardTitle>Group admin: {this.props.manager}</CardTitle>
+                        {startTime}
+                        {endTime}
                         <CardSubtitle>Description: {this.props.description}</CardSubtitle>
                         {dateExpiredLabel}
                         <br/>
                         {deleteGroupButton}
                         {friendRequestButton}
+                        {leaveGroupButton}
                     </CardBody>
                 </Card>
                 <br/>
                 <div>
-                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}/>
+                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
                     <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
                 </div>
                 <br/>
@@ -197,8 +224,26 @@ export default class GroupPage extends React.Component {
     onCloseModal() {
         this.setState({friendInfoModal: false});
     }
+    leaveGroup() {
+        return fetch('/groups/removeUserToGroup', {
+            method: 'POST',
+            body: JSON.stringify({
+                groupName: this.props.name,
+                userId: this.props.currentUserName,
+            }),
+            credentials: 'include'
+        })
+            .then(response => {        // response is the result
+                if (response.ok) {      // ok == 200
+                    console.log("OK with removeUserToGroup")
+                } else {
+                    console.log("403 with removeUserToGroup")
+                }
+            });
+    }
 
     removeFriend(friendId) {
+        this.onCloseModal();
         return fetch('/groups/removeUserToGroup', {
             method: 'POST',
             body: JSON.stringify({
@@ -257,19 +302,55 @@ export default class GroupPage extends React.Component {
             });
     }
 
-    calcPointsByLists(firsList,secondList,value){
-        var points =0;
+
+    calcPointsByLists(firsList, secondList, value) {
+        var sharedSkills = this.getSharedSkillsByLists(firsList, secondList);
+        var points = sharedSkills.length * value;
+
+        return points;
+    }
+
+    getSharedSkills(currentUserId, fiendId) {
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.mySkills, fiend.mySkills);
+    }
+
+    getSkillsThatCanBeTaught(currentUserId, fiendId) {
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.desiredSkills, fiend.mySkills);
+    }
+
+    getSharedSkillsByLists(firsList, secondList) {
+        var sharedSkills = [];
 
         if (firsList && secondList) {
             firsList.map(firstsSkill => {
                 secondList.map(secondsSkill => {
                     if (firstsSkill.id === secondsSkill.id) {
-                        points += value;
+                        sharedSkills.push(firstsSkill)
                     }
                 })
             });
         }
 
-        return points;
+        return sharedSkills;
     }
 }

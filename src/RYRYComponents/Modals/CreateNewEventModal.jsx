@@ -56,19 +56,26 @@ export default class CreateNewEventModal extends React.Component {
             endingTime: this.state.endingTime
         }
         if(this.isEventValid(newEvent)){
-            this.props.onCreateGroup(newEvent).then(isCreated => {
-                if (isCreated === true) {
-                    this.setState({
-                        createEventStatus: 'Event created!'
-                    });
-                    setTimeout(this.handleCancel, 1000);
-                }
-                else {
-                    this.setState({
-                        createEventStatus: 'Event or Community with that title already exists!'
-                    });
-                }
-            });
+            if(this.isEndDateValid(newEvent)){
+                this.props.onCreateGroup(newEvent).then(isCreated => {
+                    if (isCreated === true) {
+                        this.setState({
+                            createEventStatus: 'Event created!'
+                        });
+                        setTimeout(this.handleCancel, 1000);
+                    }
+                    else {
+                        this.setState({
+                            createEventStatus: 'Event or Community with that title already exists!'
+                        });
+                    }
+                });
+            }
+            else{
+                this.setState({
+                    createEventStatus: 'Event end date is not valid'
+                });
+            }
         }
         else{
             this.setState({
@@ -92,6 +99,35 @@ export default class CreateNewEventModal extends React.Component {
         this.setState({[name]: value})
     }
 
+    getDate(_date,_time){
+        var date = _date.split("-");
+        var time = _time.split(":");
+        var year = parseInt(date[0]);
+        var month = parseInt(date[1]);
+        var day = parseInt(date[2]);
+        var hour = parseInt(time[0]);
+        var min = parseInt(time[1]);
+        var res = new Date();
+        res.setFullYear(year, month - 1, day);
+        res.setHours(hour);
+        res.setMinutes(min);
+        return res;
+    }
+
+    isEndDateValid(newEvent){
+        var startDate = newEvent.startingDate;
+        var startTime = newEvent.startingTime;
+        var start = this.getDate(startDate,startTime);
+        var endDate = newEvent.endingDate;
+        var endTime = newEvent.endingTime;
+        var end = this.getDate(endDate,endTime);
+        if(end > start){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     isEventValid(newEvent){
         if(newEvent.name != "" && newEvent.description != "" && newEvent.startingDate != "" && newEvent.startingTime != "" && newEvent.endingDate != "" && newEvent.endingTime != ""){
             return true;

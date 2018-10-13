@@ -20,7 +20,7 @@ export default class AddNewsfeedContainer extends React.Component {
                 <br/>
                 <input className="feed-input" name="new feed" type="text" onChange={this.onChange}
                        placeholder="Enter text here..."/>
-                <button onClick={this.onAdd}>Share</button>
+                <button onClick={this.onAdd}>Post</button>
             </div>
         )
     };
@@ -34,9 +34,12 @@ export default class AddNewsfeedContainer extends React.Component {
         return fetch('/feeds/addFeed', {
             method: 'POST',
             body: JSON.stringify({
+                postTime: new Date(),
                 feed: this.state.value,
                 groupName: this.props.groupName,
                 userId: this.props.currentUserId,
+                userFirstName: this.props.firstName,
+                userLastName: this.props.lastName
             }),
             credentials: 'include'
         }).then(response => {        // response is the result

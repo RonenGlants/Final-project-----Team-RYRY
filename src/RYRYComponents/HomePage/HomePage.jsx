@@ -189,6 +189,7 @@ export default class HomePage extends React.Component {
                     <Modal open={this.state.friendRequestsModalOpen} onClose={this.onCloseModal}>
                         <FriendRequestsModal onAcceptRequest={this.onAcceptRequest}
                                              onRejectRequest={this.onRejectRequest}
+                                             closeModal={this.onCloseModal}
                                              adminId={this.props.userName}/>
                     </Modal>
                     <Modal open={this.state.communityModalOpen} onClose={this.onCloseModal}>
@@ -211,7 +212,6 @@ export default class HomePage extends React.Component {
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
-                                                               invokeSettingsPage={this.userSettingsClick}
                                                                invokeCreateNewCommunity={this.onOpenModalCommunity}
                                                                invokeCreateNewEvent={this.onOpenModalEvent}
                                                                invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>
@@ -265,13 +265,12 @@ export default class HomePage extends React.Component {
         else if (type == "communities") {
             this.state.myCommunities.forEach(community => {
                 if (community.name == groupName) {
-
                     group = community;
                 }
             })
         }
 
-        this.props.showGroupPage(groupName, group);
+        this.props.showGroupPage(groupName, group,this.state.user);
         this.setState({redirectGroupPage: true});
     }
 
@@ -347,7 +346,7 @@ export default class HomePage extends React.Component {
     };
 
     showSelectedGroupPage(selectedGroup) {
-        this.props.showGroupPage(selectedGroup.name, selectedGroup);
+        this.props.showGroupPage(selectedGroup.name, selectedGroup,this.state.user);
         this.setState({redirectGroupPage: true});
     }
 
