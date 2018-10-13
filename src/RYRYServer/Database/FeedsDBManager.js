@@ -40,6 +40,9 @@ module.exports = class FeedsDBManager {
             feeds = feeds.concat(currentGroupFeeds);
         }
 
+        if(feeds){
+            feeds
+        }
         return feeds || [];
     }
 
