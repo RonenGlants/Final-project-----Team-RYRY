@@ -37,10 +37,10 @@ export default class FriendRequestsModal extends React.Component {
                             return <form className="request-wrapper">
                                 <Row>
                                     <Col>
-                                         <label>group: {value.groupName}</label>
+                                         <label>Group: {value.groupName}</label>
                                     </Col>
                                     <Col>
-                                         <label>user: {value.userId}</label>
+                                         <label>User: {value.userId}</label>
                                     </Col>
                                     <Col>
                                         <Button color="success" name="Accept" value={valueString}

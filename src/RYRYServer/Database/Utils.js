@@ -28,4 +28,18 @@ async function update(collection,query, itemToUpdate) {
     return true;
 }
 
-module.exports = {getDataBase,getTableFromCursor, find, update}
+function getDate(_date,_time){
+    var date = _date.split("-");
+    var time = _time.split(":");
+    var year = parseInt(date[0]);
+    var month = parseInt(date[1]);
+    var day = parseInt(date[2]);
+    var hour = parseInt(time[0]);
+    var min = parseInt(time[1]);
+    var res = new Date();
+    res.setFullYear(year, month - 1, day);
+    res.setHours(hour);
+    res.setMinutes(min);
+    return res;
+}
+module.exports = {getDate,getDataBase,getTableFromCursor, find, update}

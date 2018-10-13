@@ -227,8 +227,11 @@ export default class HomePage extends React.Component {
                             <div id="search-groups">
                                 <Search data={this.state.allGroups}
                                         onChange={this.showSelectedGroupPage}
-                                        placeholder="Search Group"
-                                        searchKey="name"></Search>
+                                        placeholder="Search"
+                                        searchKey="name"
+                                        width={300}
+                                        height={40}>
+                                </Search>
                             </div>
                             <div className="card-wrapper">
                                 <Card>
