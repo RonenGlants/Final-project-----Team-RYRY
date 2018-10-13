@@ -16,7 +16,9 @@ feedManagement.get('/groupsFeeds',
     async (req, res) => {
         let groupName = req.query.groupName;
         let feeds = await dbManager.getFeedsByGroup(groupName);
-
+        feeds.sort(function(a,b){
+            return new Date(b.postTime) - new Date(a.postTime);
+        });
         res.json({feeds});
     });
 
@@ -24,7 +26,9 @@ feedManagement.get('/groupsListFeeds',
     async (req, res) => {
         let groupsNames = req.query.groupsNames;
         let feeds = await dbManager.getFeedsByGroupsNames(groupsNames);
-
+        feeds.sort(function(a,b){
+            return new Date(b.postTime) - new Date(a.postTime);
+        });
         res.json({feeds});
     });
 

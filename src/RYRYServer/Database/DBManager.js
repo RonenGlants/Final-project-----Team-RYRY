@@ -97,7 +97,9 @@ module.exports = class DBManager {
                 communities.push(group);
             }
         });
-
+        events.sort(function(a,b){
+            return new Date(b.startingTime) - new Date(a.startingTime);
+        });
         return {events: events, communities: communities};
     }
 
