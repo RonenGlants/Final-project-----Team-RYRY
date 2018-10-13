@@ -161,7 +161,7 @@ export default class SkillsInputContainer extends React.Component {
                     handleDrag={this.handleDrag}
                     handleTagClick={this.handleTagClick}
                 />
-                {this.state.errMsg}
+                <label className="errMessage">{this.state.errMsg}</label>
             </div>
         );
     }
