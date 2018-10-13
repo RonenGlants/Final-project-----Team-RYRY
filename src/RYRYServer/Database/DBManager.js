@@ -260,6 +260,22 @@ module.exports = class DBManager {
         return allGroups;
     }
 
+    async deleteAll(){
+        let isDeleted = false;
+
+        await mongo.connect(this.url, this.config).then(async (db) => {
+            let dbase = await Utils.getDataBase(db);
+            isDeleted = await this.groupsManager.deleteAll(dbase);
+            isDeleted = await this.feedsManager.deleteAll(dbase);
+            isDeleted = await this.usersManager.deleteAll(dbase);
+            isDeleted = await this.friendRequestsManager.deleteAll(dbase);
+
+            await db.close();
+        });
+
+        return isDeleted;
+    }
+
     async handleGetFeedsByUser(userId, db) {
         let dbase = await Utils.getDataBase(db);
         let feeds = await this.feedsManager.getFeedsByUser(dbase, userId);

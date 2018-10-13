@@ -50,4 +50,12 @@ module.exports = class FriendRequestsDBManager {
 
         return resultTable.length != 0;
     }
+
+    async deleteAll(db) {
+        var collection = await db.collection(this.groupsDBName);
+
+        await collection.remove({});
+        console.log("friend-request-data removed");
+        return true;
+    }
 }

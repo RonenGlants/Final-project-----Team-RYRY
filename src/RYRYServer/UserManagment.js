@@ -59,4 +59,15 @@ userManagement.post('/updateProfile',
         }
     });
 
+userManagement.post('/deleteAll',
+    async (req, res) => {
+        let isDeleted = await dbManager.deleteAll();
+        if (isDeleted){
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(403);
+        }
+    });
+
 module.exports = userManagement;

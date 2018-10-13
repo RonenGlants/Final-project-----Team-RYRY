@@ -31,6 +31,7 @@ export default class HomePage extends React.Component {
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
         this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
         this.getAllFeeds = this.getAllFeeds.bind(this);
+        this.deleteAllDBs = this.deleteAllDBs.bind(this);
 
         this.state = {
             user: null,
@@ -246,6 +247,7 @@ export default class HomePage extends React.Component {
                                     </CardBody>
                                 </Card>
                             </div>
+                            <Button onClick={this.deleteAllDBs}>Delete All DBs</Button>
                         </Col>
                     </Row>
                 </div>
@@ -354,5 +356,18 @@ export default class HomePage extends React.Component {
 
     onOpenFriendRequestsModal() {
         this.setState({friendRequestsModalOpen: true});
+    }
+
+    deleteAllDBs(){
+        return fetch('/users//deleteAll', {
+            method: 'POST',
+            credentials: 'include'
+        }).then(response => {        // response is the result
+            if (response.ok) {      // ok == 200
+                console.log("delete all DBs success")
+            } else {
+                console.log("delete all DBs : response not ok")
+            }
+        });
     }
 }

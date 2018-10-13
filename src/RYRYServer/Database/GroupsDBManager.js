@@ -117,6 +117,14 @@ module.exports = class UsersDBManager {
         var collection = await db.collection(this.groupsDBName);
         return await Utils.find(collection, {});
     }
+
+    async deleteAll(db) {
+        var collection = await db.collection(this.groupsDBName);
+
+        await collection.remove({});
+        console.log("group-data removed");
+        return true;
+    }
 }
 
 

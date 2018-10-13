@@ -81,6 +81,13 @@ module.exports = class UsersDBManager {
         return status;
     }
 
+    async deleteAll(db) {
+        var collection = await db.collection(this.usersDBName);
+
+        await collection.remove({});
+        console.log("user-data removed");
+        return true;
+    }
 }
 
 
