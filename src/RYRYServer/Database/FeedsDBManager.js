@@ -49,5 +49,13 @@ module.exports = class FeedsDBManager {
 
         return feeds;
     }
+
+    async deleteAll(db) {
+        var collection = await db.collection(this.feedsDBName);
+
+        await collection.remove({});
+        console.log("feed-data removed");
+        return true;
+    }
 }
 
