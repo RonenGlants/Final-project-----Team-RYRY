@@ -39,7 +39,7 @@ export default class GroupPage extends React.Component {
     }
 
     componentWillMount() {
-        clearInterval(this.interval);
+        clearInterval(this.intervalID);
         this.getFeeds();
         this.getFriendsData(this.props.friends);
     }
@@ -48,11 +48,13 @@ export default class GroupPage extends React.Component {
         this.intervalID = setInterval(() => {
             this.getFeeds();
             this.getFriendsData(this.props.friends);
-        }, 1000);
+        }, 3000);
     }
 
     render() {
         if(this.state.redirect){
+            clearInterval(this.intervalID);
+
             return(
                 <Redirect push to="/homepage"/>
             )

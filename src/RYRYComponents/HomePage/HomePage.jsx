@@ -45,7 +45,6 @@ export default class HomePage extends React.Component {
         this.onOpenFriendRequestsModal = this.onOpenFriendRequestsModal.bind(this);
         this.getAllGroups = this.getAllGroups.bind(this);
         this.showSelectedGroupPage = this.showSelectedGroupPage.bind(this);
-        this.getGroupsFeeds = this.getGroupsFeeds.bind(this);
         this.getAllFeeds = this.getAllFeeds.bind(this);
         this.deleteAllDBs = this.deleteAllDBs.bind(this);
         this.getLogoByNumber = this.getLogoByNumber.bind(this);
@@ -127,27 +126,6 @@ export default class HomePage extends React.Component {
             .then(content => {
                 this.setState({feeds: content.feeds})
 
-            })
-            .catch(err => {
-                throw err
-            });
-    }
-
-    getGroupsFeeds(groupName) {
-        fetch('feeds/groupsFeeds?groupName=' + groupName, {
-            method: 'GET',
-            credentials: 'include'
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response;
-                }
-                return response.json();
-            })
-            .then(content => {
-                content.feeds.map(feed => {
-                    this.state.feeds.push(feed);
-                });
             })
             .catch(err => {
                 throw err

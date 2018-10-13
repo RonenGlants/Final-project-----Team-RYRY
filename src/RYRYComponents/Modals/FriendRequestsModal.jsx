@@ -36,19 +36,11 @@ export default class FriendRequestsModal extends React.Component {
 
                             return <form className="request-wrapper">
                                 <Row>
-                                    <Col>
-                                         <label>Group: {value.groupName}</label>
-                                    </Col>
-                                    <Col>
-                                         <label>User: {value.userId}</label>
-                                    </Col>
-                                    <Col>
-                                        <Button color="success" name="Accept" value={valueString}
-                                                onClick={this.onAcceptRequest}>Accept</Button>
-                                    </Col>
-                                    <Col>
-                                        <Button color="danger" name="Reject" value={valueString} onClick={this.onRejectRequest}>Reject</Button>
-                                    </Col>
+                                    <Button className="friends-requestButton" color="success" name="Accept"
+                                            value={valueString} onClick={this.onAcceptRequest}>Accept</Button>
+                                    <Button className="friends-requestButton" color="danger" name="Reject"
+                                            value={valueString} onClick={this.onRejectRequest}>Reject</Button>
+                                    <label>'{value.userId}' asked to join Group '{value.groupName}'</label>
                                 </Row>
                             </form>
                         })}

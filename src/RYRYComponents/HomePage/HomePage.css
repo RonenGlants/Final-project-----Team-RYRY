@@ -2,8 +2,8 @@
     background-color: #EEEEE0;
 }
 
-base-container-root{
-  background-color: #EEEEE0;
+base-container-root {
+    background-color: #EEEEE0;
 }
 
 .base-container-menu {
@@ -34,28 +34,31 @@ community-root {
 
 }
 
-.skills-top{
+.skills-top {
     z-index: 2;
 }
-.avatar-imgMain{
+
+.avatar-imgMain {
     width: 100px;
     height: 100px;
     z-index: 2;
 }
-.avatar-img{
+
+.avatar-img {
     width: 60px;
     height: 60px;
     z-index: 2;
 }
+
 /*.skills-bottom{
     z-index: 1;
 }*/
 
-.edit-profile-row{
+.edit-profile-row {
     width: 600px;
 }
 
-.profileImg{
+.profileImg {
     width: 15%;
     height: 15%;
 }
@@ -94,7 +97,8 @@ news-feed-col {
     height: 100%;
     width: 500px;
 }
-#search-groups{
+
+#search-groups {
     padding-left: -50px;
 }
 
@@ -129,9 +133,11 @@ card-communities-wrapper {
     font-family: "Arial Black";
     margin: 5px;
 }
-.createButton{
+
+.createButton {
     align: right;
 }
+
 .modal-root {
     padding-top: 20px;
     margin-top: 20px;
@@ -158,16 +164,20 @@ card-communities-wrapper {
     width: 200px
 }
 
-.title{
+.title {
     font-weight: bold;
 }
 
-.input-change-button{
+.input-change-button {
     margin-right: 20px;
 }
 
-.skills-edit-wrapper{
+.skills-edit-wrapper {
     border-color: black;
     border-style: double;
     padding: 10px;
+}
+
+.friends-requestButton {
+    margin-right: 10px;
 }
