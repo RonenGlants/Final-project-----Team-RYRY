@@ -4,6 +4,14 @@ let dbManager = new DBManager();
 
 const feedManagement = express.Router();
 
+feedManagement.get('/',
+    (req, res) => {
+        res.writeHead(302, {
+            'Location': 'http://localhost:3000/'
+        });
+        res.end();
+    });
+
 feedManagement.get('/managersFeeds',
     async (req, res) => {
         let groupManagerId = req.query.groupManagerId;
