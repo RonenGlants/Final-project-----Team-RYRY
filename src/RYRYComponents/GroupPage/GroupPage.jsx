@@ -117,12 +117,6 @@ export default class GroupPage extends React.Component {
                         {leaveGroupButton}
                     </CardBody>
                 </Card>
-                <br/>
-                <div>
-                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
-                    <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
-                </div>
-                <br/>
                 <Card>
                     <CardHeader>Friends List</CardHeader>
                     <CardBody>
@@ -134,6 +128,12 @@ export default class GroupPage extends React.Component {
                             friendsData = {this.state.friendsData}/>
                     </CardBody>
                 </Card>
+                <br/>
+                <div>
+                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName} firstName={this.props.userInfo.firstName} lastName={this.props.userInfo.lastName}/>
+                    <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
+                </div>
+                <br/>
             </div>
         )
     }

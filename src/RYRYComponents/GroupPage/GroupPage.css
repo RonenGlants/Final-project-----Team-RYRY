@@ -5,3 +5,19 @@
     font-size: 20px;
     font-color: red;
 }
+.friends-wrapper{
+    align-self: center;
+}
+
+.friends-table{
+    width: 50%;
+
+}
+
+.friend-Row{
+    width: 50%;
+}
+
+td {
+    width: 50%;
+}
