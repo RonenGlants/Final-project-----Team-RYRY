@@ -28,7 +28,7 @@ export default class UserCardDropDownContainer extends React.Component {
     render() {
         return (
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle caret>
+                <DropdownToggle className="user-options" caret>
 
                 </DropdownToggle>
                 <DropdownMenu>

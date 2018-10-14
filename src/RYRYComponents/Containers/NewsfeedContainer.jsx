@@ -12,6 +12,7 @@ export default class NewsfeedContainer extends React.Component {
     render() {
         return (
             <div className="news-feed-root">
+                <label className="card-header">News feeds</label>
                 {this.props.myFeeds.map((feed, index) => {
                     var groupName = null;
                     if(this.props.showGroupName){
@@ -24,8 +25,8 @@ export default class NewsfeedContainer extends React.Component {
 
                     return (
                         <div className="feed-wrapper">
-                            <Card width="100px">
-                                <CardBody>
+                            <Card>
+                                <CardBody className="feed-card">
                                     {groupName}
                                     <CardText className="feed-user-name">Name: {feed.userFirstName} {feed.userLastName}</CardText>
                                     <CardText className="feed-text">Message: {feed.feed}</CardText>

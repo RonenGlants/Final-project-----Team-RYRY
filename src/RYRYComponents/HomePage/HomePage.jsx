@@ -161,10 +161,15 @@ export default class HomePage extends React.Component {
 
     render() {
         var firstName, lastName;
+        var deleteAllDBsElement = null;
 
         if (this.state.user) {
             firstName = this.state.user.firstName;
             lastName = this.state.user.lastName;
+
+            if (this.state.user.firstName === "Ronen") {
+                deleteAllDBsElement = <Button onClick={this.deleteAllDBs}>Delete All DBs</Button>;
+            }
         }
 
         if (this.state.redirectGroupPage) {
@@ -215,12 +220,12 @@ export default class HomePage extends React.Component {
                                                                invokeFriendRequestsManagement={this.onOpenFriendRequestsModal}/>
                                 </CardBody>
                             </Card>
-                            <br/>
+                            {deleteAllDBsElement}
                             <br/>
                             <div id="search-groups">
                                 <Search data={this.state.allGroups}
                                         onChange={this.showSelectedGroupPage}
-                                        placeholder="Search"
+                                        placeholder="Search Group"
                                         searchKey="name"
                                         width={200}
                                         height={40}>
@@ -243,6 +248,8 @@ export default class HomePage extends React.Component {
                                     </CardBody>
                                 </Card>
                             </div>
+                        </Col>
+                        <Col>
                             <div className="card-wrapper">
                                 <Card>
                                     <CardHeader>
@@ -255,7 +262,7 @@ export default class HomePage extends React.Component {
                                     </CardBody>
                                 </Card>
                             </div>
-                            <Button onClick={this.deleteAllDBs}>Delete All DBs</Button>
+
                         </Col>
                     </Row>
                 </div>
