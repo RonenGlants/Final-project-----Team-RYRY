@@ -187,3 +187,11 @@ card-communities-wrapper {
 .friends-requestButton {
     margin-right: 10px;
 }
+
+#friend-info-modal-wrapper{
+    background-color: #CCCCF4;
+}
+
+.admin-label{
+    -webkit-text-fill-color: red;
+}

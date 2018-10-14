@@ -16,48 +16,82 @@ export default class FriendInfoModal extends React.Component {
         const {open} = this.state.open;
 
         var footer = null;
-        var sharedSkillsElement= <div className="title"><label>No mutual skills</label><br/></div>;
-        var skillsThatCanBeTaughtElement= <div className="title">This friend can not teach you anything<br/></div>;
+        var sharedSkillsElement = <div className="title"><label>No mutual skills</label><br/></div>;
+        var skillsThatCanBeTaughtElement = <div className="title">This friend can not teach you anything<br/></div>;
+        var sharedDesiredSkillsElement = <div className="title">This friend does not share any desired skills<br/>
+        </div>;
+        var skillsThatCanTeachElement = <div className="title">You can not teach this friend anything<br/></div>;
         var skillsThatCanBeTaught = this.props.getSkillsThatCanBeTaught(this.props.currentUserId, this.props.id);
-        var sharedSkills= this.props.getSharedSkills(this.props.currentUserId, this.props.id);
+        var sharedSkills = this.props.getSharedSkills(this.props.currentUserId, this.props.id);
+        var sharedDesiredSkills = this.props.getSharedDesiredSkills(this.props.currentUserId, this.props.id);
+        var skillsThatCanTeach = this.props.getSkillsThatCanTeach(this.props.currentUserId, this.props.id);
 
-        if(this.props.id === this.props.manager) {
-            footer = <label>Group Admin</label>;
+
+        if (this.props.id === this.props.manager) {
+            footer = <label className="admin-label">Group Admin</label>;
         }
         else if (this.props.isManager) {
             footer = <Button color="danger" onClick={this.handleRemoveFriend}>Remove Friend</Button>;
         }
 
-        if(sharedSkills.length >0) {
+        if (sharedSkills.length > 0) {
             sharedSkillsElement =
                 <div>
                     <label className="title">Mutual skills</label>
                     {sharedSkills.map(sharedSkill => {
-                        return(
-                        <div>
-                            <small>   {sharedSkill.text}</small>
-                            <br/>
-                        </div>);
+                        return (
+                            <div>
+                                <small>   {sharedSkill.text}</small>
+                                <br/>
+                            </div>);
                     })}
                 </div>
         }
 
-        if(skillsThatCanBeTaught.length >0) {
+        if (skillsThatCanBeTaught.length > 0) {
             skillsThatCanBeTaughtElement =
                 <div>
                     <label className="title">Skills that friend can teach you</label>
                     {skillsThatCanBeTaught.map((skill) => {
-                        return(
-                        <div>
-                            <small>   {skill.text}</small>
-                            <br/>
-                        </div>);
+                        return (
+                            <div>
+                                <small>   {skill.text}</small>
+                                <br/>
+                            </div>);
+                    })}
+                </div>
+        }
+
+        if (sharedDesiredSkills.length > 0) {
+            sharedDesiredSkillsElement =
+                <div>
+                    <label className="title">Shared desired skills</label>
+                    {sharedDesiredSkills.map((skill) => {
+                        return (
+                            <div>
+                                <small>   {skill.text}</small>
+                                <br/>
+                            </div>);
+                    })}
+                </div>
+        }
+
+        if (skillsThatCanTeach.length > 0) {
+            skillsThatCanTeachElement =
+                <div>
+                    <label className="title">Skills that you can teach friend</label>
+                    {skillsThatCanTeach.map((skill) => {
+                        return (
+                            <div>
+                                <small>   {skill.text}</small>
+                                <br/>
+                            </div>);
                     })}
                 </div>
         }
 
         return (
-            <div>
+            <div id="friend-info-modal-wrapper">
                 <ModalHeader>Friend Info</ModalHeader>
                 <ModalBody>
                     <label>First name: {this.props.firstName}</label>
@@ -70,7 +104,11 @@ export default class FriendInfoModal extends React.Component {
                     <br/>
                     {sharedSkillsElement}
                     <br/>
+                    {sharedDesiredSkillsElement}
+                    <br/>
                     {skillsThatCanBeTaughtElement}
+                    <br/>
+                    {skillsThatCanTeachElement}
                 </ModalBody>
                 <ModalFooter>
                     {footer}

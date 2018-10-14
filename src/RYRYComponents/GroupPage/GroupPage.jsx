@@ -22,6 +22,8 @@ export default class GroupPage extends React.Component {
         this.calcMatchPoints = this.calcMatchPoints.bind(this);
         this.getFriendsData = this.getFriendsData.bind(this);
         this.getSharedSkills = this.getSharedSkills.bind(this);
+        this.getSharedDesiredSkills = this.getSharedDesiredSkills.bind(this);
+        this.getSkillsThatCanTeach = this.getSkillsThatCanTeach.bind(this);
         this.getSkillsThatCanBeTaught = this.getSkillsThatCanBeTaught.bind(this);
         this.leaveGroup = this.leaveGroup.bind(this);
         this.isGuest = this.isGuest.bind(this);
@@ -71,16 +73,16 @@ export default class GroupPage extends React.Component {
         var isGroupAdmin = false;
         var elementsForFriend = <div>
             <Card>
-            <CardHeader>Friends List</CardHeader>
-            <CardBody>
-                <FriendsListContainer
-                    currUserId={this.props.currentUserName}
-                    calcFriendScore={this.calcMatchPoints}
-                    myFriends={this.props.friends}
-                    openFriendInfoModal={this.openFriendInfoModal}
-                    friendsData={this.state.friendsData}/>
-            </CardBody>
-        </Card>
+                <CardHeader>Friends List</CardHeader>
+                <CardBody>
+                    <FriendsListContainer
+                        currUserId={this.props.currentUserName}
+                        calcFriendScore={this.calcMatchPoints}
+                        myFriends={this.props.friends}
+                        openFriendInfoModal={this.openFriendInfoModal}
+                        friendsData={this.state.friendsData}/>
+                </CardBody>
+            </Card>
             <br/>
             <div>
                 <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
@@ -124,7 +126,9 @@ export default class GroupPage extends React.Component {
                                      calcMatchPoints={this.calcMatchPoints}
                                      currentUserId={this.props.currentUserName}
                                      getSharedSkills={this.getSharedSkills}
-                                     getSkillsThatCanBeTaught={this.getSkillsThatCanBeTaught}/>
+                                     getSkillsThatCanBeTaught={this.getSkillsThatCanBeTaught}
+                                     getSharedDesiredSkills={this.getSharedDesiredSkills}
+                                     getSkillsThatCanTeach={this.getSkillsThatCanTeach}/>
                 </Modal>
                 <Card>
                     <CardHeader>{this.props.name}</CardHeader>
@@ -344,6 +348,34 @@ export default class GroupPage extends React.Component {
         fiend = fiend[0];
 
         return this.getSharedSkillsByLists(currentUser.mySkills, fiend.mySkills);
+    }
+
+    getSharedDesiredSkills(currentUserId, fiendId){
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.desiredSkills, fiend.desiredSkills);
+    }
+
+    getSkillsThatCanTeach(currentUserId, fiendId){
+        var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
+        var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
+
+        if (currentUser.length !== 1 || fiend.length !== 1) {
+            return [];
+        }
+
+        currentUser = currentUser[0];
+        fiend = fiend[0];
+
+        return this.getSharedSkillsByLists(currentUser.mySkills, fiend.desiredSkills);
     }
 
     getSkillsThatCanBeTaught(currentUserId, fiendId) {
