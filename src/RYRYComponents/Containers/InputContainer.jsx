@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../HomePage/HomePage.css'
 
 export default class InputContainer extends React.Component {
     constructor(args) {
@@ -7,15 +8,26 @@ export default class InputContainer extends React.Component {
         this.whenChanged = this.whenChanged.bind(this);
         this.state = {
             errMessage: '',
-            value:''
+            value: ''
         }
     }
 
     render() {
+        var inputElement;
+        if (this.props.multyLine) {
+            inputElement = <textarea style={{verticalAlign: top}} className={this.props.inputClassName} name={this.props.myName} type={this.props.type}
+                                  placeholder="Enter text here..." value={this.state.value}
+                                  onChange={this.whenChanged}/>;
+        } else {
+            inputElement =
+                <input className={this.props.inputClassName} name={this.props.myName} type={this.props.type}
+                          placeholder="Enter text here..." value={this.state.value}
+                          onChange={this.whenChanged}/>;
+        }
         return (
             <div>
                 <label className={this.props.labelClassName}> {this.props.labelValue}: </label>
-                <input className={this.props.inputClassName} name={this.props.myName} type={this.props.type} placeholder="Enter text here..." value={this.state.value} onChange={this.whenChanged}/>
+                {inputElement}
                 <label className="errMessage">{this.state.errMessage}</label>
             </div>
         );

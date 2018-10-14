@@ -54,10 +54,6 @@ community-root {
     z-index: 2;
 }
 
-/*.skills-bottom{
-    z-index: 1;
-}*/
-
 .edit-profile-row {
     width: 600px;
 }
@@ -194,6 +190,10 @@ card-communities-wrapper {
 
 .admin-label{
     -webkit-text-fill-color: red;
+}
+
+textarea{
+    vertical-align: top
 }
 
 .groups-label{

@@ -136,7 +136,9 @@ export default class GroupPage extends React.Component {
                         <CardTitle>Group admin: {this.props.manager}</CardTitle>
                         {startTime}
                         {endTime}
-                        <CardSubtitle>Description: {this.props.description}</CardSubtitle>
+                        <label>Description: </label>
+                        <br/>
+                        <textarea disabled className="description-textarea">{this.props.description}</textarea>
                         {dateExpiredLabel}
                         <br/>
                         {deleteGroupButton}

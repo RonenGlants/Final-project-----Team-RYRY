@@ -25,3 +25,10 @@ td {
 .friends-requestButton{
 
 }
+
+.description-textarea{
+    height: 100px;
+    width: 400px;
+    background-color: #F5FFF5;
+    vertical-align: top
+}

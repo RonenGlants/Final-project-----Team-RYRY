@@ -29,7 +29,7 @@ export default class CreateNewEventModal extends React.Component {
                 <ModalHeader>Create new event</ModalHeader>
                 <ModalBody>
                     <InputContainer myName="eventTitle" labelClassName="event-title-class" labelValue="Name" type="text" handleMyChange={this.handleChange} />
-                    <InputContainer myName="description" labelClassName="" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
+                    <InputContainer multyLine="true" myName="description" labelClassName="" inputClassName="group-description" labelValue="Description" type="text" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingDate" labelClassName="starting-date-class" labelValue="Starting date" type="date" handleMyChange={this.handleChange} />
                     <InputContainer myName="startingTime" labelClassName="starting-time-class" labelValue="Starting time" type="time" handleMyChange={this.handleChange} />
                     <InputContainer myName="endingDate" labelClassName="ending-date-class" labelValue="Ending date" type="date" handleMyChange={this.handleChange} />
