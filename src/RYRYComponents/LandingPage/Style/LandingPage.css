@@ -36,6 +36,10 @@ signup-table-row{
   width: 40%;
 }
 
+body{
+  background-color: #EEEEE0;
+}
+
 
 /* Example Styles for React Tags*/
 #app {

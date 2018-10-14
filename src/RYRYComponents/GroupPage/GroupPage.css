@@ -10,8 +10,6 @@
 }
 
 .friends-table{
-    width: 50%;
-
 }
 
 .friend-Row{
@@ -31,4 +29,8 @@ td {
     width: 400px;
     background-color: #F5FFF5;
     vertical-align: top
+}
+
+body {
+    background-color: #EEEEE0;
 }

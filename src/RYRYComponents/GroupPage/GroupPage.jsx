@@ -71,26 +71,27 @@ export default class GroupPage extends React.Component {
         var startTime = null;
         var leaveGroupButton = null;
         var isGroupAdmin = false;
-        var elementsForFriend = <div>
-            <Card>
-                <CardHeader>Friends List</CardHeader>
-                <CardBody>
-                    <FriendsListContainer
-                        currUserId={this.props.currentUserName}
-                        calcFriendScore={this.calcMatchPoints}
-                        myFriends={this.props.friends}
-                        openFriendInfoModal={this.openFriendInfoModal}
-                        friendsData={this.state.friendsData}/>
-                </CardBody>
-            </Card>
-            <br/>
+        var feedsElement = (
             <div>
                 <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
                                       firstName={this.props.userInfo.firstName}
                                       lastName={this.props.userInfo.lastName}/>
                 <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
-            </div>
-            <br/></div>
+            </div>);
+        var friendsListElement = (
+            <div>
+                <Card>
+                    <CardHeader>Friends List</CardHeader>
+                    <CardBody>
+                        <FriendsListContainer
+                            currUserId={this.props.currentUserName}
+                            calcFriendScore={this.calcMatchPoints}
+                            myFriends={this.props.friends}
+                            openFriendInfoModal={this.openFriendInfoModal}
+                            friendsData={this.state.friendsData}/>
+                    </CardBody>
+                </Card>
+            </div>);
 
         if (this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined) {
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
@@ -130,23 +131,32 @@ export default class GroupPage extends React.Component {
                                      getSharedDesiredSkills={this.getSharedDesiredSkills}
                                      getSkillsThatCanTeach={this.getSkillsThatCanTeach}/>
                 </Modal>
-                <Card>
-                    <CardHeader>{this.props.name}</CardHeader>
-                    <CardBody>
-                        <CardTitle>Group admin: {this.props.manager}</CardTitle>
-                        {startTime}
-                        {endTime}
-                        <label>Description: </label>
-                        <br/>
-                        <textarea disabled className="description-textarea">{this.props.description}</textarea>
-                        {dateExpiredLabel}
-                        <br/>
-                        {deleteGroupButton}
-                        {friendRequestButton}
-                        {leaveGroupButton}
-                    </CardBody>
-                </Card>
-                {elementsForFriend}
+                <Row>
+                    <Col>
+                        <Card>
+                            <CardHeader>{this.props.name}</CardHeader>
+                            <CardBody>
+                                <CardTitle>Group admin: {this.props.manager}</CardTitle>
+                                {startTime}
+                                {endTime}
+                                <label>Description: </label>
+                                <br/>
+                                <textarea disabled className="description-textarea">{this.props.description}</textarea>
+                                {dateExpiredLabel}
+                                <br/>
+                                {deleteGroupButton}
+                                {friendRequestButton}
+                                {leaveGroupButton}
+                            </CardBody>
+                        </Card>
+                    </Col>
+                    <Col>
+                        {feedsElement}
+                    </Col>
+                    <Col>
+                        {friendsListElement}
+                    </Col>
+                </Row>
             </div>
         )
     }
@@ -352,7 +362,7 @@ export default class GroupPage extends React.Component {
         return this.getSharedSkillsByLists(currentUser.mySkills, fiend.mySkills);
     }
 
-    getSharedDesiredSkills(currentUserId, fiendId){
+    getSharedDesiredSkills(currentUserId, fiendId) {
         var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
         var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
 
@@ -366,7 +376,7 @@ export default class GroupPage extends React.Component {
         return this.getSharedSkillsByLists(currentUser.desiredSkills, fiend.desiredSkills);
     }
 
-    getSkillsThatCanTeach(currentUserId, fiendId){
+    getSkillsThatCanTeach(currentUserId, fiendId) {
         var currentUser = this.state.friendsData.filter(friend => friend.id === currentUserId);
         var fiend = this.state.friendsData.filter(friend => friend.id === fiendId);
 
