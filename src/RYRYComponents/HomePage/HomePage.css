@@ -195,3 +195,7 @@ card-communities-wrapper {
 .admin-label{
     -webkit-text-fill-color: red;
 }
+
+.groups-label{
+    width: 80%;
+}

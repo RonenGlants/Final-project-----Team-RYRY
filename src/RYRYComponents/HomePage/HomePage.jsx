@@ -78,7 +78,7 @@ export default class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.intervalId =  setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.getAllFeeds();
             this.getCommunitiesAndEvents();
             this.getAllGroups();
@@ -233,7 +233,9 @@ export default class HomePage extends React.Component {
                         <Col className="groups-wrapper">
                             <div className="card-wrapper">
                                 <Card>
-                                    <CardHeader>My Communities <Button className="createButton" onClick={this.onOpenModalCommunity}>+</Button></CardHeader>
+                                    <CardHeader>
+                                        <label className="groups-label">My Communities</label>
+                                        <Button className="createButton" onClick={this.onOpenModalCommunity}>+</Button></CardHeader>
                                     <CardBody>
                                         <CommunityListContainer myType="communities"
                                                                 myCommunities={this.state.myCommunities}
@@ -243,7 +245,10 @@ export default class HomePage extends React.Component {
                             </div>
                             <div className="card-wrapper">
                                 <Card>
-                                    <CardHeader>My Events <Button className="createButton" onClick={this.onOpenModalEvent}>+</Button></CardHeader>
+                                    <CardHeader>
+                                        <label className="groups-label">My Events</label>
+                                        <Button className="createButton"
+                                                onClick={this.onOpenModalEvent}>+</Button></CardHeader>
                                     <CardBody>
                                         <CommunityListContainer myType="events" myCommunities={this.state.myEvents}
                                                                 invokeOnGroupClick={this.onGroupClick}/>
@@ -341,7 +346,7 @@ export default class HomePage extends React.Component {
                 return response.json();
             })
             .then(content => {
-              this.setState({
+                this.setState({
                     allGroups: content.allGroups,
                 })
             })
@@ -359,7 +364,7 @@ export default class HomePage extends React.Component {
         this.setState({friendRequestsModalOpen: true});
     }
 
-    deleteAllDBs(){
+    deleteAllDBs() {
         return fetch('/users//deleteAll', {
             method: 'POST',
             credentials: 'include'
