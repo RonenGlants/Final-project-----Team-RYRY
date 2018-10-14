@@ -199,3 +199,11 @@ textarea{
 .groups-label{
     width: 80%;
 }
+
+.input-label{
+    padding-right: 10px;
+}
+
+.input-wrapper{
+    margin: 10px;
+}

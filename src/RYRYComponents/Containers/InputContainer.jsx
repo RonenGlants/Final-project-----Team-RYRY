@@ -14,6 +14,8 @@ export default class InputContainer extends React.Component {
 
     render() {
         var inputElement;
+        var labelClassName = this.props.labelClassName + " input-label";
+
         if (this.props.multyLine) {
             inputElement = <textarea style={{verticalAlign: top}} className={this.props.inputClassName} name={this.props.myName} type={this.props.type}
                                   placeholder="Enter text here..." value={this.state.value}
@@ -25,8 +27,8 @@ export default class InputContainer extends React.Component {
                           onChange={this.whenChanged}/>;
         }
         return (
-            <div>
-                <label className={this.props.labelClassName}> {this.props.labelValue}: </label>
+            <div className="input-wrapper">
+                <label className={labelClassName}> {this.props.labelValue}: </label>
                 {inputElement}
                 <label className="errMessage">{this.state.errMessage}</label>
             </div>
