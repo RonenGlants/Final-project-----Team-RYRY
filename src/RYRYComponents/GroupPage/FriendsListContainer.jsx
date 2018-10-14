@@ -50,6 +50,6 @@ export default class FriendsListContainer extends React.Component {
     };
 
     onFriendClick(friendId) {
-        this.props.openFriendInfoModal((this.props.friendsData.filter(friend=>{return friend.id = friendId}))[0]);
+        this.props.openFriendInfoModal((this.props.friendsData.filter(friend=>{return friend.id === friendId}))[0]);
     }
 }

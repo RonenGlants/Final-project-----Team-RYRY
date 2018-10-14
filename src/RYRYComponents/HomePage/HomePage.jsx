@@ -70,7 +70,7 @@ export default class HomePage extends React.Component {
     }
 
     componentWillMount() {
-        clearInterval(this.interval);
+        clearInterval(this.intervalId);
         this.getUser();
         this.getAllFeeds();
         this.getCommunitiesAndEvents();
@@ -78,7 +78,7 @@ export default class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => {
+        this.intervalId =  setInterval(() => {
             this.getAllFeeds();
             this.getCommunitiesAndEvents();
             this.getAllGroups();
@@ -168,6 +168,7 @@ export default class HomePage extends React.Component {
         }
 
         if (this.state.redirectGroupPage) {
+            clearInterval(this.intervalId);
             return (
                 <Redirect push to="grouppage"/>
             )
