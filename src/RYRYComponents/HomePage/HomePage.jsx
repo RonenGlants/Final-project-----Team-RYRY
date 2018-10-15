@@ -213,7 +213,7 @@ export default class HomePage extends React.Component {
                                                                                      src={this.state.userProfileLogo}/></Button>
                                     Hello, {firstName} {lastName}
                                 </CardHeader>
-                                <CardBody>
+                                <CardBody className="user-opt-wrapper">
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
@@ -228,7 +228,9 @@ export default class HomePage extends React.Component {
                                         placeholder="Search Group"
                                         searchKey="name"
                                         width={200}
-                                        height={40}>
+                                        height={40}
+                                        border-style="solid"
+                                        border-color="black">
                                 </Search>
                             </div>
                         </Col>

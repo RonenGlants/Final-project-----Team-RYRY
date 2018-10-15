@@ -73,15 +73,16 @@ export default class GroupPage extends React.Component {
         var isGroupAdmin = false;
         var feedsElement = (
             <div>
-                <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
+                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
                                       firstName={this.props.userInfo.firstName}
                                       lastName={this.props.userInfo.lastName}/>
                 <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
             </div>);
+
         var friendsListElement = (
             <div>
                 <Card>
-                    <CardHeader>Friends List</CardHeader>
+                    <CardHeader>Friends</CardHeader>
                     <CardBody>
                         <FriendsListContainer
                             currUserId={this.props.currentUserName}
@@ -92,6 +93,7 @@ export default class GroupPage extends React.Component {
                     </CardBody>
                 </Card>
             </div>);
+
 
         if (this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined) {
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
@@ -108,9 +110,12 @@ export default class GroupPage extends React.Component {
             isGroupAdmin = true;
         }
         else if (this.isGuest()) {
-            elementsForFriend = null;
+            feedsElement = null;
+            friendsListElement = null;
             friendRequestButton = <Button disabled={this.state.disableJoinButton}
                                           onClick={this.friendRequest}>{this.state.joinGroupButton}</Button>
+
+
         }
         else {
             if (!isGroupAdmin) {
