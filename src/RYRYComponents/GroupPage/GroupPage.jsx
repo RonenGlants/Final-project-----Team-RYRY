@@ -97,9 +97,9 @@ export default class GroupPage extends React.Component {
 
         if (this.props.startingDate != undefined && this.props.startingTime != undefined && this.props.endingDate != undefined && this.props.endingTime != undefined) {
             startTimeValue = this.props.startingTime + "  " + this.props.startingDate;
-            startTime = <CardSubtitle>Start: {startTimeValue}</CardSubtitle>
+            startTime = <CardSubtitle className="event-time-data">Start: {startTimeValue}</CardSubtitle>
             endTimeValue = this.props.endingTime + "  " + this.props.endingDate;
-            endTime = <CardSubtitle>End {endTimeValue}</CardSubtitle>
+            endTime = <CardSubtitle className="event-time-data">End {endTimeValue}</CardSubtitle>
         }
 
         if (this.isDateExpired(this.props.endingDate, this.props.endingTime)) {
