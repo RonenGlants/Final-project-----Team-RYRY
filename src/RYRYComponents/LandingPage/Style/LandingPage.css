@@ -113,8 +113,8 @@ label.errMessage{
 }
 
 .skills-edit-wrapper {
-  border-color: black;
-  border-style: double;
+  border-color: darkgray;
+  border-style: groove;
   padding: 10px;
 }
 
