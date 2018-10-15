@@ -10,7 +10,7 @@ export default class AddNewsfeedContainer extends React.Component {
         this.addFeed = this.addFeed.bind(this);
 
         this.state = {
-            value: ""
+            value: "",
         }
     }
 
@@ -23,7 +23,7 @@ export default class AddNewsfeedContainer extends React.Component {
                 <label className="feed-input-label">Write something to your group</label>
                 <br/>
                 <input className="feed-input" name="new feed" type="text" onChange={this.onChange}
-                       placeholder="Enter text here..."/>
+                       placeholder="Enter text here..." value={this.state.value}/>
                 <button onClick={this.onAdd}>Post</button>
                     </CardBody>
                 </Card>
@@ -51,6 +51,7 @@ export default class AddNewsfeedContainer extends React.Component {
         }).then(response => {        // response is the result
             if (response.ok) {      // ok == 200
                 console.log("request added")
+                this.setState({value: ""});
             } else {
                 console.log("addRequest failed: response not ok")
             }
@@ -58,6 +59,6 @@ export default class AddNewsfeedContainer extends React.Component {
     }
 
     onChange(event) {
-        this.state.value = event.target.value;
+        this.setState({value: event.target.value});
     }
 }
