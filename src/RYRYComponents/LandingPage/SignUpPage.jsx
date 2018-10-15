@@ -31,8 +31,10 @@ export default class SignUpPage extends React.Component {
             <div className="signup-page-wrapper">
                 <Row>
                     <Col sm={{size: 'auto', offset: 1}}>
-                        <form className="signup-form" onSubmit={this.signUpButtonClick}>
+                        <div className="signup-form">
                             <img className="signup-logo" src={SignUpLogoImage}/>
+                            <br/>
+                            <label className="errMessage">{this.state.errMessage}</label>
                             <InputContainer myName="firstName" labelClassName="username-label" labelValue="First Name"
                                             type="text" handleMyChange={this.handleChange}
                                             inputChangeValidation={this.props.nameChangeValidation}/>
@@ -54,9 +56,9 @@ export default class SignUpPage extends React.Component {
                                     window.desiredSkillsCont = desiredSkillsCont
                                 }} skillsTitle="My Desired Skills"/>
                             </Row>
-                            <input className="submit-btn btn" type="submit" value="Sign Up"/>
-                            <label className="errMessage">{this.state.errMessage}</label>
-                        </form>
+                            <br/>
+                            <Button onClick={this.signUpButtonClick} className="submit-btn btn" type="submit" value="Sign Up">Sign Up</Button>
+                        </div>
                     </Col>
                     <Col>
                         <Card body outline color="primary" className="alredySignedUpCard"
@@ -121,9 +123,7 @@ export default class SignUpPage extends React.Component {
     }
 
     showSignUpErrorMessage(error) {
-        this.setState(() => ({
-            errMessage: error,
-        }));
+        this.setState({errMessage: error});
     }
 
     handleChange(name, value) {

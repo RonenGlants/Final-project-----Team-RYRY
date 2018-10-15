@@ -19,7 +19,12 @@ app.use('/users', userManagement);
 app.use('/groups', groupManagement);
 app.use('/feeds', feedManagement);
 app.use('/requests', friendRequestManagement);
-
+app.use(function(req,res){
+    res.writeHead(302, {
+        'Location': 'http://localhost:3000/',
+    });
+    res.end();
+});
 app.listen(3000, console.log('RYRY connect available at localhost:3000'));
 
 
