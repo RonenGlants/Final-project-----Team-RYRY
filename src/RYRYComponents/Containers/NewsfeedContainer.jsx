@@ -12,7 +12,6 @@ export default class NewsfeedContainer extends React.Component {
     render() {
         return (
             <div className="news-feed-root">
-                <label className="card-header">News feeds</label>
                 {this.props.myFeeds.map((feed, index) => {
                     var groupName = null;
                     if(this.props.showGroupName){

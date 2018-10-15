@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Card, CardBody, CardHeader} from 'reactstrap';
 
 export default class AddNewsfeedContainer extends React.Component {
     constructor(args) {
@@ -16,11 +17,16 @@ export default class AddNewsfeedContainer extends React.Component {
     render() {
         return (
             <div>
+                <Card>
+                    <CardHeader>News Feed</CardHeader>
+                    <CardBody>
                 <label className="feed-input-label">Write something to your group</label>
                 <br/>
                 <input className="feed-input" name="new feed" type="text" onChange={this.onChange}
                        placeholder="Enter text here..."/>
                 <button onClick={this.onAdd}>Post</button>
+                    </CardBody>
+                </Card>
             </div>
         )
     };
