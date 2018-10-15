@@ -1,18 +1,20 @@
-.feed-wrapper{
+.feed-wrapper {
     width: 600px;
 }
-.label{
+
+.label {
     font-size: 20px;
     font-color: red;
 }
-.friends-wrapper{
+
+.friends-wrapper {
     align-self: center;
 }
 
-.friends-table{
+.friends-table {
 }
 
-.friend-Row{
+.friend-Row {
     width: 50%;
 }
 
@@ -20,11 +22,11 @@ td {
     width: 50%;
 }
 
-.friends-requestButton{
+.friends-requestButton {
 
 }
 
-.description-textarea{
+.description-textarea {
     height: 100px;
     width: 400px;
     background-color: #F5FFF5;
@@ -35,4 +37,8 @@ td {
 
 body {
     background-color: #EEEEE0;
+}
+
+.event-time-data {
+    margin: 10px;
 }
