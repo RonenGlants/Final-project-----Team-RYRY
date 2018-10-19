@@ -213,7 +213,7 @@ export default class HomePage extends React.Component {
                                                                                      src={this.state.userProfileLogo}/></Button>
                                     Hello, {firstName} {lastName}
                                 </CardHeader>
-                                <CardBody className="user-opt-wrapper">
+                                <CardBody>
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
