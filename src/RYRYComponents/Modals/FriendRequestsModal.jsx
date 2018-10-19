@@ -35,7 +35,7 @@ export default class FriendRequestsModal extends React.Component {
                             var valueString = value.groupName + "$" + value.userId;
 
                             return <form className="request-wrapper">
-                                <Row>
+                                <Row className="friend-request-row">
                                     <Button className="friends-requestButton" color="success" name="Accept"
                                             value={valueString} onClick={this.onAcceptRequest}>Accept</Button>
                                     <Button className="friends-requestButton" color="danger" name="Reject"
