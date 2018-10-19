@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-responsive-modal';
 import Search from "react-search-box";
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Row} from 'reactstrap';
-import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+//import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import CommunityListContainer from "../Containers/CommunityListContainer.jsx";
 import './HomePage.css';
 import UserCardDropDownContainer from "../Containers/UserCardDropDownContainer.jsx";
@@ -65,7 +65,7 @@ export default class HomePage extends React.Component {
             friendRequestsModalOpen: false,
             allGroups: [],
             avatarNumber: "1",
-            userProfileLogo: UserProfileLogo,
+            //userProfileLogo: UserProfileLogo,
         }
     }
 
