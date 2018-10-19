@@ -29,9 +29,9 @@ td {
 .description-textarea {
     height: 100px;
     width: 400px;
-    background-color: #F5FFF5;
+    background-color: #EEEEE0;
     vertical-align: top;
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
 }
 

@@ -147,7 +147,7 @@ export default class GroupPage extends React.Component {
                                 {endTime}
                                 <label>Description: </label>
                                 <br/>
-                                <textarea disabled className="description-textarea">{this.props.description}</textarea>
+                                <label className="description-textarea">{this.props.description}</label>
                                 {dateExpiredLabel}
                                 <br/>
                                 {deleteGroupButton}
