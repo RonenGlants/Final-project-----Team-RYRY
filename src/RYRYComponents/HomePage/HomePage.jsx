@@ -209,7 +209,7 @@ export default class HomePage extends React.Component {
                         <Col sm={{size: 'auto'}} className="user-profile-wrapper card-wrapper">
                             <Card>
                                 <CardHeader>
-                                    <Button onClick={this.userProfileClick}><CardImg top width="100%"
+                                    <Button onClick={this.userProfileClick}><CardImg top
                                                                                      src={this.state.userProfileLogo}/></Button>
                                     Hello, {firstName} {lastName}
                                 </CardHeader>
