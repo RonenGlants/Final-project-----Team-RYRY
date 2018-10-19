@@ -5,6 +5,9 @@
 base-container-root {
     background-color: #EEEEE0;
 }
+.friend-request-row{
+    margin-bottom: 3px;
+}
 
 .user-profile-page-wrapper {
     background-color: #EEEEE0;
@@ -198,6 +201,7 @@ card-communities-wrapper {
 
 .friends-requestButton {
     margin-right: 10px;
+    margin-bottom: 4px;
 }
 
 #friend-info-modal-wrapper {
