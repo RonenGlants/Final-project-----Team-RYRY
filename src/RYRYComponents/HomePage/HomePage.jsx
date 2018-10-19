@@ -206,14 +206,17 @@ export default class HomePage extends React.Component {
                                              userName={this.props.userName}/>
                     </Modal>
                     <Row className="row-root">
-                        <Col sm={{size: 'auto'}} className="user-profile-wrapper card-wrapper">
+                        <Col sm={{size: 'auto'}}>
                             <Card>
                                 <CardHeader>
-                                    <Button onClick={this.userProfileClick}><CardImg top width="100%"
-                                                                                     src={this.state.userProfileLogo}/></Button>
+                                    <Button onClick={this.userProfileClick}>
+                                        <CardImg top width="100%"
+                                                 src={this.state.userProfileLogo}/>
+                                    </Button>
+                                    <br/>
                                     Hello, {firstName} {lastName}
                                 </CardHeader>
-                                <CardBody>
+                                <CardBody className="user-opt-wrapper">
                                     <UserCardDropDownContainer userName={firstName}
                                                                invokeLogOut={this.userLogOut}
                                                                invokeProfilePage={this.userProfileClick}
@@ -235,7 +238,12 @@ export default class HomePage extends React.Component {
                             </div>
                         </Col>
                         <Col className="feeds-wrapper">
-                            <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
+                            <Card>
+                                <CardHeader>News Feed</CardHeader>
+                                <CardBody>
+                                    <NewsfeedContainer myFeeds={this.state.feeds} showGroupName={true}/>
+                                </CardBody>
+                            </Card>
                         </Col>
                         <Col className="groups-wrapper">
                             <div className="card-wrapper">

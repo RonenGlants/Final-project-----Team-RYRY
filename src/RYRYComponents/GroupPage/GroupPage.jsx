@@ -73,7 +73,7 @@ export default class GroupPage extends React.Component {
         var isGroupAdmin = false;
         var feedsElement = (
             <div>
-                    <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
+                <AddNewsfeedContainer groupName={this.props.name} currentUserId={this.props.currentUserName}
                                       firstName={this.props.userInfo.firstName}
                                       lastName={this.props.userInfo.lastName}/>
                 <NewsfeedContainer myFeeds={this.state.myFeeds} showGroupName={false}/>
@@ -139,9 +139,10 @@ export default class GroupPage extends React.Component {
                 <Row>
                     <Col>
                         <Card>
-                            <CardHeader>{this.props.name}</CardHeader>
+                            <CardHeader>About</CardHeader>
                             <CardBody>
-                                <CardTitle>Group admin: {this.props.manager}</CardTitle>
+                                <CardTitle>Name : {this.props.name}</CardTitle>
+                                <CardTitle>Admin: {this.props.manager}</CardTitle>
                                 {startTime}
                                 {endTime}
                                 <label>Description: </label>
