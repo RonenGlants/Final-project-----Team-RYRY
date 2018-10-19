@@ -88,12 +88,13 @@ news-feed-each {
 }
 
 feed-wrapper {
+    background-color: #EEEEE0;
     margin-bottom: 10px;
 }
 
 news-feed-col {
     border: 1px solid #cccccc;
-    background-color: #bfbfbf;
+    background-color: #EEEEE0;
     height: 100%;
     width: 500px;
 }
@@ -109,8 +110,16 @@ news-feed-col {
     flex: 1;
 }
 
+.card{
+    background-color: #EEEEE0;
+    margin: 2px;
+}
+
+.feed-card-back{
+    border: 0;
+}
+
 .card-wrapper {
-    margin-top: 10px;
     margin-left: 25px;
     width: 100%;
     height: auto;
@@ -221,6 +230,7 @@ body {
 
 .feed-card {
     background-color: #BBBFB0;
+    border-radius: 25px;
 }
 
 .news-feed-root {
