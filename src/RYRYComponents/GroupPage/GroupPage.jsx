@@ -317,10 +317,10 @@ export default class GroupPage extends React.Component {
         currentUser = currentUser[0];
         fiend = fiend[0];
 
-        points += this.calcPointsByLists(currentUser.mySkills, fiend.mySkills, 14);
-        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.desiredSkills, 5);
-        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.mySkills, 50);
-        points += this.calcPointsByLists(currentUser.mySkills, fiend.desiredSkills, 25);
+        points += this.calcPointsByLists(currentUser.mySkills, fiend.mySkills,5);
+        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.desiredSkills, 10);
+        points += this.calcPointsByLists(currentUser.desiredSkills, fiend.mySkills, 30);
+        points += this.calcPointsByLists(currentUser.mySkills, fiend.desiredSkills, 20);
 
         return points;
     }

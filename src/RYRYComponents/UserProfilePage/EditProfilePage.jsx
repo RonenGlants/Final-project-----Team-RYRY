@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {Button, Card, CardBody, CardHeader, CardImg, Col, Fade, Row} from 'reactstrap';
-import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
+//import UserProfileLogo from '../Resources/UserProfileLogo.jpg'
 import Avatar1 from '../Resources/avatar1.jpeg';
 import Avatar2 from '../Resources/avatar2.jpeg';
 import Avatar3 from '../Resources/avatar3.jpeg';

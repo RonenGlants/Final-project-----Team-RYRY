@@ -16,11 +16,12 @@ export default class FriendInfoModal extends React.Component {
         const {open} = this.state.open;
 
         var footer = null;
+
         var sharedSkillsElement = <div className="title"><label>No mutual skills</label><br/></div>;
-        var skillsThatCanBeTaughtElement = <div className="title">This friend can not teach you anything<br/></div>;
-        var sharedDesiredSkillsElement = <div className="title">This friend does not share any desired skills<br/>
+        var skillsThatCanBeTaughtElement = <div className="title">{this.props.firstName} can't teach you anything<br/></div>;
+        var sharedDesiredSkillsElement = <div className="title">{this.props.firstName} and you doesn't share any desired skills<br/>
         </div>;
-        var skillsThatCanTeachElement = <div className="title">You can not teach this friend anything<br/></div>;
+        var skillsThatCanTeachElement = <div className="title">You can't teach {this.props.firstName} anything<br/></div>;
         var skillsThatCanBeTaught = this.props.getSkillsThatCanBeTaught(this.props.currentUserId, this.props.id);
         var sharedSkills = this.props.getSharedSkills(this.props.currentUserId, this.props.id);
         var sharedDesiredSkills = this.props.getSharedDesiredSkills(this.props.currentUserId, this.props.id);
